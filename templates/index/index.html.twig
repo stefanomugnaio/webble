@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création de sites internet{% endblock %}
+
+{# On ajoute le CSS spécifique de la page "index" #}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('index') }}
+{% endblock %}
+
+{% block body %}
+    {# Section hero sous la navbar #}
+    <section class="position-relative bg-dark text-white min-vh-100 d-flex align-items-center overflow-hidden">
+        {# Fond animé (géré en CSS + JS) #}
+        <div id="hero-bg" class="position-absolute top-0 start-0 w-100 h-100"></div>
+
+        {# Contenu au-dessus du fond #}
+        <div class="container position-relative flex-grow-1 d-flex flex-column justify-content-around text-center">
+
+            {# Titre + sous-titre #}
+            <div class="mb-5 pt-5">
+                <h1 class="display-4 fw-bold mb-3">
+                    Votre présence en ligne, sans exploser votre budget.
+                </h1>
+                <p class="lead mb-5">
+                    Création de site web sur mesure & formations web.
+                </p>
+
+                {# Call to action principal #}
+                <a href="#contact" class="btn btn-light btn-lg rounded-pill px-5">
+                    Devis en ligne gratuit
+                </a>
+            </div>
+
+        </div>
+    </section>
+{% endblock %}
+
+{# On ajoute le JS spécifique de la page "index" #}
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('index') }}
+{% endblock %}
