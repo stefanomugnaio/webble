@@ -1,0 +1,204 @@
+{# templates/pricing/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Formules & tarifs{% endblock %}
+
+{# On charge le CSS spécifique de la page création de site #}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('creation') }}
+{% endblock %}
+
+{% block body %}
+<section class="bg-dark text-white py-5 d-flex align-items-center" style="min-height: 100vh;">
+    <div class="container py-3">
+
+        <div class="text-center mb-4">
+            <p class="text-uppercase small text-secondary mb-2">
+                Formules
+            </p>
+            <h1 class="fw-bold mb-2 fs-2 fs-lg-1">
+                Des offres simples, adaptées à votre budget.
+            </h1>
+            <p class="text-secondary mb-0 fs-6">
+                Choisissez le niveau d’accompagnement qui correspond à votre projet.
+            </p>
+        </div>
+
+        <div class="row g-3 g-lg-4 justify-content-center">
+            {# Tranquille #}
+            <div class="col-md-6 col-lg-4">
+                <div class="card pricing-card h-100 border-0 shadow-sm">
+                    <div class="card-body d-flex flex-column p-3 p-md-4">
+                        <p class="text-uppercase small text-primary fw-semibold mb-2 text-center">
+                            Tranquille
+                        </p>
+                        <div class="text-center mb-3">
+                            <div class="fw-bold text-dark mb-0 fs-2 fs-lg-1">
+                                150&nbsp;€
+                            </div>
+                            <div class="text-muted small mt-1">
+                                Pour enfin avoir un vrai site (et plus juste une page Facebook).
+                            </div>
+                        </div>
+
+                        <a href="{{ path('app_contact') }}" class="btn btn-primary w-100 rounded-pill mb-3">
+                            C'est parti !
+                        </a>
+
+                        <p class="text-muted small mb-3">
+                            Idéal pour lancer rapidement votre présence en ligne avec une page claire et professionnelle.
+                        </p>
+
+                        <ul class="list-unstyled text-muted small mb-0">
+                            <li class="mb-2">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                1 page principale (landing page)
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Design responsive (mobile, tablette, desktop)
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Intégration de votre logo et de vos couleurs
+                            </li>
+                            <li>
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Livraison clé en main, prête à être mise en ligne
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            {# Sérieux (bloc central mis en avant) #}
+            <div class="col-md-6 col-lg-4">
+                <div class="card pricing-card pricing-card-featured h-100 border-0 shadow-lg">
+                    <div class="card-body d-flex flex-column p-3 p-md-4">
+                        <p class="text-uppercase small text-warning fw-semibold mb-2 text-center">
+                            Sérieux
+                        </p>
+                        <div class="text-center mb-3">
+                            <div class="fw-bold text-dark mb-0 fs-2 fs-lg-1">
+                                550&nbsp;€
+                            </div>
+                            <div class="text-muted small mt-1">
+                                Pour ceux qui en ont marre que le site du voisin soit mieux que le leur.
+                            </div>
+                        </div>
+
+                        <a href="{{ path('app_contact') }}" class="btn btn-primary w-100 rounded-pill mb-3">
+                            C'est parti !
+                        </a>
+
+                        <p class="text-muted small mb-3">
+                            La formule idéale pour les indépendants et petites structures qui veulent un site solide et évolutif.
+                        </p>
+
+                        <ul class="list-unstyled text-muted small mb-0">
+                            <li class="mb-2">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Tout ce qui est inclus dans Starter
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Jusqu’à 5 pages (Accueil, Services, À propos, Contact, etc.)
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Optimisation de base pour le référencement (SEO)
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Intégration de vos réseaux sociaux
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Formation rapide à la prise en main du site
+                            </li>
+                            <li>
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Espace administrateur basique pour la gestion du contenu
+                            </li>
+                            <li>
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Support pendant 3 mois après la mise en ligne
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            {# Fou #}
+            <div class="col-md-6 col-lg-4">
+                <div class="card pricing-card h-100 border-0 shadow-sm">
+                    <div class="card-body d-flex flex-column p-3 p-md-4">
+                        <p class="text-uppercase small text-danger fw-semibold mb-2 text-center">
+                            Fou
+                        </p>
+                        <div class="text-center mb-3">
+                            <div class="fw-bold text-dark mb-0 fs-3 fs-lg-2">
+                                Sur devis
+                            </div>
+                            <div class="text-muted small mt-1">
+                                Pour les idées qui ne rentrent dans aucune case (et c’est très bien comme ça).
+                            </div>
+                        </div>
+
+                        <a href="{{ path('app_contact') }}" class="btn btn-outline-primary w-100 rounded-pill mb-3">
+                            Contactez-moi !
+                        </a>
+
+                        <p class="text-muted small mb-3">
+                            Pour les projets qui sortent du cadre : fonctionnalités avancées, espace client, etc.
+                        </p>
+
+                        <ul class="list-unstyled text-muted small mb-0">
+                            <li class="mb-2">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Nombre de pages et structure adaptés à votre activité
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Fonctionnalités spécifiques (blog, espace client, réservation, etc.)
+                            </li>
+                            <li>
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Devis détaillé et transparent avant lancement
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Intégration de vos réseaux sociaux
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Optimisation de base pour le référencement (SEO)
+                            </li>
+                            <li>
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Espace administrateur avancé pour la gestion du contenu
+                            </li>
+                            <li>
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Formation à la prise en main du site
+                            </li>
+                            <li>
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Support pendant 6 mois après la mise en ligne
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('creation') }}
+{% endblock %}
