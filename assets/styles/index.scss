@@ -1,18 +1,91 @@
-// assets/styles/index.scss
-
-/* Fond derrière le hero */
+/* Fond du hero (dégradé fixe) */
 #hero-bg {
-  background: radial-gradient(circle at top left, #020617 0, #020617 40%, #020617 100%);
-  background-color: #020617;
+  position: absolute;
+  inset: 0;
   overflow: hidden;
+  z-index: 0;
+
+  background: radial-gradient(circle at 10% 0%, #1f355a 0%, #050816 50%, #02040a 100%);
+  transform: scale(1.1);          /* toujours un peu plus grand que la zone */
+  transform-origin: center center;
 }
 
-/* Bulles lumineuses (orbes) */
+/* Taches lumineuses floues */
 .hero-orb {
   position: absolute;
   border-radius: 999px;
-  pointer-events: none;
+  filter: blur(40px);
+  opacity: 0.55;
   mix-blend-mode: screen;
-  opacity: 0.6;
-  filter: blur(2px);
+}
+
+/* Orb 1 : coin haut gauche */
+.hero-orb-1 {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, #3a8bff 0%, #2456ff 40%, transparent 70%);
+  top: -120px;
+  left: -120px;
+}
+
+/* Orb 2 : coin bas droit */
+.hero-orb-2 {
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, #1fd1ff 0%, #147dbe 40%, transparent 70%);
+  bottom: -160px;
+  right: -100px;
+}
+
+/* Orb 3 : au centre */
+.hero-orb-3 {
+  width: 340px;
+  height: 340px;
+  background: radial-gradient(circle, #9b6bff 0%, #5b3bff 40%, transparent 70%);
+  top: 45%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+}
+
+/* Légère texture / bruit */
+.hero-noise {
+  position: absolute;
+  inset: -50px;
+  pointer-events: none;
+  opacity: 0.18;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='noStitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.65'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+}
+
+/* --- ANIMATIONS DU TEXTE DU HERO --- */
+
+.hero-content {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: hero-fade-up 0.8s ease-out 0.2s forwards;
+}
+
+.hero-title {
+  opacity: 0;
+  transform: translateY(25px);
+  animation: hero-fade-up 0.9s ease-out 0.25s forwards;
+}
+
+.hero-subtitle {
+  opacity: 0;
+  transform: translateY(25px);
+  animation: hero-fade-up 0.9s ease-out 0.4s forwards;
+}
+
+.hero-cta {
+  opacity: 0;
+  transform: translateY(25px);
+  animation: hero-fade-up 0.9s ease-out 0.55s forwards;
+}
+
+@keyframes hero-fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

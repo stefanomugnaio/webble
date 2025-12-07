@@ -1,55 +1,91 @@
 // assets/pages/index.js
 
 import '../styles/index.scss';
-import { animate } from 'animejs';   // ✅ API v4
 
 document.addEventListener('DOMContentLoaded', () => {
-    const container = document.querySelector('#hero-bg');
-    if (!container) {
-        return;
+    const heroBg = document.getElementById('hero-bg');
+
+    // Config des halos
+    const orbs = [
+        {
+            el: document.querySelector('.hero-orb-1'),
+            maxX: 120,
+            maxY: 70,
+            speed: 0.02,           // vitesse d’interpolation
+            changeEvery: 4000,     // changement de cible en ms
+        },
+        {
+            el: document.querySelector('.hero-orb-2'),
+            maxX: 150,
+            maxY: 90,
+            speed: 0.018,
+            changeEvery: 5000,
+        },
+        {
+            el: document.querySelector('.hero-orb-3'),
+            maxX: 100,
+            maxY: 60,
+            speed: 0.022,
+            changeEvery: 4500,
+        }
+    ];
+
+    // État interne des halos
+    const state = orbs.map(cfg => ({
+        ...cfg,
+        currentX: 0,
+        currentY: 0,
+        targetX: 0,
+        targetY: 0,
+        lastChange: performance.now()
+    }));
+
+    const start = performance.now();
+    const BG_SCALE = 1.1;      // zoom fixe
+
+    function randomBetween(min, max) {
+        return min + Math.random() * (max - min);
     }
 
-    const NB_ORBS = 25;
-
-    // Création des bulles lumineuses
-    for (let i = 0; i < NB_ORBS; i++) {
-        const orb = document.createElement('div');
-        orb.classList.add('hero-orb');
-
-        // taille aléatoire
-        const size = 80 + Math.random() * 200; // 80 à 280 px
-        orb.style.width = `${size}px`;
-        orb.style.height = `${size}px`;
-
-        // position de départ aléatoire
-        orb.style.left = `${Math.random() * 100}vw`;
-        orb.style.top = `${Math.random() * 100}vh`;
-
-        // couleur : dégradé radial avec teinte variable
-        const hue = 200 + Math.random() * 80; // bleu / violet / rose
-        orb.style.background = `
-            radial-gradient(circle at 30% 20%,
-                hsla(${hue}, 90%, 70%, 0.9),
-                hsla(${hue + 40}, 90%, 60%, 0.0)
-            )
-        `;
-
-        container.appendChild(orb);
+    function pickNewTarget(orbState) {
+        orbState.targetX = randomBetween(-orbState.maxX, orbState.maxX);
+        orbState.targetY = randomBetween(-orbState.maxY, orbState.maxY);
+        // on décale un peu l’intervalle pour ne pas tout changer en même temps
+        orbState.changeEvery = orbState.changeEvery + randomBetween(-800, 800);
     }
 
-    // Petite fonction utilitaire pour les valeurs aléatoires
-    const rand = (min, max) => Math.random() * (max - min) + min;
+    // Initialisation des cibles
+    state.forEach(pickNewTarget);
 
-    // Animation douce des bulles
-    animate('.hero-orb', {
-        translateX: () => rand(-150, 150),
-        translateY: () => rand(-100, 100),
-        scale: () => rand(0.8, 1.4),
-        opacity: () => rand(0.3, 0.8),
-        duration: () => rand(6000, 13000),
-        easing: 'easeInOutSine',
-        direction: 'alternate',
-        loop: true,
-        delay: (_, i) => i * 200, // décalage progressif
-    });
+    function animate(time) {
+        const t = time - start;
+
+        // léger mouvement du fond, sans zoom variable
+        if (heroBg) {
+            const offsetX = Math.sin(t * 0.00015) * 15;   // -15px / +15px
+            const offsetY = Math.cos(t * 0.00012) * 15;
+            heroBg.style.transform = `scale(${BG_SCALE}) translate3d(${offsetX}px, ${offsetY}px, 0)`;
+        }
+
+        // Mise à jour de chaque halo
+        state.forEach(orb => {
+            if (!orb.el) return;
+
+            // Nouvelle cible si le temps est écoulé
+            if (time - orb.lastChange > orb.changeEvery) {
+                orb.lastChange = time;
+                pickNewTarget(orb);
+            }
+
+            // Interpolation vers la cible (lerp)
+            orb.currentX += (orb.targetX - orb.currentX) * orb.speed;
+            orb.currentY += (orb.targetY - orb.currentY) * orb.speed;
+
+            orb.el.style.transform = `translate3d(${orb.currentX}px, ${orb.currentY}px, 0)`;
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
 });
