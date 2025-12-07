@@ -1,0 +1,58 @@
+{# templates/devis/confirmation.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Demande de devis envoyée{% endblock %}
+
+{% block body %}
+<section class="text-white py-5 d-flex align-items-center" style="min-height: 100vh;">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4 p-md-5 text-center">
+
+                        <div class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+                        </div>
+
+                        <h1 class="h3 fw-bold mb-2">
+                            Votre demande de devis a bien été envoyée.
+                        </h1>
+
+                        <p class="text-secondary mb-4">
+                            Je vous recontacte rapidement par email ou téléphone pour parler de votre projet
+                            <strong>
+                                {% if offer.price_ht is not null %}
+                                    (offre {{ offer.label }} – {{ offer.price_ht|number_format(0, ',', ' ') }} € HT)
+                                {% else %}
+                                    (offre {{ offer.label }})
+                                {% endif %}
+                            </strong>.
+                        </p>
+
+                        <hr class="my-4">
+
+                        <p class="text-secondary small mb-4">
+                            Vous pouvez entre-temps préparer quelques exemples de sites que vous aimez,
+                            ou une liste des fonctionnalités dont vous avez besoin : ça nous fera gagner du temps
+                            lors de notre premier échange.
+                        </p>
+
+                        <div class="d-flex flex-column flex-md-row justify-content-center gap-2">
+                            <a href="{{ path('app_index') }}" class="btn btn-primary rounded-pill px-4">
+                                Retour à la page d'accueil
+                            </a>
+                            <a href="{{ path('app_contact') }}" class="btn btn-outline-secondary rounded-pill px-4">
+                                Me contacter pour une question
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

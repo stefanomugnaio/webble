@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Devis - {{ offer.label }}{% endblock %}
+
+{% block body %}
+<section class="text-white py-5 d-flex align-items-center" style="min-height: 100vh;">
+    <div class="container py-4">
+
+        {# Flash succès après enregistrement #}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success rounded-pill text-center mb-4">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="mb-4 text-center">
+                    <p class="text-uppercase small text-secondary mb-1">
+                        Demande de devis
+                    </p>
+                    <h1 class="h3 fw-bold mb-2">
+                        Offre {{ offer.label }}
+                    </h1>
+                    <p class="text-secondary mb-0">
+                        {{ offer.description }}
+                    </p>
+                </div>
+
+                {# Récap HT / TVA / TTC #}
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <h4 class="mb-4">Récapitulatif</h4>
+                        {% if montant_ht is not null %}
+                            <div class="row mb-2">
+                                <div class="col-6 text-muted small">Montant HT</div>
+                                <div class="col-6 text-end fw-semibold">
+                                    {{ montant_ht|number_format(2, ',', ' ') }} €
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6 text-muted small">
+                                    TVA ({{ (taux_tva * 100)|number_format(0) }} %)
+                                </div>
+                                <div class="col-6 text-end fw-semibold">
+                                    {{ montant_tva|number_format(2, ',', ' ') }} €
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row mb-1">
+                                <div class="col-6 fw-bold">Total TTC</div>
+                                <div class="col-6 text-end fw-bold fs-4">
+                                    {{ montant_ttc|number_format(2, ',', ' ') }} €
+                                </div>
+                            </div>
+                        {% else %}
+                            <p class="mb-2">
+                                Cette offre est réalisée <strong>sur devis</strong>.
+                            </p>
+                            <p class="text-muted small mb-0">
+                                Remplissez le formulaire ci-dessous, je vous envoie un devis détaillé (HT, TVA 20 %, TTC).
+                            </p>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+                {# Détail des features #}
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <h2 class="h5 fw-semibold mb-3">
+                            Ce que comprend l’offre {{ offer.label }}
+                        </h2>
+                        <ul class="list-unstyled text-muted small mb-0">
+                            {% for feature in offer.features %}
+                                <li class="mb-2">
+                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                    {{ feature }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                {# Formulaire lié à App\Form\DevisType #}
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <h2 class="h5 fw-semibold mb-3">
+                            Vos coordonnées
+                        </h2>
+                        <p class="text-muted small mb-4">
+                            Laissez-moi vos informations pour que je puisse vous recontacter à propos de l’offre
+                            <strong>{{ offer.label }}</strong>.
+                        </p>
+
+                        {{ form_start(form, {'attr': {'class': 'row g-3'}}) }}
+
+                            <div class="col-md-6">
+                                {{ form_label(form.nom, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.nom) }}
+                            </div>
+
+                            <div class="col-md-6">
+                                {{ form_label(form.prenom, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.prenom) }}
+                            </div>
+
+                            <div class="col-md-6">
+                                {{ form_label(form.email, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.email) }}
+                            </div>
+
+                            <div class="col-md-6">
+                                {{ form_label(form.telephone, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.telephone, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.telephone) }}
+                            </div>
+
+                            <div class="col-12">
+                                {{ form_label(form.adresse, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.adresse, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.adresse) }}
+                            </div>
+
+                            <div class="col-md-4">
+                                {{ form_label(form.code_postal, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.code_postal, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.code_postal) }}
+                            </div>
+
+                            <div class="col-md-8">
+                                {{ form_label(form.ville, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.ville) }}
+                            </div>
+
+                            <div class="col-12 text-center mt-5">
+                                <button type="submit" class="btn btn-primary rounded-pill px-4">
+                                    Envoyer ma demande de devis
+                                </button>
+                            </div>
+
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <a href="{{ path('app_creation_site') }}" class="btn btn-outline-light rounded-pill px-4">
+                        Retour aux formules
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
