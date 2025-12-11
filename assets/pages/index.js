@@ -4,8 +4,7 @@ import '../styles/index.scss';
 
 document.addEventListener('DOMContentLoaded', () => {
     const heroBg = document.getElementById('hero-bg');
-
-    // Config des halos
+    console.log("Test");    // Config des halos
     const orbs = [
         {
             el: document.querySelector('.hero-orb-1'),

@@ -6,7 +6,7 @@
 {# On charge le CSS spécifique de la page création de site #}
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('creation') }}
+    {{ encore_entry_link_tags('creation_site') }}
 {% endblock %}
 
 {% block body %}
@@ -200,5 +200,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('creation') }}
+    {{ encore_entry_script_tags('creation_site') }}
 {% endblock %}

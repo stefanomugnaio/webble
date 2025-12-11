@@ -63,7 +63,6 @@ final class EnvoiDevisController extends AbstractController
 
         // Offre inconnue -> retour à la page formules
         if (!isset($offers[$offre])) {
-            // ⚠ adapte ce nom de route à ta page "Formules"
             return $this->redirectToRoute('app_creation_site');
         }
 
@@ -72,7 +71,7 @@ final class EnvoiDevisController extends AbstractController
         // TVA normale en France pour ce type de service : 20 %
         $tauxTva = 0.20;
 
-        $montantHt  = $offer['price_ht'];
+        $montantHt  = $offer['price_ht'];  // prix du site seul
         $montantTva = null;
         $montantTtc = null;
 
@@ -81,32 +80,61 @@ final class EnvoiDevisController extends AbstractController
             $montantTtc = $montantHt + $montantTva;
         }
 
+        // Prix de la maintenance : 15 € HT / mois -> 180 € HT / an
+        $maintenanceHtAn = 30.0 * 12;
+
         // Entité Devis : infos de contact + offre choisie
         $devis = new Devis();
-        // on stocke le code de l'offre (tranquille / serieuse / pro)
         $devis->setOffre($offre);
 
-        // Formulaire lié à l'entité Devis (nom, prénom, email, etc.)
+        // Formulaire
         $form = $this->createForm(DevisType::class, $devis);
         $form->handleRequest($request);
+
+        // On calcule les montants en tenant compte de l'option maintenance
+        $contratMaintenance = $devis->isContratMaintenance() ?? false;
+
+        $maintenance_ht   = null;
+        $maintenance_tva  = null;
+        $maintenance_ttc  = null;
+        $montant_ht_total = null;
+        $montant_tva_total = null;
+        $montant_ttc_total = null;
+
+        if ($montantHt !== null) {
+            // base : site seul
+            $maintenance_ht  = $contratMaintenance ? $maintenanceHtAn : 0.0;
+            $maintenance_tva = $maintenance_ht * $tauxTva;
+            $maintenance_ttc = $maintenance_ht + $maintenance_tva;
+
+            $montant_ht_total  = $montantHt + $maintenance_ht;
+            $montant_tva_total = $montant_ht_total * $tauxTva;
+            $montant_ttc_total = $montant_ht_total + $montant_tva_total;
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($devis);
             $em->flush();
 
-            // Redirection vers la page de confirmation
             return $this->redirectToRoute('app_devis_confirmation', [
                 'offre' => $offre,
             ]);
         }
 
         return $this->render('envoi_devis/index.html.twig', [
-            'offer'       => $offer,
-            'montant_ht'  => $montantHt,
-            'taux_tva'    => $tauxTva,
-            'montant_tva' => $montantTva,
-            'montant_ttc' => $montantTtc,
-            'form'        => $form->createView(),
+            'offer'              => $offer,
+            'taux_tva'           => $tauxTva,
+            'montant_ht'         => $montantHt,
+            'montant_tva'        => $montantTva,
+            'montant_ttc'        => $montantTtc,
+            'maintenance_ht'     => $maintenance_ht,
+            'maintenance_ttc'    => $maintenance_ttc,
+            'montant_ht_total'   => $montant_ht_total,
+            'montant_tva_total'  => $montant_tva_total,
+            'montant_ttc_total'  => $montant_ttc_total,
+            'maintenance_ht_an'  => $maintenanceHtAn,
+            'contrat_maintenance'=> $contratMaintenance,
+            'form'               => $form->createView(),
         ]);
     }
 

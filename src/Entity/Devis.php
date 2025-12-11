@@ -37,6 +37,9 @@ class Devis
     #[ORM\Column(length: 50)]
     private ?string $offre = null;
 
+    #[ORM\Column]
+    private ?bool $contrat_maintenance = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -134,6 +137,18 @@ class Devis
     public function setOffre(string $offre): static
     {
         $this->offre = $offre;
+
+        return $this;
+    }
+
+    public function isContratMaintenance(): ?bool
+    {
+        return $this->contrat_maintenance;
+    }
+
+    public function setContratMaintenance(bool $contrat_maintenance): static
+    {
+        $this->contrat_maintenance = $contrat_maintenance;
 
         return $this;
     }

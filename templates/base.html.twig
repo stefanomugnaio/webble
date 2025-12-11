@@ -17,10 +17,6 @@
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
-        {# JS Webpack Encore #}
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
     </head>
 
     <body
@@ -34,5 +30,9 @@
         {% include 'menu/menu.html.twig' %}
 
         {% block body %}{% endblock %}
+        {# JS Webpack Encore #}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
     </body>
 </html>
