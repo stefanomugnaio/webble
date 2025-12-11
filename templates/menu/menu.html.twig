@@ -29,14 +29,17 @@
      tabindex="-1"
      id="mainMenu"
      aria-labelledby="mainMenuLabel">
+
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="mainMenuLabel"></h5>
         <button type="button" class="btn-close btn-close-white"
                 data-bs-dismiss="offcanvas"
                 aria-label="Fermer"></button>
     </div>
+
     <div class="offcanvas-body">
-        <ul class="nav flex-column">
+
+        <ul class="nav flex-column mb-4">
             <li class="nav-item mb-2">
                 <a class="nav-link text-white" href="{{ path('app_index') }}">Accueil</a>
             </li>
@@ -50,5 +53,13 @@
                 <a class="nav-link text-white" href="{{ path('app_contact') }}">Contact</a>
             </li>
         </ul>
+
+        {# --- Lien Mentions légales (en bas, discret) --- #}
+        <div class="mt-auto pt-3 border-top border-secondary">
+            <a class="nav-link text-secondary small" href="{{ path('app_mentions_legales') }}">
+                Mentions légales
+            </a>
+        </div>
+
     </div>
 </div>
