@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Politique de confidentialité{% endblock %}
+
+{% block body %}
+<section class="mt-5 py-5 text-white" style="min-height: 100vh;">
+    <div class="container py-4">
+
+        <h1 class="mb-4 fw-bold">Politique de confidentialité</h1>
+
+        <div class="card bg-dark text-white border-0 shadow-sm">
+            <div class="card-body">
+
+                <p class="small text-muted">
+                    Cette politique de confidentialité explique comment le site <strong>Webble</strong> collecte,
+                    utilise et protège vos données personnelles, conformément au Règlement Général sur la Protection
+                    des Données (RGPD) et à la législation française.
+                </p>
+
+                <h2 class="h4 mt-4">1. Responsable du traitement</h2>
+                <p>
+                    Le responsable du traitement des données est :
+                    <br><strong>Stéphane Meunier – Webble</strong><br>
+                    9 rue d'Oradour, 54190 Villerupt<br>
+                    Email : <em>support@webble.fr</em><br>
+                    Statut : Auto-entrepreneur
+                </p>
+
+                <h2 class="h4 mt-4">2. Données collectées</h2>
+                <p>
+                    Les données suivantes peuvent être collectées via les formulaires du site (contact, devis, demande d'informations) :
+                </p>
+                <ul>
+                    <li>Nom et prénom</li>
+                    <li>Adresse email</li>
+                    <li>Numéro de téléphone</li>
+                    <li>Adresse postale</li>
+                    <li>Informations relatives à votre projet web</li>
+                </ul>
+                <p>
+                    Aucune donnée sensible n’est collectée.
+                </p>
+
+                <h2 class="h4 mt-4">3. Finalité du traitement</h2>
+                <p>
+                    Vos données sont utilisées exclusivement pour :
+                </p>
+                <ul>
+                    <li>traiter vos demandes de devis,</li>
+                    <li>répondre à vos messages,</li>
+                    <li>assurer le suivi commercial,</li>
+                    <li>gérer la relation client,</li>
+                    <li>établir des factures si nécessaire.</li>
+                </ul>
+
+                <h2 class="h4 mt-4">4. Base légale du traitement</h2>
+                <p>
+                    Le traitement de vos données repose sur :
+                </p>
+                <ul>
+                    <li>votre consentement (case à cocher, formulaire),</li>
+                    <li>l’exécution d’un contrat ou d’un devis à votre demande,</li>
+                    <li>l’intérêt légitime du prestataire pour assurer ses services.</li>
+                </ul>
+
+                <h2 class="h4 mt-4">5. Destinataires des données</h2>
+                <p>
+                    Les données sont destinées uniquement à l’entreprise <strong>Webble</strong>.
+                    Elles ne sont ni vendues, ni louées, ni transmises à des tiers.
+                </p>
+
+                <h2 class="h4 mt-4">6. Durée de conservation</h2>
+                <ul>
+                    <li><strong>12 mois</strong> pour les demandes de devis sans suite,</li>
+                    <li><strong>10 ans</strong> pour les clients (obligations comptables).</li>
+                </ul>
+
+                <h2 class="h4 mt-4">7. Vos droits</h2>
+                <p>
+                    Conformément au RGPD, vous disposez des droits suivants :
+                </p>
+                <ul>
+                    <li>Droit d’accès</li>
+                    <li>Droit de rectification</li>
+                    <li>Droit de suppression</li>
+                    <li>Droit d’opposition</li>
+                    <li>Droit à la portabilité des données</li>
+                </ul>
+                <p>
+                    Pour exercer vos droits, vous pouvez écrire à :<br>
+                    <em>support@webble.fr</em>
+                </p>
+
+                <h2 class="h4 mt-4">8. Sécurité et confidentialité</h2>
+                <p>
+                    Webble met en œuvre des mesures de sécurité techniques et organisationnelles destinées à protéger
+                    vos données personnelles contre la perte, l’accès non autorisé ou la divulgation.
+                </p>
+
+                <h2 class="h4 mt-4">9. Sous-traitance</h2>
+                <p>
+                    Dans le cadre du stockage et de l’hébergement, certaines données peuvent être hébergées sur les
+                    serveurs d’OVH (hébergeur du site). OVH agit en tant que sous-traitant conforme au RGPD.
+                </p>
+
+                <h2 class="h4 mt-4">10. Cookies</h2>
+                <p>
+                    Le site Webble n’utilise actuellement <strong>aucun cookie</strong>.
+                </p>
+
+                <h2 class="h4 mt-4">11. Modification de la politique de confidentialité</h2>
+                <p>
+                    Cette politique peut être mise à jour à tout moment. La version en vigueur est accessible sur cette page.
+                </p>
+
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ path('app_index') }}" class="btn btn-outline-light rounded-pill px-4">
+                Retour à l'accueil
+            </a>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
