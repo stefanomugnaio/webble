@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conditions Générales de Vente{% endblock %}
+
+{% block body %}
+<section class="mt-5 py-5 text-white" style="min-height: 100vh;">
+    <div class="container py-4">
+
+        <h1 class="mb-4 fw-bold">Conditions Générales de Vente (CGV)</h1>
+
+        <div class="card bg-dark text-white border-0 shadow-sm">
+            <div class="card-body">
+
+                <p class="small text-muted">
+                    Les présentes Conditions Générales de Vente (CGV) s’appliquent à toutes les prestations proposées par 
+                    <strong>Stéphane Meunier – Auto-entrepreneur (Webble)</strong>, sauf accord écrit contraire.
+                </p>
+
+                <h2 class="h4 mt-4">1. Description des prestations</h2>
+                <p>
+                    Webble propose des prestations de création de sites internet, conception graphique, 
+                    maintenance web, formations numériques, intégration de contenu et accompagnement digital.
+                </p>
+                <p>
+                    Chaque prestation fait l’objet d’un devis détaillé décrivant le contenu, les options choisies 
+                    et le périmètre du projet. Le devis accepté fait office de contrat entre le client et le prestataire.
+                </p>
+
+                <h2 class="h4 mt-4">2. Tarifs et mode de calcul</h2>
+                <p>
+                    Les tarifs sont indiqués en euros (€) et calculés en fonction :
+                </p>
+                <ul>
+                    <li>du type de prestation choisie,</li>
+                    <li>du niveau de personnalisation,</li>
+                    <li>des options additionnelles (maintenance, formations, contenus, etc.).</li>
+                </ul>
+                <p>
+                    Les prix sont ceux indiqués sur le devis transmis au client.  
+                    Toute demande de modification en cours de projet peut entraîner une révision du tarif.
+                </p>
+
+                <h2 class="h4 mt-4">3. TVA applicable</h2>
+                <p>
+                    Dans le cadre du régime de la micro-entreprise, et conformément à l’article 293 B du CGI,
+                    la TVA n’est pas applicable (« TVA non applicable – article 293 B du CGI »).  
+                    Si le statut du prestataire évolue, la TVA applicable sera indiquée sur les devis et factures.
+                </p>
+
+                <h2 class="h4 mt-4">4. Délais d’exécution</h2>
+                <p>
+                    Les délais de livraison sont précisés dans le devis ou définis d’un commun accord avec le client.
+                    Ils dépendent notamment :
+                </p>
+                <ul>
+                    <li>de la rapidité des retours du client,</li>
+                    <li>de la fourniture complète des contenus (textes, images, médias),</li>
+                    <li>de la complexité du projet.</li>
+                </ul>
+                <p>
+                    Les retards imputables au client (absence de réponses, éléments manquants) décalent
+                    automatiquement la date de livraison.
+                </p>
+
+                <h2 class="h4 mt-4">5. Conditions de résiliation</h2>
+                <p>
+                    Le client peut résilier le contrat avant le début du projet sans frais.  
+                    Après démarrage du projet, toute résiliation entraîne la facturation des travaux déjà réalisés,
+                    sur la base du temps passé ou selon le pourcentage d’avancement.
+                </p>
+                <p>
+                    Pour les contrats de maintenance :  
+                    <strong>ils sont conclus pour une durée de 12 mois, renouvelables automatiquement, sauf résiliation 
+                    écrite un mois avant la date anniversaire.</strong>
+                </p>
+
+                <h2 class="h4 mt-4">6. Modalités de paiement</h2>
+                <p>
+                    Le paiement s’effectue selon les modalités prévues dans le devis : acompte à la commande,
+                    puis solde à la livraison ou à l’avancement selon le projet.
+                </p>
+                <p>
+                    Les paiements acceptés : virement bancaire, chèque ou paiement électronique selon disponibilité.
+                </p>
+                <p>
+                    Toute facture non réglée à échéance pourra entraîner des pénalités de retard conformément à la loi.
+                </p>
+
+                <h2 class="h4 mt-4">7. Responsabilités</h2>
+                <p>
+                    Webble s’engage à fournir des services professionnels et conformes au devis signé.
+                    Toutefois, la responsabilité du prestataire ne pourra être engagée :
+                </p>
+                <ul>
+                    <li>en cas de mauvaise utilisation du site par le client,</li>
+                    <li>en cas d’intervention d’un tiers sur le code ou l’hébergement,</li>
+                    <li>en cas de panne liée à un prestataire externe (hébergeur, fournisseur de services),</li>
+                    <li>pour les contenus fournis par le client (images, textes, vidéos).</li>
+                </ul>
+                <p>
+                    Le client est responsable de l’exactitude des contenus publiés sur son site.
+                </p>
+
+                <h2 class="h4 mt-4">8. Droit applicable et juridiction compétente</h2>
+                <p>
+                    Les présentes CGV sont soumises au droit français.  
+                    En cas de litige, et à défaut de résolution amiable, les tribunaux français seront seuls compétents.
+                </p>
+
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ path('app_index') }}" class="btn btn-outline-light rounded-pill px-4">
+                Retour à l'accueil
+            </a>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
