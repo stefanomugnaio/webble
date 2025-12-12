@@ -40,6 +40,9 @@ class Devis
     #[ORM\Column]
     private ?bool $contrat_maintenance = null;
 
+    #[ORM\Column]
+    private ?bool $rgpd = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -149,6 +152,18 @@ class Devis
     public function setContratMaintenance(bool $contrat_maintenance): static
     {
         $this->contrat_maintenance = $contrat_maintenance;
+
+        return $this;
+    }
+
+    public function isRgpd(): ?bool
+    {
+        return $this->rgpd;
+    }
+
+    public function setRgpd(bool $rgpd): static
+    {
+        $this->rgpd = $rgpd;
 
         return $this;
     }

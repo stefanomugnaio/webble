@@ -15,8 +15,8 @@
 {% endblock %}
 
 {% block body %}
-<section class="text-white py-5 d-flex align-items-center" style="min-height: 100vh;">
-    <div class="container py-4">
+<section class="text-white py-5 d-flex align-items-center fs-5" style="min-height: 100vh;">
+    <div class="container py-4 fs-5">
 
         <div class="row justify-content-center">
             <div class="col-lg-8">
@@ -29,7 +29,9 @@
 
                 {{ form_start(form) }}
 
-                {# --- Coordonnées ----------------------------------------- #}
+                {# -------------------------------------------------------------------------- #}
+                {#  COORDONNÉES                                                               #}
+                {# -------------------------------------------------------------------------- #}
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body">
                         <h2 class="h5 fw-semibold mb-3">Vos coordonnées</h2>
@@ -45,7 +47,9 @@
                     </div>
                 </div>
 
-                {# --- Ce que comprend l'offre ----------------------------- #}
+                {# -------------------------------------------------------------------------- #}
+                {#  CE QUE COMPREND L’OFFRE                                                   #}
+                {# -------------------------------------------------------------------------- #}
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body">
                         <h2 class="h5 fw-semibold mb-3">Ce que comprend l’offre {{ offer.label }}</h2>
@@ -60,28 +64,28 @@
                     </div>
                 </div>
 
-                {# --- Récapitulatif -------------------------------------- #}
+                {# -------------------------------------------------------------------------- #}
+                {#  RÉCAPITULATIF                                                             #}
+                {# -------------------------------------------------------------------------- #}
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body">
 
                         <h4 class="mb-4">Récapitulatif</h4>
 
-                        <div class="mb-3 bg-light p-3">
+                        {# -- Bloc maintenance -- #}
+                        <div class="my-5 bg-light p-3 rounded">
                             {{ form_widget(form.contrat_maintenance, {
-                                attr: {
-                                    class: 'form-check-input'
-                                }
+                                attr: { class: 'form-check-input' }
                             }) }}
 
                             {{ form_label(form.contrat_maintenance, null, {
                                 label_attr: { class: 'form-check-label ms-2' }
                             }) }}
 
-                            <p class="small text-muted mt-2">
-                                Le contrat de maintenance annuelle comprend la surveillance technique du site, les mises à jour
-                                de sécurité, les correctifs en cas de dysfonctionnement, ainsi qu’un accompagnement pour les
-                                petites modifications du contenu. Une solution idéale pour garder un site performant, sécurisé
-                                et toujours à jour.
+                            <p class="small text-muted mt-2 mb-0">
+                                Le contrat de maintenance comprend la surveillance technique, les mises à jour
+                                de sécurité, les correctifs en cas de problème, et un accompagnement pour les
+                                petites modifications du contenu.
                             </p>
                         </div>
 
@@ -102,15 +106,14 @@
                             </div>
 
                             <div id="maintenanceRow" class="row mb-3 align-items-center gray-row">
-                                {% if offer.label == "Sérieuse" %}
-                                    <div class="col-7 small">Contrat de maintenance annuelle (3 mois offerts)</div>
-                                {% else %}
-                                    <div class="col-7 small">Contrat de maintenance annuelle</div>
-                                {% endif %}
-                                
-                                <div class="col-5 text-end fw-semibold" id="maintenanceAmount">
-                                    0,00 €
+                                <div class="col-7 small">
+                                    {% if offer.label == "Sérieuse" %}
+                                        Contrat de maintenance (3 mois offerts)
+                                    {% else %}
+                                        Contrat de maintenance annuelle
+                                    {% endif %}
                                 </div>
+                                <div class="col-5 text-end fw-semibold" id="maintenanceAmount">0,00 €</div>
                             </div>
 
                             <hr>
@@ -124,12 +127,35 @@
 
                             <div class="row mb-1">
                                 <div class="col-6 fw-bold">Total TTC</div>
-                                <div class="col-6 text-end fw-bold fs-4" id="totalTtc">
+                                <div class="col-6 text-end fw-bold" id="totalTtc">
                                     {{ montant_ttc_total|number_format(2, ',', ' ') }} €
                                 </div>
                             </div>
 
                         {% endif %}
+
+                        {# -------------------------------------------------------------------------- #}
+                        {#  RGPD (LABEL HTML MANUEL — TAILLE OK AVEC FS-5)                          #}
+                        {# -------------------------------------------------------------------------- #}
+                        <div class="mt-4">
+
+                            <div class="form-check d-flex align-items-start">
+
+                                {{ form_widget(form.rgpd, {
+                                    attr: { class: 'form-check-input mt-1' }
+                                }) }}
+
+                                <label class="ms-2 fs-5"><!-- texte contrôlé -->
+                                    J'ai lu et j'accepte la <a href="{{ path('app_politique_confidentialite') }}" class="text-decoration-underline">
+                                    politique de confidentialité
+                                </a>
+                                </label>
+
+                            </div>
+
+                           
+
+                        </div>
 
                     </div>
                 </div>

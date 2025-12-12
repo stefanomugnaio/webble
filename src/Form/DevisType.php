@@ -14,21 +14,72 @@ class DevisType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
-            ->add('prenom')
-            ->add('email')
-            ->add('telephone')
-            ->add('adresse')
-            ->add('code_postal')
-            ->add('ville')
-            // champ interne pour savoir quelle offre a été choisie
-            ->add('offre', HiddenType::class, [
-                'required' => false,
+
+            // -----------------------------
+            // CHAMPS TEXTES (UN PAR UN)
+            // -----------------------------
+
+            ->add('nom', null, [
+                'attr'       => ['class' => 'form-control fs-5'],
+                'label_attr' => ['class' => 'fs-5'],
             ])
+
+            ->add('prenom', null, [
+                'attr'       => ['class' => 'form-control fs-5'],
+                'label_attr' => ['class' => 'fs-5'],
+            ])
+
+            ->add('email', null, [
+                'attr'       => ['class' => 'form-control fs-5'],
+                'label_attr' => ['class' => 'fs-5'],
+            ])
+
+            ->add('telephone', null, [
+                'attr'       => ['class' => 'form-control fs-5'],
+                'label_attr' => ['class' => 'fs-5'],
+            ])
+
+            ->add('adresse', null, [
+                'attr'       => ['class' => 'form-control fs-5'],
+                'label_attr' => ['class' => 'fs-5'],
+            ])
+
+            ->add('code_postal', null, [
+                'attr'       => ['class' => 'form-control fs-5'],
+                'label_attr' => ['class' => 'fs-5'],
+            ])
+
+            ->add('ville', null, [
+                'attr'       => ['class' => 'form-control fs-5'],
+                'label_attr' => ['class' => 'fs-5'],
+            ])
+
+            // -----------------------------
+            // HIDDEN FIELD
+            // -----------------------------
+
+            ->add('offre', HiddenType::class)
+
+            // -----------------------------
+            // CHECKBOX MAINTENANCE
+            // -----------------------------
+
             ->add('contrat_maintenance', CheckboxType::class, [
-                'required' => false,
-                'label' => 'Contrat de maintenance annuelle (360 € HT / an)',
-                'help' => 'Maintenance, petites évolutions, mises à jour de sécurité. Engagement 12 mois.',
+                'required'   => false,
+                'label'      => 'Contrat de maintenance annuelle (360 € HT / an)',
+                'attr'       => ['class' => 'form-check-input fs-5'],
+                'label_attr' => ['class' => 'fs-5 ms-2'],
+            ])
+
+            // -----------------------------
+            // CHECKBOX RGPD (PAS DE LABEL)
+            // -----------------------------
+
+            ->add('rgpd', CheckboxType::class, [
+                'required'   => true,
+                'label'      => false,
+                'attr'       => ['class' => 'form-check-input fs-5'],
+                'label_attr' => ['class' => 'fs-5'],
             ])
         ;
     }
