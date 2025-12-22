@@ -23,10 +23,10 @@
                         <p class="text-secondary mb-4">
                             Je vous recontacte rapidement par email ou téléphone pour parler de votre projet
                             <strong>
-                                {% if offer.price_ht is not null %}
-                                    (offre {{ offer.label }} – {{ offer.price_ht|number_format(0, ',', ' ') }} € HT)
+                                {% if offre.prix_site_ht is not null %}
+                                    (offre {{ offre.libelle }} – {{ offre.prix_site_ht|number_format(0, ',', ' ') }} € HT)
                                 {% else %}
-                                    (offre {{ offer.label }})
+                                    (offre {{ offre.libelle }})
                                 {% endif %}
                             </strong>.
                         </p>

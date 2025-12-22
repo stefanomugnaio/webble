@@ -1,0 +1,255 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('profil') }}
+{% endblock %}
+
+{% block title %}Espace client{% endblock %}
+
+{% block body %}
+<section class="py-5">
+    <div class="container">
+
+        <div class="row justify-content-center mt-5">
+            <div class="col-12">
+                <div class="rounded-4 p-4">
+                    <div class="row g-4">
+
+                        {# ================= FLASH MESSAGES ================= #}
+                        {% for type, messages in app.flashes %}
+                            {% for message in messages %}
+                                <div class="flash-message alert alert-{{ type }} m-3">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+
+                        {# ============================================================ #
+                           COLONNE GAUCHE — MENU
+                           ============================================================ #}
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm rounded-4">
+                                <div class="card-body p-4">
+
+                                    <div class="mb-4">
+                                        <h5 class="mb-0">{{ client.prenom }} {{ client.nom }}</h5>
+                                        <small class="text-muted">{{ client.email }}</small>
+                                    </div>
+
+                                    <ul class="list-group list-group-flush">
+
+                                        <a class="list-group-item border-0 d-flex align-items-center gap-2 {% if section == 'profil' %}fw-semibold{% endif %}"
+                                           href="{{ path('app_profil', { section: 'profil' }) }}">
+                                            <i class="bi bi-person"></i> Mon profil
+                                        </a>
+
+                                        <a class="list-group-item border-0 d-flex align-items-center gap-2 {% if section == 'documents' %}fw-semibold{% endif %}"
+                                           href="{{ path('app_profil', { section: 'documents' }) }}">
+                                            <i class="bi bi-file-earmark-text"></i> Mes documents
+                                        </a>
+
+                                        <a class="d-none list-group-item border-0 d-flex align-items-center gap-2 {% if section == 'projets' %}fw-semibold{% endif %}"
+                                           href="{{ path('app_profil', { section: 'projets' }) }}">
+                                            <i class="bi bi-gear"></i> Mes projets
+                                        </a>
+
+                                        <a class="list-group-item border-0 d-flex align-items-center gap-2 {% if section == 'notifications' %}fw-semibold{% endif %}"
+                                           href="{{ path('app_profil', { section: 'notifications' }) }}">
+                                            <i class="bi bi-bell"></i> Notifications
+                                        </a>
+
+                                        <a class="list-group-item border-0 d-flex align-items-center gap-2 text-decoration-none text-dark"
+                                           href="{{ path('app_logout') }}">
+                                            <i class="bi bi-box-arrow-right"></i> Déconnexion
+                                        </a>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        {# ============================================================ #
+                           COLONNE DROITE — CONTENU (UN SEUL BLOC)
+                           ============================================================ #}
+                        <div class="col-md-8">
+
+                            {% if section == 'documents' %}
+
+                                {# ====================== BLOC DOCUMENTS ====================== #}
+                                <div class="card border-0 shadow-sm rounded-4">
+                                    <div class="card-body p-4">
+
+                                        <h5 class="mb-3">
+                                            <i class="bi bi-file-earmark-pdf me-2"></i>
+                                            Mes documents
+                                        </h5>
+
+                                        {% if documents is not empty %}
+                                            <div class="list-group list-group-flush">
+                                                {% for document in documents %}
+                                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <div class="d-flex align-items-center">
+                                                            <i class="bi bi-file-earmark-pdf text-danger me-2"></i>
+                                                            <span>{{ document.nom }}</span>
+                                                        </div>
+
+                                                        <a class="btn btn-sm btn-outline-secondary"
+                                                           href="{{ path('profil_document_telecharger', { id: document.id }) }}">
+                                                            Télécharger
+                                                        </a>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            <p class="text-muted mb-0">Aucun document disponible.</p>
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+
+                            {% elseif section == 'notifications' %}
+
+                                <div class="card border-0 shadow-sm rounded-4">
+                                    <div class="card-body p-4">
+
+                                        <h5 class="mb-4">
+                                            <i class="bi bi-bell me-2"></i>
+                                            Notifications
+                                        </h5>
+
+                                        {{ form_start(formNotifications, {
+                                            attr: { id: 'form-notifications' }
+                                        }) }}
+
+                                            <div class="form-check form-switch">
+                                                {{ form_widget(formNotifications.notification_document, {
+                                                    attr: {
+                                                        class: 'form-check-input',
+                                                    }
+                                                }) }}
+
+                                                {{ form_label(formNotifications.notification_document, null, {
+                                                    label_attr: { class: 'form-check-label ms-2' }
+                                                }) }}
+                                            </div>
+
+                                        {{ form_end(formNotifications) }}
+
+                                    </div>
+                                </div>
+
+
+                            {% elseif section == 'projets' %}
+
+                                {# ====================== BLOC PROJETS ====================== #}
+                                <div class="card border-0 shadow-sm rounded-4 d-none">
+                                    <div class="card-body p-4">
+                                        <h5 class="mb-2">
+                                            <i class="bi bi-gear me-2"></i>
+                                            Mes projets
+                                        </h5>
+                                        <p class="text-muted mb-0">
+                                            Section en cours de construction.
+                                        </p>
+                                    </div>
+                                </div>
+
+                            {% else %}
+
+                                {# ====================== BLOC PROFIL ====================== #}
+                                <div class="card border-0 shadow-sm rounded-4">
+                                    <div class="card-body p-4">
+
+                                        {{ form_start(form) }}
+
+                                        <div class="mb-3">
+                                            {{ form_label(form.nom) }}
+                                            {{ form_widget(form.nom, {
+                                                attr: form.nom.vars.attr|merge({
+                                                    class: 'form-control profil-champ',
+                                                    readonly: true
+                                                })
+                                            }) }}
+                                            {{ form_errors(form.nom) }}
+                                        </div>
+
+                                        <div class="mb-3">
+                                            {{ form_label(form.prenom) }}
+                                            {{ form_widget(form.prenom, {
+                                                attr: form.prenom.vars.attr|merge({
+                                                    class: 'form-control profil-champ',
+                                                    readonly: true
+                                                })
+                                            }) }}
+                                            {{ form_errors(form.prenom) }}
+                                        </div>
+
+                                        <div class="mb-3">
+                                            {{ form_label(form.email) }}
+                                            {{ form_widget(form.email, {
+                                                attr: form.email.vars.attr|merge({
+                                                    class: 'form-control profil-champ',
+                                                    readonly: true
+                                                })
+                                            }) }}
+                                            {{ form_errors(form.email) }}
+                                        </div>
+
+                                        <div class="mb-3">
+                                            {{ form_label(form.telephone) }}
+                                            {{ form_widget(form.telephone, {
+                                                attr: form.telephone.vars.attr|merge({
+                                                    class: 'form-control profil-champ',
+                                                    readonly: true
+                                                })
+                                            }) }}
+                                            {{ form_errors(form.telephone) }}
+                                        </div>
+
+                                        <div class="mb-4">
+                                            {{ form_label(form.pays) }}
+                                            {{ form_widget(form.pays, {
+                                                attr: form.pays.vars.attr|merge({
+                                                    class: 'form-control profil-champ',
+                                                    readonly: true
+                                                })
+                                            }) }}
+                                            {{ form_errors(form.pays) }}
+                                        </div>
+
+                                        <button id="btn-save"
+                                                type="submit"
+                                                class="btn btn-primary px-4 py-2 rounded-3"
+                                                disabled>
+                                            Enregistrer
+                                        </button>
+
+                                        <button id="btn-edit"
+                                                type="button"
+                                                class="btn btn-secondary px-4 py-2 rounded-3">
+                                            Modifier
+                                        </button>
+
+                                        {{ form_end(form) }}
+
+                                    </div>
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('profil') }}
+{% endblock %}

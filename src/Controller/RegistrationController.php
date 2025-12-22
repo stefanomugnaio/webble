@@ -4,39 +4,42 @@ namespace App\Controller;
 
 use App\Entity\Client;
 use App\Form\RegistrationFormType;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\RegistrationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 class RegistrationController extends AbstractController
 {
     #[Route('/enregistrement', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
-    {
-        $user = new Client();
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
+    public function register(
+        Request $request,
+        RegistrationService $clientService
+    ): Response {
+        
+        $client = new Client();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var string $plainPassword */
-            $plainPassword = $form->get('plainPassword')->getData();
+        // Création du formulaire
+        $formulaire = $this->createForm(RegistrationFormType::class, $client);
+        $formulaire->handleRequest($request);
 
-            // encode the plain password
-            $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+        // Soumission + validation
+        if ($formulaire->isSubmitted() && $formulaire->isValid()) {
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+            // Récupération du mot de passe texte
+            $motDePasseClair = $formulaire->get('plainPassword')->getData();
 
-            // do anything else you need here, like send an email
+            // Enregistrement via le service métier
+            $clientService->enregistreClient($client, $motDePasseClair);
 
+            // Redirection après inscription
             return $this->redirectToRoute('app_index');
         }
 
+        // Affichage
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form,
+            'registrationForm' => $formulaire->createView(),
         ]);
     }
 }

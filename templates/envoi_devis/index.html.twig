@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Devis - {{ offer.label }}{% endblock %}
+{% block title %}Devis – {{ offre.libelle }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -15,167 +15,163 @@
 {% endblock %}
 
 {% block body %}
-<section class="text-white py-5 d-flex align-items-center fs-5" style="min-height: 100vh;">
-    <div class="container py-4 fs-5">
+<section class="py-5 text-white" style="min-height: 100vh;">
+    <div class="container">
 
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
+        {# ================= HEADER ================= #}
+        <div class="text-center mb-4">
+            <p class="text-uppercase small text-secondary mb-1">Demande de devis</p>
+            <h1 class="fw-bold">Offre {{ offre.libelle }}</h1>
+            <p class="text-secondary">{{ offre.description }}</p>
+        </div>
 
-                <div class="mb-4 text-center">
-                    <p class="text-uppercase small text-secondary mb-1">Demande de devis</p>
-                    <h1 class="h3 fw-bold mb-2">Offre {{ offer.label }}</h1>
-                    <p class="text-secondary mb-0">{{ offer.description }}</p>
+        {{ form_start(form) }}
+
+        {# ================= COORDONNÉES ================= #}
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="fw-semibold mb-3">Vos coordonnées</h5>
+
+                <div class="row g-3">
+                    <div class="col-md-6">{{ form_row(form.nom) }}</div>
+                    <div class="col-md-6">{{ form_row(form.prenom) }}</div>
+                    <div class="col-md-6">{{ form_row(form.email) }}</div>
+                    <div class="col-md-6">{{ form_row(form.telephone) }}</div>
+                    <div class="col-12">{{ form_row(form.adresse) }}</div>
+                    <div class="col-md-6">{{ form_row(form.code_postal) }}</div>
+                    <div class="col-md-6">{{ form_row(form.ville) }}</div>
+                </div>
+            </div>
+        </div>
+
+        {# ================= CONTENU OFFRE ================= #}
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="fw-semibold mb-3">Ce que comprend l’offre</h5>
+                <ul class="list-unstyled mb-0">
+                    {% for item in offre.caracteristiques %}
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            {{ item }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        {# ================= RÉCAP ================= #}
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+
+                <h5 class="fw-semibold mb-4">Récapitulatif</h5>
+
+                {# CHECKBOX MAINTENANCE #}
+                <div class="mb-4 bg-light p-3 rounded">
+                    {{ form_widget(form.contrat_maintenance, {
+                        attr: { class: 'form-check-input' }
+                    }) }}
+
+                    {{ form_label(form.contrat_maintenance, null, {
+                        label_attr: { class: 'form-check-label ms-2' }
+                    }) }}
+
+                    <p class="small text-muted mt-2 mb-0">
+                        Contrat de maintenance : mises à jour, sécurité et assistance.
+                    </p>
                 </div>
 
-                {{ form_start(form) }}
+                {% if montants.site_ht is not null %}
 
-                {# -------------------------------------------------------------------------- #}
-                {#  COORDONNÉES                                                               #}
-                {# -------------------------------------------------------------------------- #}
-                <div class="card border-0 shadow-sm mb-4">
-                    <div class="card-body">
-                        <h2 class="h5 fw-semibold mb-3">Vos coordonnées</h2>
+                    {# ===== VARIABLES JS ATTENDUES ===== #}
+                    <script>
+                        window.montantSiteHT = {{ montants.site_ht }};
+                        window.maintenanceHT = {{ montants.maintenance_annuelle }};
+                        window.tauxTVA = {{ taux_tva }};
+                        window.offerLabel = "{{ offre.libelle }}";
+                    </script>
 
-                        <div class="row g-3">
-                            {% for field in ['nom','prenom','email','telephone','adresse','code_postal','ville'] %}
-                                <div class="col-md-{{ field in ['adresse','ville'] ? '12' : '6' }}">
-                                    {{ form_label(attribute(form, field)) }}
-                                    {{ form_widget(attribute(form, field), { attr: { class: 'form-control' }}) }}
-                                </div>
-                            {% endfor %}
+                    <div class="row mb-2">
+                        <div class="col-7 text-muted small">Site web (HT)</div>
+                        <div class="col-5 text-end fw-semibold">
+                            {{ montants.site_ht|number_format(2, ',', ' ') }} €
                         </div>
                     </div>
-                </div>
 
-                {# -------------------------------------------------------------------------- #}
-                {#  CE QUE COMPREND L’OFFRE                                                   #}
-                {# -------------------------------------------------------------------------- #}
-                <div class="card border-0 shadow-sm mb-4">
-                    <div class="card-body">
-                        <h2 class="h5 fw-semibold mb-3">Ce que comprend l’offre {{ offer.label }}</h2>
-                        <ul class="list-unstyled text-muted small mb-0">
-                            {% for feature in offer.features %}
-                                <li class="mb-2">
-                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                    {{ feature }}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-
-                {# -------------------------------------------------------------------------- #}
-                {#  RÉCAPITULATIF                                                             #}
-                {# -------------------------------------------------------------------------- #}
-                <div class="card border-0 shadow-sm mb-4">
-                    <div class="card-body">
-
-                        <h4 class="mb-4">Récapitulatif</h4>
-
-                        {# -- Bloc maintenance -- #}
-                        <div class="my-5 bg-light p-3 rounded">
-                            {{ form_widget(form.contrat_maintenance, {
-                                attr: { class: 'form-check-input' }
-                            }) }}
-
-                            {{ form_label(form.contrat_maintenance, null, {
-                                label_attr: { class: 'form-check-label ms-2' }
-                            }) }}
-
-                            <p class="small text-muted mt-2 mb-0">
-                                Le contrat de maintenance comprend la surveillance technique, les mises à jour
-                                de sécurité, les correctifs en cas de problème, et un accompagnement pour les
-                                petites modifications du contenu.
-                            </p>
+                    <div id="maintenanceRow" class="row mb-3 align-items-center gray-row">
+                        <div class="col-7 small">
+                            {% if offre.libelle == 'Sérieuse' %}
+                                Contrat de maintenance (3 mois offerts)
+                            {% else %}
+                                Contrat de maintenance annuelle
+                            {% endif %}
                         </div>
-
-                        {% if montant_ht is not null %}
-
-                            <script>
-                                window.montantSiteHT = {{ montant_ht }};
-                                window.maintenanceHT = {{ maintenance_ht_an }};
-                                window.tauxTVA = 0.20;
-                                window.offerLabel = "{{ offer.label }}";
-                            </script>
-
-                            <div class="row mb-2">
-                                <div class="col-7 text-muted small">Site web (HT)</div>
-                                <div class="col-5 text-end fw-semibold">
-                                    {{ montant_ht|number_format(2, ',', ' ') }} €
-                                </div>
-                            </div>
-
-                            <div id="maintenanceRow" class="row mb-3 align-items-center gray-row">
-                                <div class="col-7 small">
-                                    {% if offer.label == "Sérieuse" %}
-                                        Contrat de maintenance (3 mois offerts)
-                                    {% else %}
-                                        Contrat de maintenance annuelle
-                                    {% endif %}
-                                </div>
-                                <div class="col-5 text-end fw-semibold" id="maintenanceAmount">0,00 €</div>
-                            </div>
-
-                            <hr>
-
-                            <div class="row mb-2">
-                                <div class="col-6 text-muted small">TVA (20 %)</div>
-                                <div class="col-6 text-end fw-semibold" id="tvaAmount">
-                                    {{ montant_tva_total|number_format(2, ',', ' ') }} €
-                                </div>
-                            </div>
-
-                            <div class="row mb-1">
-                                <div class="col-6 fw-bold">Total TTC</div>
-                                <div class="col-6 text-end fw-bold" id="totalTtc">
-                                    {{ montant_ttc_total|number_format(2, ',', ' ') }} €
-                                </div>
-                            </div>
-
-                        {% endif %}
-
-                        {# -------------------------------------------------------------------------- #}
-                        {#  RGPD (LABEL HTML MANUEL — TAILLE OK AVEC FS-5)                          #}
-                        {# -------------------------------------------------------------------------- #}
-                        <div class="mt-4">
-
-                            <div class="form-check d-flex align-items-start">
-
-                                {{ form_widget(form.rgpd, {
-                                    attr: { class: 'form-check-input mt-1' }
-                                }) }}
-
-                                <label class="ms-2 fs-5"><!-- texte contrôlé -->
-                                    J'ai lu et j'accepte la <a href="{{ path('app_politique_confidentialite') }}" class="text-decoration-underline">
-                                    politique de confidentialité
-                                </a>
-                                </label>
-
-                            </div>
-
-                           
-
+                        <div class="col-5 text-end fw-semibold" id="maintenanceAmount">
+                            0,00 €
                         </div>
-
                     </div>
-                </div>
 
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary rounded-pill px-4">
-                        Envoyer ma demande de devis
-                    </button>
-                </div>
+                    <hr>
 
-                {{ form_end(form) }}
+                    <div class="row mb-2">
+                        <div class="col-6 text-muted small">TVA (20 %)</div>
+                        <div class="col-6 text-end fw-semibold" id="tvaAmount">
+                            {{ montants.total_tva|number_format(2, ',', ' ') }} €
+                        </div>
+                    </div>
 
-                <div class="text-center mt-4">
-                    <a href="{{ path('app_creation_site') }}" class="btn btn-outline-light rounded-pill px-4">
-                        Retour aux formules
-                    </a>
+                    <div class="row mb-4">
+                        <div class="col-6 fw-bold">Total TTC</div>
+                        <div class="col-6 text-end fw-bold" id="totalTtc">
+                            {{ montants.total_ttc|number_format(2, ',', ' ') }} €
+                        </div>
+                    </div>
+
+                {% endif %}
+
+                {# ===== RGPD DANS LE RÉCAP ===== #}
+                <div class="mt-4 p-3 border rounded bg-white">
+
+                    <div class="form-check d-flex align-items-start">
+                        {{ form_widget(form.rgpd, {
+                            attr: {
+                                class: 'form-check-input mt-1',
+                                required: true
+                            }
+                        }) }}
+
+                        <label class="form-check-label ms-2">
+                            J’ai lu et j’accepte la
+                            <a href="{{ path('app_politique_confidentialite') }}"
+                               target="_blank"
+                               class="text-decoration-underline">
+                                politique de confidentialité
+                            </a>.
+                            <span class="text-danger">*</span>
+                        </label>
+                    </div>
+
+                    {{ form_errors(form.rgpd) }}
+
                 </div>
 
             </div>
         </div>
+
+        {# ================= ACTIONS ================= #}
+        <div class="d-flex justify-content-between">
+            <a href="{{ path('app_creation_site') }}" class="btn btn-outline-secondary">
+                Retour aux offres
+            </a>
+            <button type="submit" class="btn btn-primary px-4">
+                Envoyer la demande de devis
+            </button>
+        </div>
+
+        <input type="hidden" name="devis[offre]" value="{{ offre.libelle }}">
+
+
+        {{ form_end(form) }}
+
     </div>
 </section>
 {% endblock %}

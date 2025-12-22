@@ -1,0 +1,24 @@
+.profil-champ[readonly] {
+    background-color: #f1f3f5;
+    cursor: not-allowed;
+    color: #6c757d;
+}
+
+.profil-champ:not([readonly]) {
+    background-color: #fff;
+}
+
+.alert {
+    animation: fadeIn .3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

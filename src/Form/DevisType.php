@@ -8,78 +8,112 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Validator\Constraints\IsTrue;
 
 class DevisType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-
-            // -----------------------------
-            // CHAMPS TEXTES (UN PAR UN)
-            // -----------------------------
-
             ->add('nom', null, [
-                'attr'       => ['class' => 'form-control fs-5'],
-                'label_attr' => ['class' => 'fs-5'],
+                'label' => 'Nom',
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'row_attr' => [
+                    'class' => 'mb-1',
+                ],
             ])
 
             ->add('prenom', null, [
-                'attr'       => ['class' => 'form-control fs-5'],
-                'label_attr' => ['class' => 'fs-5'],
+                'label' => 'Prénom',
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'row_attr' => [
+                    'class' => 'mb-1',
+                ],
             ])
 
             ->add('email', null, [
-                'attr'       => ['class' => 'form-control fs-5'],
-                'label_attr' => ['class' => 'fs-5'],
+                'label' => 'Adresse e-mail',
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'row_attr' => [
+                    'class' => 'mb-1',
+                ],
             ])
 
             ->add('telephone', null, [
-                'attr'       => ['class' => 'form-control fs-5'],
-                'label_attr' => ['class' => 'fs-5'],
+                'label' => 'Téléphone',
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'row_attr' => [
+                    'class' => 'mb-1',
+                ],
             ])
 
             ->add('adresse', null, [
-                'attr'       => ['class' => 'form-control fs-5'],
-                'label_attr' => ['class' => 'fs-5'],
+                'label' => 'Adresse',
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'row_attr' => [
+                    'class' => 'mb-1',
+                ],
             ])
 
             ->add('code_postal', null, [
-                'attr'       => ['class' => 'form-control fs-5'],
-                'label_attr' => ['class' => 'fs-5'],
+                'label' => 'Code postal',
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'row_attr' => [
+                    'class' => 'mb-1',
+                ],
             ])
 
             ->add('ville', null, [
-                'attr'       => ['class' => 'form-control fs-5'],
-                'label_attr' => ['class' => 'fs-5'],
+                'label' => 'Ville',
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'row_attr' => [
+                    'class' => 'mb-1',
+                ],
             ])
 
-            // -----------------------------
-            // HIDDEN FIELD
-            // -----------------------------
-
+            // OFFRE (hidden, gérée côté controller/service)
             ->add('offre', HiddenType::class)
 
-            // -----------------------------
-            // CHECKBOX MAINTENANCE
-            // -----------------------------
-
+            // MAINTENANCE
             ->add('contrat_maintenance', CheckboxType::class, [
-                'required'   => false,
-                'label'      => 'Contrat de maintenance annuelle (360 € HT / an)',
-                'attr'       => ['class' => 'form-check-input fs-5'],
-                'label_attr' => ['class' => 'fs-5 ms-2'],
+                'label' => 'Contrat de maintenance annuelle (360 € HT / an)',
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-check-input',
+                ],
+                'row_attr' => [
+                    'class' => 'form-check',
+                ],
             ])
 
-            // -----------------------------
-            // CHECKBOX RGPD (PAS DE LABEL)
-            // -----------------------------
-
+            // RGPD
             ->add('rgpd', CheckboxType::class, [
-                'required'   => true,
-                'label'      => false,
-                'attr'       => ['class' => 'form-check-input fs-5'],
-                'label_attr' => ['class' => 'fs-5'],
+                'label' => false, // label géré dans le Twig
+                'attr' => [
+                    'class' => 'form-check-input',
+                ],
+                'row_attr' => [
+                    'class' => 'form-check mt-2',
+                ],
+                'constraints' => [
+                    new IsTrue(
+                        message: 'Vous devez accepter la politique de confidentialité.'
+                    ),
+                ],
             ])
         ;
     }

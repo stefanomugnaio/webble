@@ -12,6 +12,7 @@ class SecurityController extends AbstractController
     #[Route(path: '/connexion', name: 'app_connexion')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+        // Redirige vers l'index si l'user n'est pas connecté
         if ($this->getUser()) {
             return $this->redirectToRoute('app_index');
         }

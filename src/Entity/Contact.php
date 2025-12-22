@@ -24,10 +24,13 @@ class Contact
     private ?string $email = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $sujet = null;
+    private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $date_creation = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $sujet = null;
 
     public function getId(): ?int
     {
@@ -70,14 +73,14 @@ class Contact
         return $this;
     }
 
-    public function getSujet(): ?string
+    public function getDescription(): ?string
     {
-        return $this->sujet;
+        return $this->description;
     }
 
-    public function setSujet(?string $sujet): static
+    public function setDescription(?string $description): static
     {
-        $this->sujet = $sujet;
+        $this->description = $description;
 
         return $this;
     }
@@ -90,6 +93,18 @@ class Contact
     public function setDateCreation(\DateTime $date_creation): static
     {
         $this->date_creation = $date_creation;
+
+        return $this;
+    }
+
+    public function getSujet(): ?string
+    {
+        return $this->sujet;
+    }
+
+    public function setSujet(string $sujet): static
+    {
+        $this->sujet = $sujet;
 
         return $this;
     }
