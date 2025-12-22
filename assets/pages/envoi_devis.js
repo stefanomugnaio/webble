@@ -1,3 +1,5 @@
+import '../styles/envoi_devis.scss';
+
 document.addEventListener("DOMContentLoaded", () => {
 
     console.log("JS envoi_devis chargé.");

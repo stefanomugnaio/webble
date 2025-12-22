@@ -57,4 +57,11 @@ class EnvoiDevisController extends AbstractController
             'taux_tva' => 0.20,
         ]);
     }
+
+    #[Route('/contrat-de-maintenance', name: 'app_cdm')]
+    public function contratDeMaintenance(): Response
+    {
+        return $this->render('envoi_devis/cdm.html.twig');
+    }
+
 }

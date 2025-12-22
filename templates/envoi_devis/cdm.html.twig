@@ -1,0 +1,66 @@
+{# templates/devis/confirmation.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Contrat de maintenance{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-8 mt-5">
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+
+                    <h3 class="card-title mb-3 text-primary">
+                        Contrat de maintenance
+                    </h3>
+
+                    <p class="card-text">
+                        Le contrat de maintenance vous permet de garder un site web fiable,
+                        sécurisé et à jour.
+                    </p>
+
+                    <ul class="list-group list-group-flush small mb-3">
+                        <li class="list-group-item">
+                            🔐 <strong>Sécurité et mises à jour</strong> pour protéger votre site contre les problèmes et les failles
+                        </li>
+                        <li class="list-group-item">
+                            🛡️ Surveillance et corrections en cas de dysfonctionnement
+                        </li>
+                        <li class="list-group-item">
+                            🐞 Correction de bugs mineurs affectant le bon fonctionnement du site
+                        </li>
+                        <li class="list-group-item">
+                            ✏️ Modifications mineures de contenu (textes, images, informations)
+                        </li>
+                        <li class="list-group-item">
+                            🗑️ Suppression ou mise à jour de contenus existants
+                        </li>
+                        <li class="list-group-item">
+                            ⚙️ Ajustements simples pour améliorer ou corriger des fonctionnalités existantes
+                        </li>
+                        <li class="list-group-item">
+                            📊 Vérification régulière du bon fonctionnement et des performances du site
+                        </li>
+                        <li class="list-group-item">
+                            💾 Sauvegardes régulières afin de pouvoir restaurer le site en cas de problème
+                        </li>
+                        <li class="list-group-item">
+                            📞 Assistance et support en cas de question ou de souci technique
+                        </li>
+                    </ul>
+
+                    <div class="alert alert-warning small mb-0">
+                        Le contrat de maintenance ne comprend pas la création de nouvelles fonctionnalités,
+                        les évolutions majeures du site ou les refontes complètes.
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}
