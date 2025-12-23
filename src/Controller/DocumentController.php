@@ -25,14 +25,11 @@ class DocumentController extends AbstractController
         $form = $this->createForm(DocumentType::class);
         $form->handleRequest($request);
 
+        $fichier = $form->get('fichier')->getData();
+        dd($fichier);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $fichier = $form->get('fichier')->getData();
-
-            $documentService->enregistreDocumentPourClient(
-                $fichier,
-                $client
-            );
+            $documentService->enregistreDocumentPourClient($fichier,$client);
 
             $this->addFlash('success', 'Document ajouté avec succès.');
 

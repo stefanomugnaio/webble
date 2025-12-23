@@ -4,8 +4,9 @@ namespace App\Service;
 
 use App\Entity\Client;
 use App\Entity\Document;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 class NotificationEmailService
 {
@@ -19,8 +20,8 @@ class NotificationEmailService
         Document $document
     ): void {
         $email = (new Email())
-            ->from($this->fromEmail)
-            ->to($client->getEmail())
+            ->from('postmaster@webble.fr')
+            ->to('stf.m54@gmail.com')
             ->subject('Nouveau document disponible')
             ->html("
                 <p>Bonjour {$client->getPrenom()},</p>
@@ -38,6 +39,10 @@ class NotificationEmailService
                 </p>
             ");
 
-        $this->mailer->send($email);
+        try {
+            $this->mailer->send($email);
+        } catch (TransportExceptionInterface $e) {
+            dd($e->getMessage());
+        }
     }
 }

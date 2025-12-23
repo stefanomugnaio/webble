@@ -20,61 +20,89 @@ class RegistrationFormType extends AbstractType
     {
         $builder
 
-            // ------------------------------------------------
-            // Champs identité
-            // ------------------------------------------------
+            // -------------------------------
+            // Identité
+            // -------------------------------
             ->add('nom', TextType::class, [
                 'label' => 'Nom',
-                'attr' => ['placeholder' => 'Votre nom'],
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Votre nom'
+                ],
             ])
 
             ->add('prenom', TextType::class, [
                 'label' => 'Prénom',
-                'attr' => ['placeholder' => 'Votre prénom'],
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Votre prénom'
+                ],
             ])
 
             ->add('email', EmailType::class, [
                 'label' => 'Adresse email',
-                'attr' => ['placeholder' => 'email@exemple.com'],
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'email@exemple.com'
+                ],
             ])
 
-            // ------------------------------------------------
+            // -------------------------------
             // Téléphone
-            // ------------------------------------------------
+            // -------------------------------
             ->add('telephone', TextType::class, [
                 'label' => 'Téléphone',
                 'required' => false,
                 'attr' => [
-                    'placeholder' => 'Votre numéro (optionnel)'
+                    'class' => 'form-control',
+                    'placeholder' => 'Optionnel'
                 ],
             ])
 
-            // ------------------------------------------------
+            // -------------------------------
             // Pays
-            // ------------------------------------------------
+            // -------------------------------
             ->add('pays', TextType::class, [
                 'label' => 'Pays',
-                'attr' => ['placeholder' => 'France'],
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'France'
+                ],
             ])
 
-            // ------------------------------------------------
+            // -------------------------------
+            // Notifications documents (CHAMP MANQUANT)
+            // -------------------------------
+            ->add('notification_document', CheckboxType::class, [
+                'label' => 'Recevoir une notification lors de l’ajout d’un document',
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-check-input'
+                ],
+            ])
+
+            // -------------------------------
             // Conditions générales
-            // ------------------------------------------------
+            // -------------------------------
             ->add('agreeTerms', CheckboxType::class, [
                 'label' => "J'accepte les conditions générales",
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue(message: 'Vous devez accepter les conditions.'),
                 ],
+                'attr' => [
+                    'class' => 'form-check-input'
+                ],
             ])
 
-            // ------------------------------------------------
+            // -------------------------------
             // Mot de passe
-            // ------------------------------------------------
+            // -------------------------------
             ->add('plainPassword', PasswordType::class, [
                 'label' => 'Mot de passe',
                 'mapped' => false,
                 'attr' => [
+                    'class' => 'form-control',
                     'autocomplete' => 'new-password',
                     'placeholder' => '********'
                 ],

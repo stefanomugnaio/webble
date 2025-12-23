@@ -47,6 +47,7 @@ class ContactType extends AbstractType
                     'Demande d\'informations' => 'informations',
                     'Devis pour un site web : Formule Pro' => 'devis',
                     'Problème technique' => 'technique',
+                    'Développement spécifique' => 'specifique',
                     'Support / Assistance' => 'support',
                     'J\'ai perdu mon mot de passe (Espace client)' => 'password',
                     'Autre' => 'autre',

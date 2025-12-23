@@ -1,46 +1,52 @@
-{% block body %}
-<section class="d-flex align-items-center justify-content-center" style="min-height: 100vh;">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
+{{ form_start(form) }}
 
-                <div class="card shadow-lg border-0">
-                    <div class="card-body p-4">
+<div class="mb-3">
+    {{ form_label(form.nom) }}
+    {{ form_widget(form.nom) }}
+    {{ form_errors(form.nom) }}
+</div>
 
-                        <h1 class="h3 mb-4 text-center fw-bold">Créer un compte</h1>
+<div class="mb-3">
+    {{ form_label(form.prenom) }}
+    {{ form_widget(form.prenom) }}
+    {{ form_errors(form.prenom) }}
+</div>
 
-                        {{ form_errors(registrationForm) }}
+<div class="mb-3">
+    {{ form_label(form.email) }}
+    {{ form_widget(form.email) }}
+    {{ form_errors(form.email) }}
+</div>
 
-                        {{ form_start(registrationForm) }}
+<div class="mb-3">
+    {{ form_label(form.telephone) }}
+    {{ form_widget(form.telephone) }}
+</div>
 
-                            <div class="mb-3">
-                                {{ form_label(registrationForm.email, 'Adresse email', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-                                {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
-                                {{ form_errors(registrationForm.email) }}
-                            </div>
+<div class="mb-3">
+    {{ form_label(form.pays) }}
+    {{ form_widget(form.pays) }}
+</div>
 
-                            <div class="mb-3">
-                                {{ form_label(registrationForm.plainPassword, 'Mot de passe', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-                                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
-                                {{ form_errors(registrationForm.plainPassword) }}
-                            </div>
+<div class="form-check mb-3">
+    {{ form_widget(form.notification_document) }}
+    {{ form_label(form.notification_document) }}
+</div>
 
-                            <div class="form-check mb-3">
-                                {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
-                                {{ form_label(registrationForm.agreeTerms, "J'accepte les conditions d'utilisation", {'label_attr': {'class': 'form-check-label'}}) }}
-                                {{ form_errors(registrationForm.agreeTerms) }}
-                            </div>
+<div class="form-check mb-3">
+    {{ form_widget(form.agreeTerms) }}
+    {{ form_label(form.agreeTerms) }}
+    {{ form_errors(form.agreeTerms) }}
+</div>
 
-                            <button type="submit" class="btn btn-primary w-100 py-2">
-                                Créer mon compte
-                            </button>
+<div class="mb-3">
+    {{ form_label(form.plainPassword) }}
+    {{ form_widget(form.plainPassword) }}
+    {{ form_errors(form.plainPassword) }}
+</div>
 
-                        {{ form_end(registrationForm) }}
-                    </div>
-                </div>
+<button class="btn btn-primary w-100">
+    Créer mon compte
+</button>
 
-            </div>
-        </div>
-    </div>
-</section>
-{% endblock %}
+{{ form_end(form) }}

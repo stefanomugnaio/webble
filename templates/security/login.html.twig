@@ -15,8 +15,8 @@
 
                         {# --- Message d’erreur --- #}
                         {% if error %}
-                            <div class="alert alert-danger text-center py-2">
-                                {{ error.messageKey|trans(error.messageData, 'security') }}
+                            <div class="alert alert-danger">
+                                Adresse email ou mot de passe incorrect.
                             </div>
                         {% endif %}
 
@@ -63,10 +63,10 @@
                                 value="{{ csrf_token('authenticate') }}"
                             >
 
-                            <div class="form-check mb-3">
+                            {# <div class="form-check mb-3">
                                 <input type="checkbox" class="form-check-input" name="_remember_me" id="rememberMe">
                                 <label class="form-check-label" for="rememberMe">Se souvenir de moi</label>
-                            </div>
+                            </div> #}
 
                             <button class="btn btn-primary w-100 py-2 fw-semibold" type="submit">
                                 Se connecter

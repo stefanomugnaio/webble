@@ -18,11 +18,7 @@ class DocumentService
     /**
      * Enregistre un document PDF pour un client.
      */
-    public function enregistreDocumentPourClient(
-        UploadedFile $fichier,
-        Client $client,
-        string $nomDocument
-    ): Document {
+    public function enregistreDocumentPourClient(UploadedFile $fichier,Client $client,string $nomDocument): Document {
 
         // Nom du fichier stocké
         $nomFichier = uniqid('doc_', true).'.'.$fichier->guessExtension();
