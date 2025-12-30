@@ -14,9 +14,9 @@
 
         {# ================= HEADER ================= #}
         <div class="text-center mb-4">
-            <p class="text-uppercase small text-secondary mb-1">Demande de devis</p>
+            <p class="text-uppercase small text-white mb-1">Demande de devis</p>
             <h1 class="fw-bold">Offre {{ offre.libelle }}</h1>
-            <p class="text-secondary">{{ offre.description }}</p>
+            <p class="text-white">{{ offre.description }}</p>
         </div>
 
         {{ form_start(form, {
@@ -29,7 +29,7 @@
         {# ================= COORDONNÉES ================= #}
         <div class="card shadow-sm mb-4">
             <div class="card-body">
-                <h5 class="fw-semibold mb-3">Vos coordonnées</h5>
+                <h5 class="fw-semibold mb-3">Dans un premier temps, renseignez vos coordonées</h5>
 
                 <div class="row g-3">
                     <div class="col-md-6">
@@ -74,7 +74,7 @@
         {# ================= CONTENU OFFRE ================= #}
         <div class="card shadow-sm mb-4">
             <div class="card-body">
-                <h5 class="fw-semibold mb-3">Ce que comprend l’offre</h5>
+                <h5 class="fw-semibold mb-3">Récapitulatif de l’offre</h5>
                 <ul class="list-unstyled mb-0">
                     {% for item in offre.caracteristiques %}
                         <li class="mb-2">
@@ -89,8 +89,6 @@
         {# ================= RÉCAP ================= #}
         <div class="card shadow-sm mb-4">
             <div class="card-body">
-
-                <h5 class="fw-semibold mb-4">Récapitulatif</h5>
 
                 {# CHECKBOX MAINTENANCE #}
                 <div class="mb-4 bg-light p-3 rounded">
