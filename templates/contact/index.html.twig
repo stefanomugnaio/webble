@@ -12,12 +12,6 @@
     <section class="min-vh-100 text-white d-flex align-items-center" style="background-color="#020718">
         <div class="container py-5">
 
-            {# Flash success éventuel #}
-            {% for message in app.flashes('success') %}
-                <div class="alert alert-success rounded-pill text-center mb-4">
-                    {{ message }}
-                </div>
-            {% endfor %}
 
             <div class="row justify-content-center">
                 <div class="col-lg-10">
@@ -56,6 +50,14 @@
                         <div class="col-lg-7 d-flex">
                             <div class="card bg-body-tertiary text-dark w-100">
                                 <div class="card-body p-4 p-md-5">
+                                    {# Flash success éventuel #}
+                                    {% for label, messages in app.flashes %}
+                                        {% for message in messages %}
+                                            <div class="alert alert-{{ label }} flash-message" role="alert">
+                                                {{ message }}
+                                            </div>
+                                        {% endfor %}
+                                    {% endfor %}
                                     <h2 class="h4 fw-semibold mb-3">
                                         Envoyer un message
                                     </h2>
@@ -64,7 +66,12 @@
                                         pour clarifier votre besoin et voir comment je peux vous aider.
                                     </p>
 
-                                    {{ form_start(form, {'attr': {'class': 'row g-3'}}) }}
+                                    {{ form_start(form, {
+                                        attr: {
+                                            id: 'contact-form',
+                                            'data-recaptcha-site-key': recaptcha_site_key
+                                        }
+                                    }) }}
 
                                         <div class="col-md-6">
                                             {{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
@@ -112,10 +119,15 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-12 mt-3">
+                                            {{ form_widget(form.recaptchaToken) }}  
+                                        </div>
+
                                         {# Champ date_creation caché #}
                                         <div class="d-none">
                                             {{ form_widget(form.date_creation) }}
                                         </div>
+
 
                                         <div class="col-12 mt-3">
                                             <button type="submit" class="btn btn-secondary w-100 rounded-pill py-2">
@@ -135,4 +147,11 @@
 
         </div>
     </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+     {# Script reCAPTCHA v3 #}
+    <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>
+    {{ encore_entry_script_tags('contact') }}
 {% endblock %}

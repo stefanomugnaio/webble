@@ -19,7 +19,12 @@
             <p class="text-secondary">{{ offre.description }}</p>
         </div>
 
-        {{ form_start(form) }}
+        {{ form_start(form, {
+            attr: {
+                id: 'contact-form',
+                'data-recaptcha-site-key': recaptcha_site_key
+            }
+        }) }}
 
         {# ================= COORDONNÉES ================= #}
         <div class="card shadow-sm mb-4">
@@ -163,6 +168,10 @@
                     <div class="error-message">{{ form_errors(form.rgpd) }}</div>
                 </div>
 
+                <div class="col-12 mt-3">
+                    {{ form_widget(form.recaptchaToken) }}  
+                </div>
+
             </div>
         </div>
 
@@ -184,5 +193,6 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>
     {{ encore_entry_script_tags('envoi_devis') }}
 {% endblock %}

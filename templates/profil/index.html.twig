@@ -59,6 +59,18 @@
                                             <i class="bi bi-bell"></i> Notifications
                                         </a>
 
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                            <a class="list-group-item border-0 d-flex align-items-center gap-2 {% if section == 'messages' %}fw-semibold{% endif %}"
+                                               href="{{ path('app_profil', { section: 'messages' }) }}">
+                                                <i class="bi bi-envelope"></i> Messages
+                                            </a>
+
+                                            <a class="list-group-item border-0 d-flex align-items-center gap-2 {% if section == 'devis' %}fw-semibold{% endif %}"
+                                               href="{{ path('app_profil', { section: 'devis' }) }}">
+                                                <i class="bi bi-file-text"></i> Devis
+                                            </a>
+                                        {% endif %}
+
                                         <a class="list-group-item border-0 d-flex align-items-center gap-2 text-decoration-none text-dark"
                                            href="{{ path('app_logout') }}">
                                             <i class="bi bi-box-arrow-right"></i> Déconnexion
@@ -74,9 +86,9 @@
                            ============================================================ #}
                         <div class="col-md-8">
 
+                            {# ====================== BLOC DOCUMENTS ====================== #}
                             {% if section == 'documents' %}
 
-                                {# ====================== BLOC DOCUMENTS ====================== #}
                                 <div class="card border-0 shadow-sm rounded-4">
                                     <div class="card-body p-4">
 
@@ -108,6 +120,7 @@
                                     </div>
                                 </div>
 
+                            {# ====================== BLOC NOTIFICATIONS ====================== #}
                             {% elseif section == 'notifications' %}
 
                                 <div class="card border-0 shadow-sm rounded-4">
@@ -139,10 +152,143 @@
                                     </div>
                                 </div>
 
+                            {# ====================== BLOC MESSAGES (TABLE CONTACT) ====================== #}
+                            {% elseif section == 'messages' %}
 
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <div class="card border-0 shadow-sm rounded-4">
+                                        <div class="card-body p-4">
+
+                                            <h5 class="mb-4">
+                                                <i class="bi bi-envelope me-2"></i>
+                                                Messages de contact
+                                            </h5>
+
+                                            {% if contacts is not empty %}
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm align-middle">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Reçu le</th>
+                                                                <th>Nom</th>
+                                                                <th>Email</th>
+                                                                <th>Sujet</th>
+                                                                <th>Message</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for contact in contacts %}
+                                                                <tr>
+                                                                    <td>
+                                                                        {% if contact.dateCreation %}
+                                                                            {{ contact.dateCreation|date('d/m/Y') }}
+                                                                        {% endif %}
+                                                                    </td>
+                                                                    <td>{{ contact.prenom }} {{ contact.nom }}</td>
+                                                                    <td>
+                                                                        {% if contact.email %}
+                                                                            <a href="mailto:{{ contact.email }}">
+                                                                                {{ contact.email }}
+                                                                            </a>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                    <td>{{ contact.sujet }}</td>
+                                                                    <td class="small">
+                                                                        {{ contact.description|default('')|nl2br }}
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            {% else %}
+                                                <p class="text-muted mb-0">
+                                                    Aucun message de contact enregistré pour le moment.
+                                                </p>
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <p class="text-danger">Accès non autorisé.</p>
+                                {% endif %}
+
+                            {# ====================== BLOC DEVIS (TABLE DEVIS) ====================== #}
+                            {% elseif section == 'devis' %}
+
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <div class="card border-0 shadow-sm rounded-4">
+                                        <div class="card-body p-4">
+
+                                            <h5 class="mb-4">
+                                                <i class="bi bi-file-text me-2"></i>
+                                                Demandes de devis
+                                            </h5>
+
+                                            {% if devisList is not empty %}
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm align-middle">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Nom</th>
+                                                                <th>Email</th>
+                                                                <th>Téléphone</th>
+                                                                <th>Ville</th>
+                                                                <th>Offre</th>
+                                                                <th>Contrat maint.</th>
+                                                                <th>RGPD</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for devis in devisList %}
+                                                                <tr>
+                                                                    <td>{{ devis.id }}</td>
+                                                                    <td>{{ devis.prenom }} {{ devis.nom }}</td>
+                                                                    <td>
+                                                                        {% if devis.email %}
+                                                                            <a href="mailto:{{ devis.email }}">
+                                                                                {{ devis.email }}
+                                                                            </a>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                    <td>{{ devis.telephone }}</td>
+                                                                    <td>{{ devis.ville }}</td>
+                                                                    <td>{{ devis.offre }}</td>
+                                                                    <td>
+                                                                        {% if devis.contratMaintenance %}
+                                                                            <span class="badge bg-success">Oui</span>
+                                                                        {% else %}
+                                                                            <span class="badge bg-secondary">Non</span>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                    <td>
+                                                                        {% if devis.rgpd %}
+                                                                            <span class="badge bg-success">OK</span>
+                                                                        {% else %}
+                                                                            <span class="badge bg-danger">Non</span>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            {% else %}
+                                                <p class="text-muted mb-0">
+                                                    Aucune demande de devis pour le moment.
+                                                </p>
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <p class="text-danger">Accès non autorisé.</p>
+                                {% endif %}
+
+                            {# ====================== BLOC PROJETS ====================== #}
                             {% elseif section == 'projets' %}
 
-                                {# ====================== BLOC PROJETS ====================== #}
                                 <div class="card border-0 shadow-sm rounded-4 d-none">
                                     <div class="card-body p-4">
                                         <h5 class="mb-2">
@@ -155,9 +301,9 @@
                                     </div>
                                 </div>
 
+                            {# ====================== BLOC PROFIL ====================== #}
                             {% else %}
 
-                                {# ====================== BLOC PROFIL ====================== #}
                                 <div class="card border-0 shadow-sm rounded-4">
                                     <div class="card-body p-4">
 

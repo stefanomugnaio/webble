@@ -74,10 +74,7 @@ class EnvoiDevisService
     /**
      * Enregistrement du devis
      */
-    public function enregistrerDevis(
-        Devis $devis,
-        string $libelleOffre
-    ): void
+    public function enregistrerDevis(Devis $devis,string $libelleOffre): bool
     {
         // sécurité
         $devis->setOffre($libelleOffre);
@@ -88,6 +85,7 @@ class EnvoiDevisService
 
         $this->entityManager->persist($devis);
         $this->entityManager->flush();
-        echo("push ok");
+        
+        return true;
     }
 }

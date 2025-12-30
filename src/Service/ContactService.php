@@ -25,7 +25,7 @@ class ContactService
     /**
      * Eregistrement du contact
      */
-    public function save(Contact $contact): void
+    public function save(Contact $contact): bool
     {
         if (method_exists($contact, 'setDateCreation')) {
             $contact->setDateCreation(new DateTime());
@@ -33,5 +33,7 @@ class ContactService
 
         $this->em->persist($contact);
         $this->em->flush();
+
+        return true;
     }
 }

@@ -15,13 +15,10 @@ class NotificationEmailService
         private string $fromEmail
     ) {}
 
-    public function envoyerNotificationDocument(
-        Client $client,
-        Document $document
-    ): void {
+    public function envoyerNotificationDocument(Client $client,Document $document): void {
         $email = (new Email())
             ->from('postmaster@webble.fr')
-            ->to('stf.m54@gmail.com')
+            ->to($client->getEmail())
             ->subject('Nouveau document disponible')
             ->html("
                 <p>Bonjour {$client->getPrenom()},</p>
@@ -38,6 +35,34 @@ class NotificationEmailService
                     — L’équipe
                 </p>
             ");
+
+        try {
+            $this->mailer->send($email);
+        } catch (TransportExceptionInterface $e) {
+            dd($e->getMessage());
+        }
+    }
+
+    public function envoyerNotificationContact($description): void {
+        $email = (new Email())
+            ->from('postmaster@webble.fr')
+            ->to('stephane.mn@outlook.fr')
+            ->subject('Un nouveau message est arrivé')
+            ->html($description);
+
+        try {
+            $this->mailer->send($email);
+        } catch (TransportExceptionInterface $e) {
+            dd($e->getMessage());
+        }
+    }
+
+    public function envoyerNotificationDevis($description): void {
+        $email = (new Email())
+            ->from('postmaster@webble.fr')
+            ->to('stephane.mn@outlook.fr')
+            ->subject('Un nouveau message est arrivé')
+            ->html($description);
 
         try {
             $this->mailer->send($email);

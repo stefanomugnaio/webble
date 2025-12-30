@@ -225,4 +225,10 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function eraseCredentials(): void
+    {
+        // clear any temporary, sensitive data on the user, e.g.:
+        // $this->plainPassword = null;
+    }
 }

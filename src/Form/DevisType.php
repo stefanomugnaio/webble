@@ -137,6 +137,10 @@ class DevisType extends AbstractType
                     ),
                 ],
             ])
+
+            ->add('recaptchaToken', HiddenType::class, [
+                'mapped' => false,
+            ])
         ;
     }
 

@@ -5,14 +5,14 @@
 }
 
 .pricing-card:hover {
-  transform: translateY(-8px) scale(1.03);
+  transform: translateY(-8px) scale(1.01);
   box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.35);
 }
 
 .pricing-card-featured {
-  transform: scale(1.03);
+  transform: scale(1.01);
 }
 
 .pricing-card-featured:hover {
-  transform: translateY(-8px) scale(1.06);
+  transform: translateY(-8px) scale(1.02);
 }

@@ -71,7 +71,11 @@ class ContactType extends AbstractType
                 ],
             ])
 
-            // ✅ DATE DE CRÉATION EN HIDDEN
+            ->add('recaptchaToken', HiddenType::class, [
+                'mapped' => false,
+            ])
+
+            //DATE DE CRÉATION EN HIDDEN
             ->add('date_creation', HiddenType::class)
         ;
 

@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Document;
 use App\Form\ProfilClientType;
 use App\Form\NotificationClientType;
+use App\Repository\ContactRepository;
+use App\Repository\DevisRepository;
 use App\Service\DocumentService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +22,9 @@ class ProfilController extends AbstractController
     public function index(
         Request $request,
         EntityManagerInterface $em,
-        DocumentService $documentService
+        DocumentService $documentService,
+        ContactRepository $contactRepository,
+        DevisRepository $devisRepository
     ): Response {
         $client = $this->getUser();
 
@@ -52,12 +56,12 @@ class ProfilController extends AbstractController
         $formNotifications = $this->createForm(NotificationClientType::class, $client);
         $formNotifications->handleRequest($request);
 
-        if ($section === 'notifications'
+        if (
+            $section === 'notifications'
             && $formNotifications->isSubmitted()
             && $formNotifications->isValid()
         ) {
             $em->flush();
-
             // $this->addFlash('success', 'Préférences de notification mises à jour.');
             // return $this->redirectToRoute('app_profil', ['section' => 'notifications']);
         }
@@ -71,18 +75,50 @@ class ProfilController extends AbstractController
         }
 
         // --------------------------------------------------
+        // MESSAGES = TABLE CONTACT (admin uniquement)
+        // --------------------------------------------------
+        $contacts = [];
+        if ($section === 'messages') {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+            // On trie par date de création décroissante
+            $contacts = $contactRepository->findBy([], [
+                'date_creation' => 'DESC',
+            ]);
+        }
+
+        // --------------------------------------------------
+        // DEVIS = TABLE DEVIS (admin uniquement)
+        // --------------------------------------------------
+        $devisList = [];
+        if ($section === 'devis') {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+            // Tous les devis, les plus récents en premier (par id)
+            $devisList = $devisRepository->findBy([], [
+                'id' => 'DESC',
+            ]);
+        }
+
+        // --------------------------------------------------
         // RENDER
         // --------------------------------------------------
         return $this->render('profil/index.html.twig', [
-            'client' => $client,
-            'section' => $section,
+            'client'            => $client,
+            'section'           => $section,
 
             // formulaires
-            'form' => $formProfil->createView(),
+            'form'              => $formProfil->createView(),
             'formNotifications' => $formNotifications->createView(),
 
             // documents
-            'documents' => $documents,
+            'documents'         => $documents,
+
+            // messages (Contact)
+            'contacts'          => $contacts,
+
+            // devis (Devis)
+            'devisList'         => $devisList,
         ]);
     }
 

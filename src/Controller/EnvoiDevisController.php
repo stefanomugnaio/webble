@@ -6,6 +6,7 @@ use App\Entity\Devis;
 use App\Form\DevisType;
 use App\Service\DevisService;
 use App\Service\EnvoiDevisService;
+use App\Service\NotificationEmailService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -17,7 +18,8 @@ class EnvoiDevisController extends AbstractController
     public function devis(
         string $offre,
         Request $request,
-        EnvoiDevisService $devisService
+        EnvoiDevisService $devisService,
+        NotificationEmailService $notificationEmailService
     ): Response
     {
         // 1. Données de l’offre (depuis pricing)
@@ -35,12 +37,9 @@ class EnvoiDevisController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            echo("isSubmit");
-            $devisService->enregistrerDevis(
-                $devis,
-                $donneesOffre['libelle']
-            );
+            if ($devisService->enregistrerDevis($devis,$donneesOffre['libelle'])){
+                $notificationEmailService->envoyerNotificationDevis($devis->getOffre());
+            }
 
             return $this->render('envoi_devis/confirmation.html.twig', [
                 'offre' => $donneesOffre,
