@@ -5,14 +5,16 @@ namespace App\Controller;
 use App\Entity\Client;
 use App\Form\RegistrationFormType;
 use App\Service\RegistrationService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RegistrationController extends AbstractController
 {
     #[Route('/enregistrement', name: 'app_register')]
+    #[IsGranted('ROLE_ADMIN')]
     public function register(
         Request $request,
         RegistrationService $clientService

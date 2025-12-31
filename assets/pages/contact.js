@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault(); // on bloque l'envoi le temps de récupérer le token
 
             grecaptcha.ready(() => {
-                grecaptcha.execute('VOTRE_SITE_KEY_RECAPTCHA', { action: 'contact' })
+                grecaptcha.execute('6LdPoDosAAAAAJCaixO_Oip1kWWn7sIipFd0Z0Iz', { action: 'contact' })
                     .then((token) => {
                         // On met le token dans le champ hidden
                         recaptchaField.value = token;
