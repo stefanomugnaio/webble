@@ -43,6 +43,12 @@ class Devis
     #[ORM\Column]
     private ?bool $rgpd = null;
 
+    #[ORM\Column]
+    private ?bool $domaine = null;
+
+    #[ORM\Column]
+    private ?bool $hebergement = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -164,6 +170,30 @@ class Devis
     public function setRgpd(bool $rgpd): static
     {
         $this->rgpd = $rgpd;
+
+        return $this;
+    }
+
+    public function isDomaine(): ?bool
+    {
+        return $this->domaine;
+    }
+
+    public function setDomaine(bool $domaine): static
+    {
+        $this->domaine = $domaine;
+
+        return $this;
+    }
+
+    public function isHebergement(): ?bool
+    {
+        return $this->hebergement;
+    }
+
+    public function setHebergement(bool $hebergement): static
+    {
+        $this->hebergement = $hebergement;
 
         return $this;
     }

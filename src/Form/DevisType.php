@@ -128,6 +128,22 @@ class DevisType extends AbstractType
                 'row_attr' => ['class' => 'form-check'],
             ])
 
+            ->add('domaine', CheckboxType::class, [
+                'label'    => 'Assistance à la création du nom de domaine (20 € HT)',
+                'required' => false,
+                'attr'     => ['class' => 'form-check-input'],
+                'row_attr' => ['class' => 'form-check'],
+                'data'     => true,   // ✅ cochée par défaut
+            ])
+
+            ->add('hebergement', CheckboxType::class, [
+                'label'    => 'Configuration de l’hébergement et mise en ligne (30 € HT)',
+                'required' => false,
+                'attr'     => ['class' => 'form-check-input'],
+                'row_attr' => ['class' => 'form-check'],
+                'data'     => true,   // ✅ cochée par défaut
+            ])
+
             // RGPD
             ->add('rgpd', CheckboxType::class, [
                 'label' => false,

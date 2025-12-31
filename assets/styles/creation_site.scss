@@ -16,3 +16,7 @@
 .pricing-card-featured:hover {
   transform: translateY(-8px) scale(1.02);
 }
+
+.fs-price {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}

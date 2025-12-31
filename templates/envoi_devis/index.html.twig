@@ -74,7 +74,7 @@
         {# ================= CONTENU OFFRE ================= #}
         <div class="card shadow-sm mb-4">
             <div class="card-body">
-                <h5 class="fw-semibold mb-3">Récapitulatif de l’offre</h5>
+                <h5 class="fw-semibold mb-3">Ce que comprend l'offre {{ offre.libelle }}</h5>
                 <ul class="list-unstyled mb-0">
                     {% for item in offre.caracteristiques %}
                         <li class="mb-2">
@@ -89,12 +89,13 @@
         {# ================= RÉCAP ================= #}
         <div class="card shadow-sm mb-4">
             <div class="card-body">
+                <h5 class="fw-semibold mb-3">Options</h5>
 
-                {# CHECKBOX MAINTENANCE #}
-                <div class="mb-4 bg-light p-3 rounded">
+                {# ====== CONTRAT DE MAINTENANCE ====== #}
+                <div class="mb-3 bg-light p-3 rounded">
                     {{ form_widget(form.contrat_maintenance, { attr: { class: 'form-check-input' } }) }}
                     {{ form_label(form.contrat_maintenance, null, { label_attr: { class: 'form-check-label ms-2' } }) }}
-
+                    
                     <p class="small text-muted mt-2 mb-0">
                         Un contrat de maintenance est proposé afin d’assurer la sécurité, les mises à jour,
                         les modifications mineures et l’assistance technique.
@@ -102,9 +103,34 @@
                             Voir le détail du contrat de maintenance
                         </a>
                     </p>
-
-
                 </div>
+
+                {# ====== NOM DE DOMAINE ====== #}
+                <div class="mb-3 bg-light p-3 rounded">
+                    {{ form_widget(form.domaine, { attr: { class: 'form-check-input' } }) }}
+                    {{ form_label(form.domaine, null, { label_attr: { class: 'form-check-label ms-2' } }) }}
+                    
+                    <p class="small text-muted mt-2 mb-0">
+                        Je vous assiste pendant la création du nom de domaine pour votre site web :
+                        nous choisissons ensemble un nom clair et adapté à votre activité,
+                        puis je vérifie sa disponibilité et m’occupe de l’enregistrement technique.
+                        Le coût d’achat du nom de domaine reste à votre charge et sera réglé directement auprès du fournisseur.
+                    </p>
+                </div>
+
+
+                {# ====== HÉBERGEMENT & MISE EN LIGNE ====== #}
+                <div class="mb-3 bg-light p-3 rounded">
+                    {{ form_widget(form.hebergement, { attr: { class: 'form-check-input' } }) }}
+                    {{ form_label(form.hebergement, null, { label_attr: { class: 'form-check-label ms-2' } }) }}
+                    
+                    <p class="small text-muted mt-2 mb-0">
+                       Je vous assiste pendant la création de l’hébergement chez le fournisseur (choix de la formule, création de la base de données, configuration...), j’y installe le site, 
+                       puis je vérifie qu’il fonctionne correctement en ligne.
+                        Le coût de l’hébergement reste à votre charge et est réglé directement auprès du fournisseur.
+                    </p>
+                </div>
+
 
                 {% if montants.site_ht is not null %}
                     <script>
@@ -115,13 +141,15 @@
                     </script>
 
                     <div class="row mb-2">
+                        <h5 class="fw-semibold mb-3">Récapitulatif</h5>
+
                         <div class="col-7 text-muted small">Site web (HT)</div>
                         <div class="col-5 text-end fw-semibold">
                             {{ montants.site_ht|number_format(2, ',', ' ') }} €
                         </div>
                     </div>
 
-                    <div id="maintenanceRow" class="row mb-3 align-items-center gray-row">
+                    <div id="maintenanceRow" class="row mb-2 align-items-center gray-row">
                         <div class="col-7 small">
                             {% if offre.libelle == 'Sérieuse' %}
                                 Contrat de maintenance (3 mois offerts)
@@ -130,6 +158,26 @@
                             {% endif %}
                         </div>
                         <div class="col-5 text-end fw-semibold" id="maintenanceAmount">
+                            0,00 €
+                        </div>
+                    </div>
+
+                    {# LIGNE DE RÉCAP : NOM DE DOMAINE #}
+                    <div id="domaineRow" class="row mb-2 align-items-center gray-row">
+                        <div class="col-7 small">
+                            Assistance à la création du nom de domaine
+                        </div>
+                        <div class="col-5 text-end fw-semibold" id="domaineAmount">
+                            0,00 €
+                        </div>
+                    </div>
+
+                    {# LIGNE DE RÉCAP : HÉBERGEMENT #}
+                    <div id="hebergementRow" class="row mb-3 align-items-center gray-row">
+                        <div class="col-7 small">
+                            Configuration de l’hébergement et mise en ligne
+                        </div>
+                        <div class="col-5 text-end fw-semibold" id="hebergementAmount">
                             0,00 €
                         </div>
                     </div>
@@ -145,11 +193,33 @@
 
                     <div class="row mb-4">
                         <div class="col-6 fw-bold">Total TTC</div>
-                        <div class="col-6 text-end fw-bold" id="totalTtc">
+                        <div class="col-6 text-end fw-bold fs-4" id="totalTtc">
                             {{ montants.total_ttc|number_format(2, ',', ' ') }} €
                         </div>
                     </div>
                 {% endif %}
+
+                {# =============== MODAL WARNING OPTIONS =============== #}
+                <div class="modal fade" id="optionWarningModal" tabindex="-1"
+                     aria-labelledby="optionWarningModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content text-dark">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="optionWarningModalLabel">Attention !</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                            </div>
+                            <div class="modal-body" id="optionWarningModalMessage">
+                                <!-- Le texte est inséré en JS -->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                                    J'ai compris
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {# ===================================================== #}
 
                 {# RGPD #}
                 <div class="mt-4 p-3 border rounded bg-white">
@@ -159,7 +229,7 @@
                             J’ai lu et j’accepte la
                             <a href="{{ path('app_politique_confidentialite') }}" target="_blank" class="text-decoration-underline">
                                 politique de confidentialité
-                            </a>.
+                            </a>
                             <span class="text-danger">*</span>
                         </label>
                     </div>
@@ -170,18 +240,20 @@
                     {{ form_widget(form.recaptchaToken) }}  
                 </div>
 
+
+                {# ACTIONS #}
+                <div class="d-flex justify-content-between">
+                    <a href="{{ path('app_creation_site') }}" class="btn btn-outline-secondary">
+                        Retour aux offres
+                    </a>
+                    <button type="submit" class="btn btn-primary px-4">
+                        Envoyer la demande de devis
+                    </button>
+                </div>
             </div>
         </div>
 
-        {# ACTIONS #}
-        <div class="d-flex justify-content-between">
-            <a href="{{ path('app_creation_site') }}" class="btn btn-outline-secondary">
-                Retour aux offres
-            </a>
-            <button type="submit" class="btn btn-primary px-4">
-                Envoyer la demande de devis
-            </button>
-        </div>
+        
 
         {{ form_end(form) }}
 
