@@ -12,7 +12,6 @@
     <section class="min-vh-100 text-white d-flex align-items-center" style="background-color="#020718">
         <div class="container py-5">
 
-
             <div class="row justify-content-center">
                 <div class="col-lg-10">
 
@@ -23,7 +22,7 @@
                                 <div class="card-body p-0">
                                     <h1 class="text-uppercase text-light mb-5">
                                         Contact
-                                    </p>
+                                    </h1>
                                     <h1 class="h2 text-light fw-bold mb-3">
                                         Parlons de votre projet.
                                     </h1>
@@ -50,6 +49,7 @@
                         <div class="col-lg-7 d-flex">
                             <div class="card bg-body-tertiary text-dark w-100">
                                 <div class="card-body p-4 p-md-5">
+
                                     {# Flash success éventuel #}
                                     {% for label, messages in app.flashes %}
                                         {% for message in messages %}
@@ -58,6 +58,7 @@
                                             </div>
                                         {% endfor %}
                                     {% endfor %}
+
                                     <h2 class="h4 fw-semibold mb-3">
                                         Envoyer un message
                                     </h2>
@@ -111,6 +112,15 @@
                                             </div>
                                         </div>
 
+                                        {# ====== Numéro de contrat (affiché seulement pour certains sujets) ====== #}
+                                        <div id="num-contrat-wrapper" class="col-12 d-none">
+                                            {{ form_label(form.num_contrat, 'Numéro de contrat', {'label_attr': {'class': 'form-label'}}) }}
+                                            {{ form_widget(form.num_contrat, {'attr': {'class': 'form-control'}}) }}
+                                            <div class="text-danger small mt-1 error-message">
+                                                {{ form_errors(form.num_contrat) }}
+                                            </div>
+                                        </div>
+
                                         <div class="col-12">
                                             {{ form_label(form.description, 'Parlez moi de votre besoin...', {'label_attr': {'class': 'form-label'}}) }}
                                             {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
@@ -127,7 +137,6 @@
                                         <div class="d-none">
                                             {{ form_widget(form.date_creation) }}
                                         </div>
-
 
                                         <div class="col-12 mt-3">
                                             <button type="submit" class="btn btn-secondary w-100 rounded-pill py-2">

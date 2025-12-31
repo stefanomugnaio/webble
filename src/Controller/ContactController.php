@@ -35,15 +35,34 @@ final class ContactController extends AbstractController
         if ($form->isSubmitted()) {
 
             // ===================== reCAPTCHA v3 =====================
-            // Champ hidden non mappé : recaptchaToken
             $token = $form->get('recaptchaToken')->getData();
-
             $isHuman = $recaptchaService->verify($token, 'contact', 0.5);
 
             if (!$isHuman) {
                 $form->addError(new FormError(
                     'La vérification anti-robot a échoué. Merci de réessayer.'
                 ));
+            }
+
+            // ===================== Numéro de contrat obligatoire selon sujet =====================
+            $sujet = $form->get('sujet')->getData();
+            $numContrat = $form->get('num_contrat')->getData();
+
+            // Les 5 derniers sujets de ta liste
+            $sujetsAvecContratObligatoire = [
+                'technique',
+                'specifique',
+                'support',
+                'password',
+                'autre',
+            ];
+
+            if (in_array($sujet, $sujetsAvecContratObligatoire, true)
+                && (!is_string($numContrat) || trim($numContrat) === '')
+            ) {
+                $form->get('num_contrat')->addError(
+                    new FormError('Veuillez renseigner votre numéro de contrat.')
+                );
             }
 
             // ===================== Validation formulaire =====================

@@ -32,6 +32,9 @@ class Contact
     #[ORM\Column(length: 100)]
     private ?string $sujet = null;
 
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $num_contrat = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +108,18 @@ class Contact
     public function setSujet(string $sujet): static
     {
         $this->sujet = $sujet;
+
+        return $this;
+    }
+
+    public function getNumContrat(): ?string
+    {
+        return $this->num_contrat;
+    }
+
+    public function setNumContrat(?string $num_contrat): static
+    {
+        $this->num_contrat = $num_contrat;
 
         return $this;
     }

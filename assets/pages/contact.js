@@ -21,8 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             event.preventDefault(); // on bloque l'envoi le temps de récupérer le token
 
+            // On récupère la clé depuis le data- du formulaire, avec fallback sur ta clé actuelle
+            const siteKey =
+                form.dataset.recaptchaSiteKey ||
+                '6LdPoDosAAAAAJCaixO_Oip1kWWn7sIipFd0Z0Iz';
+
             grecaptcha.ready(() => {
-                grecaptcha.execute('6LdPoDosAAAAAJCaixO_Oip1kWWn7sIipFd0Z0Iz', { action: 'contact' })
+                grecaptcha.execute(siteKey, { action: 'contact' })
                     .then((token) => {
                         // On met le token dans le champ hidden
                         recaptchaField.value = token;
@@ -32,9 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     })
                     .catch((error) => {
                         console.error('Erreur reCAPTCHA :', error);
-                        // En cas de bug reCAPTCHA, tu peux choisir :
-                        // soit bloquer l'envoi, soit laisser passer.
-                        // Ici on laisse passer :
+                        // En cas de bug reCAPTCHA : on laisse passer
                         form.submit();
                     });
             });
@@ -58,4 +61,42 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 400);
         }, 5000); // 5000 ms = 5 secondes
     });
+
+    /* =====================================================
+       NUMÉRO DE CONTRAT (affichage conditionnel)
+       ===================================================== */
+
+    const sujetSelect = document.getElementById('contact_sujet');
+    const numContratWrapper = document.getElementById('num-contrat-wrapper');
+    const numContratInput = document.getElementById('contact_num_contrat');
+
+    // Les sujets pour lesquels le numéro de contrat est requis
+    const sujetsAvecContrat = ['technique', 'specifique', 'support', 'password', 'autre'];
+
+    function toggleNumContrat() {
+        if (!sujetSelect || !numContratWrapper || !numContratInput) {
+            return;
+        }
+
+        const value = sujetSelect.value;
+        const doitAfficher = sujetsAvecContrat.includes(value);
+
+        // Affiche/masque le bloc
+        numContratWrapper.classList.toggle('d-none', !doitAfficher);
+
+        // Rend le champ requis ou non (HTML5)
+        if (doitAfficher) {
+            numContratInput.setAttribute('required', 'required');
+        } else {
+            numContratInput.removeAttribute('required');
+        }
+    }
+
+    if (sujetSelect) {
+        // Au chargement (utile si le formulaire est réaffiché avec des erreurs)
+        toggleNumContrat();
+
+        // À chaque changement de sujet
+        sujetSelect.addEventListener('change', toggleNumContrat);
+    }
 });

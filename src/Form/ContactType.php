@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-
 class ContactType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -55,6 +54,18 @@ class ContactType extends AbstractType
                 'placeholder' => 'Choisissez un sujet...',
                 'constraints' => [
                     new NotBlank(message: 'Veuillez sélectionner un sujet.'),
+                ],
+            ])
+
+            // ✅ Nouveau champ numéro de contrat
+            ->add('num_contrat', null, [
+                'label' => 'Numéro de contrat',
+                'required' => false, // on gère le "obligatoire" à la main selon le sujet
+                'constraints' => [
+                    new Length(
+                        max: 50,
+                        maxMessage: 'Le numéro de contrat ne peut pas dépasser {{ limit }} caractères.'
+                    ),
                 ],
             ])
 
