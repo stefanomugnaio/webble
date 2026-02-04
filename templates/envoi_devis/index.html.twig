@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block body %}
-<section class="py-5 text-white" style="min-height: 100vh;">
+<section class="py-5 text-white margin-top-responsive" style="min-height: 100vh;">
     <div class="container">
 
         {# ================= HEADER ================= #}
@@ -242,11 +242,12 @@
 
 
                 {# ACTIONS #}
-                <div class="d-flex justify-content-between">
-                    <a href="{{ path('app_creation_site') }}" class="btn btn-outline-secondary">
+                <div class="d-flex flex-column gap-3 flex-md-row justify-content-between">
+
+                    <a href="{{ path('app_creation_site') }}" class="btn btn-outline-secondary rounded-pill">
                         Retour aux offres
                     </a>
-                    <button type="submit" class="btn btn-primary px-4">
+                    <button type="submit" class="btn btn-primary px-4 rounded-pill">
                         Envoyer la demande de devis
                     </button>
                 </div>

@@ -1,3 +1,12 @@
 body {
     background-color: skyblue;
 }
+
+/* Marge basse uniquement en mobile */
+@media (max-width: 992px) {
+    .margin-top-responsive {
+        margin-top: 4rem; /* ajuste si besoin : 3rem / 5rem */
+    }
+}
+
+
