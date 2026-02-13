@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formations{% endblock %}
+
+
+{% block body %}
+<section class="text-white py-5 d-flex align-items-center margin-top-responsive" style="min-height: 100vh;">
+    <div class="container py-3">
+
+        <div class="text-center mb-5">
+            <p class="text-uppercase fs-4 mb-2">
+                Formations
+            </p>
+            <h1 class="fw-bold mb-2 fs-2 fs-lg-1">
+                Apprenez à votre rythme, simplement.
+            </h1>
+            <p class="text-white fs-6 mb-0">
+                Des formations accessibles, pratiques et concrètes.
+            </p>
+        </div>
+
+        <div class="row g-3 g-lg-4 justify-content-center">
+
+            {# Formation 1 #}
+            <div class="col-md-6 col-lg-3">
+                <div class="card pricing-card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body d-flex flex-column p-4">
+
+                        <div class="mb-3">
+                            <i class="bi bi-laptop fs-1 text-primary"></i>
+                        </div>
+
+                        <h5 class="fw-bold mb-4 text-dark">
+                            Découverte informatique
+                        </h5>
+
+                        <p class="text-muted small mb-4">
+                            Comprendre l'environnement Windows, savoir utiliser un ordinateur,
+                            naviguer sur Internet et gérer ses fichiers.
+                        </p>
+
+                        {# Bloc durée / infos #}
+                        <div class="text-muted small text-start mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-mortarboard me-2"></i>
+                                Formation débutant
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-calendar-event me-2"></i>
+                                Durée : 8H
+                            </div>
+                        </div>
+
+                        <a href="{{ path('app_decouverte_informatique')}}" class="btn btn-outline-primary rounded-pill mt-auto">
+                            En savoir plus
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+
+            {# Formation 2 #}
+            {# <div class="col-md-6 col-lg-3">
+                <div class="card pricing-card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body d-flex flex-column p-4">
+
+                        <div class="mb-3">
+                            <i class="bi bi-globe fs-1 text-primary"></i>
+                        </div>
+
+                        <h5 class="fw-bold mb-5 text-dark">
+                            Internet & e-mails
+                        </h5>
+
+                        <p class="text-muted small mb-5">
+                            Utiliser Internet en toute sécurité, gérer ses e-mails et éviter les arnaques.
+                        </p>
+
+                        <a href="#" class="btn btn-outline-primary rounded-pill mt-auto">
+                            En savoir plus
+                        </a>
+                    </div>
+                </div>
+            </div> #}
+
+            {# Formation 3 #}
+            {# <div class="col-md-6 col-lg-3">
+                <div class="card pricing-card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body d-flex flex-column p-4">
+
+                        <div class="mb-3">
+                            <i class="bi bi-file-earmark-text fs-1 text-primary"></i>
+                        </div>
+
+                        <h5 class="fw-bold mb-5 text-dark">
+                            Bureautique de base
+                        </h5>
+
+                        <p class="text-muted small mb-5">
+                            Word, Excel et documents du quotidien : l’essentiel sans prise de tête.
+                        </p>
+
+                        <a href="#" class="btn btn-outline-primary rounded-pill mt-auto">
+                            En savoir plus
+                        </a>
+                    </div>
+                </div>
+            </div> #}
+
+            {# Formation 4 #}
+            {# <div class="col-md-6 col-lg-3">
+                <div class="card pricing-card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body d-flex flex-column p-4">
+
+                        <div class="mb-3">
+                            <i class="bi bi-shield-check fs-1 text-primary"></i>
+                        </div>
+
+                        <h5 class="fw-bold mb-2 text-dark">
+                            Sécurité numérique
+                        </h5>
+
+                        <p class="text-muted small mb-5">
+                            Protéger ses données, ses mots de passe et éviter les erreurs courantes.
+                        </p>
+
+                        <a href="#" class="btn btn-outline-primary rounded-pill mt-auto">
+                            En savoir plus
+                        </a>
+                    </div>
+                </div>
+            </div> #}
+
+        </div>
+
+    </div>
+</section>
+{% endblock %}
+

@@ -1,0 +1,168 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formation – Découverte informatique{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('creation_site') }}
+{% endblock %}
+
+{% block body %}
+<section class="py-5 margin-top-responsive mt-5">
+    <div class="container mt-5 p-5 bg-white rounded">
+
+        {# ================= HEADER ================= #}
+        <div class="row align-items-center mb-5">
+
+            {# TEXTE GAUCHE #}
+            <div class="col-lg-6">
+
+                <h1 class="fw-bold mb-3">
+                    Découverte informatique
+                </h1>
+
+                <p class="fs-5 text-muted mb-4">
+                    Maîtrisez les fondamentaux de l’informatique pour utiliser un ordinateur et naviguer sur internet en toute confiance.
+                </p>
+
+                <div class="bg-light rounded p-3 mb-4">
+                    <div class="row g-3 small text-muted">
+
+                        <div class="col-md-4 d-flex align-items-center">
+                            <i class="bi bi-calendar-event me-2"></i>
+                            Formation ponctuelle
+                        </div>
+
+                        <div class="col-md-4 d-flex align-items-center">
+                            <i class="bi bi-clock-history me-2"></i>
+                            Durée : 8 heures
+                        </div>
+
+                        <div class="col-md-4 d-flex align-items-center">
+                            <i class="bi bi-house-door me-2"></i>
+                            À domicile
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{{ path('app_formation', {'formation': 'decouverte_informatique'}) }}" class="btn btn-primary rounded-pill px-4">
+                        Démarrer mon inscription
+                    </a>
+                    <a
+                        href="{{ asset('Documents/Formation - Découverte informatique.pdf') }}"
+                        class="btn btn-link text-decoration-none"
+                        download
+                    >
+                        Télécharger le programme
+                    </a>
+                </div>
+
+            </div>
+
+            {# IMAGE DROITE #}
+            <div class="col-lg-6 text-center mt-5 mt-lg-0 rounded">
+                <img
+                    src="{{ asset('images/windows11.png') }}"
+                    alt="Découverte informatique"
+                    class="img-fluid rounded"
+                >
+            </div>
+
+        </div>
+
+        <hr class="my-5">
+
+        {# ================= AVANTAGES ================= #}
+        <div class="row g-4 mb-5">
+
+            <div class="col-md-6 d-flex gap-3">
+                <i class="bi bi-wifi fs-2 text-primary"></i>
+                <div>
+                    <h5 class="fw-semibold">
+                        Une formation accessible
+                    </h5>
+                    <p class="text-muted mb-1">
+                        Formation adaptée aux débutants, sans prérequis, avec un rythme
+                        adapté à chacun.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-6 d-flex gap-3">
+                <i class="bi bi-person-check fs-2 text-primary"></i>
+                <div>
+                    <h5 class="fw-semibold">
+                        Un accompagnement personnalisé
+                    </h5>
+                    <p class="text-muted mb-1">
+                        Formation individuelle ou en petit groupe pour favoriser
+                        l’échange et la pratique.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <hr class="my-5">
+
+        {# ================= PROGRAMME ================= #}
+        <div class="row">
+            <div class="col-lg-8">
+
+                <h2 class="fw-bold mb-4">
+                    Programme de la formation
+                </h2>
+
+                <p class="text-muted mb-4">
+                    Cette formation vous permet d’acquérir les bases essentielles
+                    pour utiliser un ordinateur et Internet en toute autonomie.
+                </p>
+
+                <ul class="list-unstyled text-muted">
+                    <li class="mb-3">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        Découverte de l’ordinateur (écran, clavier, souris)
+                    </li>
+                    <li class="mb-3">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        Comprendre l’environnement Windows et le bureau
+                    </li>
+                    <li class="mb-3">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        Gérer les fichiers et dossiers (créer, déplacer, supprimer)
+                    </li>
+                    <li class="mb-3">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        Naviguer sur Internet et effectuer des recherches simples
+                    </li>
+                    <li class="mb-3">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        Créer et utiliser une adresse e-mail
+                    </li>
+                    <li>
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        Bonnes pratiques de sécurité numérique
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+
+        {# ================= ACTIONS ================= #}
+        <div class="d-flex flex-column gap-3 flex-md-row justify-content-between mt-5">
+
+            <a href="{{ path('app_liste_formations') }}" class="btn btn-outline-secondary rounded-pill">
+                Retour aux formations
+            </a>
+
+            <a href="{{ path('app_contact') }}" class="btn btn-primary rounded-pill px-4">
+                Demander des informations
+            </a>
+
+        </div>
+
+    </div>
+</section>
+{% endblock %}

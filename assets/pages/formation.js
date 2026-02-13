@@ -1,0 +1,2 @@
+import '../styles/formation.scss';
+

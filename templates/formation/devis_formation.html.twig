@@ -1,0 +1,194 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Devis – {{ formation.libelle }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('formation') }}
+{% endblock %}
+
+{% block body %}
+<section class="py-5 text-white margin-top-responsive" style="min-height: 100vh;">
+    <div class="container">
+
+        {# ================= HEADER ================= #}
+        <div class="text-center mb-4">
+            <p class="text-uppercase small text-white mb-1">Demande de devis</p>
+            <h1 class="fw-bold">Offre {{ formation.libelle }}</h1>
+            <p class="text-white">{{ formation.description }}</p>
+        </div>
+
+        {{ form_start(form, {
+            attr: {
+                id: 'contact-form',
+                'data-recaptcha-site-key': recaptcha_site_key
+            }
+        }) }}
+
+        {# ================= COORDONNÉES ================= #}
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+
+                <h5 class="fw-semibold mb-3">
+                    Dans un premier temps, renseignez vos coordonnées
+                </h5>
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        {{ form_label(form.nom) }}
+                        {{ form_widget(form.nom) }}
+                        {{ form_errors(form.nom) }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form_label(form.prenom) }}
+                        {{ form_widget(form.prenom) }}
+                        {{ form_errors(form.prenom) }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form_label(form.email) }}
+                        {{ form_widget(form.email) }}
+                        {{ form_errors(form.email) }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form_label(form.telephone) }}
+                        {{ form_widget(form.telephone) }}
+                        {{ form_errors(form.telephone) }}
+                    </div>
+
+                    <div class="col-12">
+                        {{ form_label(form.adresse) }}
+                        {{ form_widget(form.adresse) }}
+                        {{ form_errors(form.adresse) }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form_label(form.code_postal) }}
+                        {{ form_widget(form.code_postal) }}
+                        {{ form_errors(form.code_postal) }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form_label(form.ville) }}
+                        {{ form_widget(form.ville) }}
+                        {{ form_errors(form.ville) }}
+                    </div>
+
+                </div>
+
+                <hr class="my-4">
+
+                {# ================= SESSION FORMATION ================= #}
+                <h5 class="fw-semibold mb-3">Session de formation</h5>
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        {{ form_label(form.sessionFormation.date_debut) }}
+                        {{ form_widget(form.sessionFormation.date_debut) }}
+                        {{ form_errors(form.sessionFormation.date_debut) }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form_label(form.sessionFormation.date_fin) }}
+                        {{ form_widget(form.sessionFormation.date_fin) }}
+                        {{ form_errors(form.sessionFormation.date_fin) }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form_label(form.sessionFormation.prix) }}
+                        {{ form_widget(form.sessionFormation.prix) }}
+                        {{ form_errors(form.sessionFormation.prix) }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form_label(form.sessionFormation.status) }}
+                        {{ form_widget(form.sessionFormation.status) }}
+                        {{ form_errors(form.sessionFormation.status) }}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        {# ================= RÉCAP ================= #}
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+
+                <h5 class="fw-semibold mb-3">Récapitulatif</h5>
+
+                <div class="row mb-2">
+                    <div class="col-7 text-muted small">
+                        {{ formation.libelle }} (HT)
+                    </div>
+                    <div class="col-5 text-end fw-semibold">
+                        {{ montants.formation_ht|number_format(2, ',', ' ') }} €
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row mb-2">
+                    <div class="col-6 text-muted small">TVA (20 %)</div>
+                    <div class="col-6 text-end fw-semibold">
+                        {{ montants.total_tva|number_format(2, ',', ' ') }} €
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-6 fw-bold">Total TTC</div>
+                    <div class="col-6 text-end fw-bold fs-4">
+                        {{ montants.total_ttc|number_format(2, ',', ' ') }} €
+                    </div>
+                </div>
+
+                {# ================= RGPD ================= #}
+                <div class="mt-4 p-3 border rounded bg-white text-dark">
+                    <div class="form-check d-flex align-items-start">
+                        {{ form_widget(form.rgpd, { attr: { class: 'form-check-input mt-1' } }) }}
+                        <label class="form-check-label ms-2">
+                            J’ai lu et j’accepte la
+                            <a href="{{ path('app_politique_confidentialite') }}" target="_blank">
+                                politique de confidentialité
+                            </a>
+                            <span class="text-danger">*</span>
+                        </label>
+                    </div>
+                    {{ form_errors(form.rgpd) }}
+                </div>
+
+                {{ form_widget(form.recaptchaToken) }}
+
+                {# ================= ACTIONS ================= #}
+                <div class="d-flex flex-column gap-3 flex-md-row justify-content-between mt-4">
+
+                    <a href="{{ path('app_liste_formations') }}"
+                       class="btn btn-outline-secondary rounded-pill">
+                        Retour aux formations
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-primary px-4 rounded-pill">
+                        Envoyer la demande de devis
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+
+    </div>
+</section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>
+    {{ encore_entry_script_tags('formation') }}
+{% endblock %}
