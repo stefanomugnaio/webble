@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une formation{% endblock %}
+
+{% block body %}
+<section class="py-5 margin-top-responsive" style="min-height: 100vh;">
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <p class="text-uppercase small text-muted mb-1">
+                Administration
+            </p>
+            <h1 class="fw-bold">
+                Ajouter une formation
+            </h1>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+
+                {{ form_start(form) }}
+
+                {{ form_row(form.libelle) }}
+                {{ form_row(form.prix) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.duree) }}
+
+                <div class="d-flex justify-content-between mt-4">
+
+                    <a href="{{ path('app_liste_formations') }}"
+                       class="btn btn-outline-secondary rounded-pill">
+                        Retour
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-primary rounded-pill px-4">
+                        Enregistrer la formation
+                    </button>
+
+                </div>
+
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

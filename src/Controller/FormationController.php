@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Devis;
-use App\Form\DevisType;
-use App\Entity\DevisFormation;
-use App\Form\DevisFormationType;
+use App\Entity\Formation;
+use App\Form\FormationType;
+use App\Entity\SessionFormation;
 use App\Service\FormationService;
-use App\Service\NotificationEmailService;
+use App\Form\SessionFormationType;
+use App\Service\SessionFormationService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -15,11 +15,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class FormationController extends AbstractController
 {
+    /*
+    |--------------------------------------------------------------------------
+    | LISTE DES FORMATIONS
+    |--------------------------------------------------------------------------
+    */
+
     #[Route('/formations', name: 'app_liste_formations')]
-        public function index(): Response
-        {
-            return $this->render('formation/index.html.twig');
-        }
+    public function index(
+        FormationService $formationService
+    ): Response
+    {
+        $formations = $formationService->recupererToutesLesFormations();
+
+        return $this->render('formation/index.html.twig', [
+            'formations' => $formations,
+        ]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | PAGE DÉTAIL FORMATION (exemple statique)
+    |--------------------------------------------------------------------------
+    */
 
     #[Route('/decouverte-informatique', name: 'app_decouverte_informatique')]
     public function decouverteInformatique(): Response
@@ -27,56 +45,92 @@ final class FormationController extends AbstractController
         return $this->render('formation/decouverte_informatique.html.twig');
     }
 
-    #[Route('/formation/devis/{formation}', name: 'app_formation')]
-    public function devisFormation(
-        string $formation,
+    /*
+    |--------------------------------------------------------------------------
+    | DEMANDE DE DEVIS POUR UNE FORMATION
+    |--------------------------------------------------------------------------
+    */
+
+    
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | AJOUT D'UNE SESSION (ADMIN)
+    |--------------------------------------------------------------------------
+    */
+
+    #[Route('/admin/formation/ajouter-session', name: 'app_ajouter_session')]
+    public function ajouterSessionFormation(
         Request $request,
-        FormationService $formationService,
-        NotificationEmailService $notificationEmailService
+        SessionFormationService $sessionFormationService
     ): Response
     {
-        $donneesFormation = $formationService->recupererDonneesFormation($formation);
+        $session = new SessionFormation();
 
-        $montants = $formationService->calculerMontants(
-            $donneesFormation,
-            0.20
+        $formulaire = $this->createForm(
+            SessionFormationType::class,
+            $session
         );
 
-        $devisFormation = new DevisFormation();
+        $formulaire->handleRequest($request);
 
-        // ✅ On injecte les données ici (pas dans le form)
-        $devisFormation->setFormation($donneesFormation['libelle']);
-        $devisFormation->setDateDemande(new \DateTime());
+        if ($formulaire->isSubmitted() && $formulaire->isValid()) {
 
-        $form = $this->createForm(
-            DevisFormationType::class,
-            $devisFormation
-        );
+            $sessionFormationService->creerSession($session);
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $formationService->enregistrerDevisFormation(
-                $devisFormation,
-                $donneesFormation['libelle']
+            $this->addFlash(
+                'success',
+                'La session de formation a été créée avec succès.'
             );
 
-            $notificationEmailService->envoyerNotificationDevis(
-                $devisFormation->getFormation()
-            );
-
-            return $this->render('envoi_devis/confirmation.html.twig', [
-                'formation' => $donneesFormation,
-                'devisFormation' => $devisFormation,
-            ]);
+            return $this->redirectToRoute('app_liste_formations');
         }
 
-        return $this->render('formation/devis_formation.html.twig', [
-            'form' => $form,
-            'formation' => $donneesFormation,
-            'montants' => $montants,
-            'taux_tva' => 0.20,
+        return $this->render('session_formation/new.html.twig', [
+            'form' => $formulaire,
+        ]);
+    }
+
+    #[Route('/admin/formation/ajouter', name: 'app_ajouter_formation')]
+    public function ajouterFormation(
+        Request $request,
+        FormationService $formationService
+    ): Response
+    {
+        $formation = new Formation();
+
+        $formulaire = $this->createForm(
+            FormationType::class,
+            $formation
+        );
+
+        $formulaire->handleRequest($request);
+
+        if ($formulaire->isSubmitted() && $formulaire->isValid()) {
+
+            // 🔥 Génération automatique du slug
+            $slug = strtolower(
+                trim(
+                    preg_replace('/[^A-Za-z0-9-]+/', '-', $formation->getLibelle())
+                )
+            );
+
+            $formation->setSlug($slug);
+
+            $formationService->enregistrerFormation($formation);
+
+            $this->addFlash(
+                'success',
+                'La formation a été ajoutée avec succès.'
+            );
+
+            return $this->redirectToRoute('app_liste_formations');
+        }
+
+        return $this->render('formation/ajouter_formation.html.twig', [
+            'form' => $formulaire,
         ]);
     }
 }

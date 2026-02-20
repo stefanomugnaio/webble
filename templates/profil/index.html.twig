@@ -69,6 +69,11 @@
                                                href="{{ path('app_profil', { section: 'devis' }) }}">
                                                 <i class="bi bi-file-text"></i> Devis
                                             </a>
+
+                                            <a class="list-group-item border-0 d-flex align-items-center gap-2 {% if section == 'devis' %}fw-semibold{% endif %}"
+                                               href="{{ path('app_ajouter_formation', { section: 'formation' }) }}">
+                                                <i class="bi bi-file-text"></i> Ajouter une session de formation
+                                            </a>
                                         {% endif %}
 
                                         <a class="list-group-item border-0 d-flex align-items-center gap-2 text-decoration-none text-dark"

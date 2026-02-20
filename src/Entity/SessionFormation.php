@@ -19,9 +19,6 @@ class SessionFormation
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $date_debut = null;
 
-    #[ORM\Column]
-    private ?float $prix = null;
-
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $date_fin = null;
 
@@ -52,18 +49,6 @@ class SessionFormation
     public function setDateDebut(\DateTime $date_debut): static
     {
         $this->date_debut = $date_debut;
-
-        return $this;
-    }
-
-    public function getPrix(): ?float
-    {
-        return $this->prix;
-    }
-
-    public function setPrix(float $prix): static
-    {
-        $this->prix = $prix;
 
         return $this;
     }

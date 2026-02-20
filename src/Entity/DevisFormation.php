@@ -35,9 +35,6 @@ class DevisFormation
     #[ORM\Column(length: 100)]
     private ?string $ville = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $formation = null;
-
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $date_demande = null;
 
@@ -46,6 +43,9 @@ class DevisFormation
 
     #[ORM\Column]
     private ?bool $rgpd = null;
+
+    #[ORM\ManyToOne(inversedBy: 'DevisFormation')]
+    private ?Formation $Formation = null;
 
     public function getId(): ?int
     {
@@ -136,18 +136,6 @@ class DevisFormation
         return $this;
     }
 
-    public function getFormation(): ?string
-    {
-        return $this->formation;
-    }
-
-    public function setFormation(string $formation): static
-    {
-        $this->formation = $formation;
-
-        return $this;
-    }
-
     public function getDateDemande(): ?\DateTime
     {
         return $this->date_demande;
@@ -180,6 +168,18 @@ class DevisFormation
     public function setRgpd(bool $rgpd): static
     {
         $this->rgpd = $rgpd;
+
+        return $this;
+    }
+
+    public function getFormations(): ?Formation
+    {
+        return $this->Formation;
+    }
+
+    public function setFormations(?Formation $Formation): static
+    {
+        $this->Formation = $Formation;
 
         return $this;
     }
