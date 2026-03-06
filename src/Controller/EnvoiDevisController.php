@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
+use App\Config\AppConfig;
 use App\Entity\Devis;
 use App\Form\DevisType;
-use App\Service\DevisService;
 use App\Service\EnvoiDevisService;
 use App\Service\NotificationEmailService;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,23 +22,21 @@ class EnvoiDevisController extends AbstractController
         NotificationEmailService $notificationEmailService
     ): Response
     {
-        // 1. Données de l’offre (depuis pricing)
         $donneesOffre = $devisService->recupererDonneesOffre($offre);
 
-        // 2. Montants
         $montants = $devisService->calculerMontants(
             $donneesOffre,
-            0.20
+            AppConfig::TAUX_TVA
         );
 
-        // 3. Formulaire
+
         $devis = new Devis();
         $form = $this->createForm(DevisType::class, $devis);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($devisService->enregistrerDevis($devis,$donneesOffre['libelle'])){
-                $notificationEmailService->envoyerNotificationDevis($devis->getOffre());
+                $notificationEmailService->envoyerNotificationDevis($form->getData());
             }
 
             return $this->render('envoi_devis/confirmation.html.twig', [
@@ -48,12 +46,11 @@ class EnvoiDevisController extends AbstractController
 
         }
 
-        // 4. Rendu (template INCHANGÉ)
         return $this->render('envoi_devis/index.html.twig', [
             'form' => $form,
             'offre' => $donneesOffre,
             'montants' => $montants,
-            'taux_tva' => 0.20,
+            'taux_tva' => AppConfig::TAUX_TVA
         ]);
     }
 
@@ -62,5 +59,6 @@ class EnvoiDevisController extends AbstractController
     {
         return $this->render('envoi_devis/cdm.html.twig');
     }
+    
 
 }

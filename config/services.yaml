@@ -10,6 +10,7 @@ parameters:
     documents_directory: '%kernel.project_dir%/public/uploads/documents'  
     app.mail_from: 'noreply@webble.fr'
     recaptcha_site_key: '%env(RECAPTCHA_SITE_KEY)%'
+    app.taux_tva: '%env(float:TAUX_TVA)%'
 
 services:
     # default configuration for services in *this* file

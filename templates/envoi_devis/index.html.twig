@@ -67,6 +67,11 @@
                         {{ form_widget(form.ville) }}
                         <div class="error-message">{{ form_errors(form.ville) }}</div>
                     </div>
+                    <div class="col-md-12">
+                        {{ form_label(form.description) }}
+                        {{ form_widget(form.description) }}
+                        <div class="error-message">{{ form_errors(form.description) }}</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -185,7 +190,7 @@
                     <hr>
 
                     <div class="row mb-2">
-                        <div class="col-6 text-muted small">TVA (20 %)</div>
+                        <div class="col-6 text-muted small">TVA (0 %)</div>
                         <div class="col-6 text-end fw-semibold" id="tvaAmount">
                             {{ montants.total_tva|number_format(2, ',', ' ') }} €
                         </div>

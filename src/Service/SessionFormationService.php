@@ -53,4 +53,10 @@ class SessionFormationService
         $this->entityManager->persist($session);
         $this->entityManager->flush();
     }
+
+    public function recupererToutesLesSessions(){
+        return $this->entityManager
+            ->getRepository(SessionFormation::class)
+            ->findAll();
+    }
 }

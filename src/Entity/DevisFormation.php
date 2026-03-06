@@ -30,7 +30,7 @@ class DevisFormation
     private ?string $adresse = null;
 
     #[ORM\Column]
-    private ?int $code_postal = null;
+    private ?string $code_postal = null;
 
     #[ORM\Column(length: 100)]
     private ?string $ville = null;
@@ -112,12 +112,12 @@ class DevisFormation
         return $this;
     }
 
-    public function getCodePostal(): ?int
+    public function getCodePostal(): ?string
     {
         return $this->code_postal;
     }
 
-    public function setCodePostal(int $code_postal): static
+    public function setCodePostal(string $code_postal): static
     {
         $this->code_postal = $code_postal;
 

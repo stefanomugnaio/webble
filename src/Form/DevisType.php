@@ -5,16 +5,17 @@ namespace App\Form;
 use App\Entity\Devis;
 use Doctrine\DBAL\Types\StringType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class DevisType extends AbstractType
 {
@@ -113,6 +114,24 @@ class DevisType extends AbstractType
                         max: 100,
                         minMessage: 'La ville doit contenir au moins {{ limit }} caractères.',
                         maxMessage: 'La ville ne peut pas dépasser {{ limit }} caractères.'
+                    ),
+                ],
+            ])
+            ->add('description', TextareaType::class, [
+                'label' => 'Description du projet',
+                'attr' => [
+                    'class' => 'form-control',
+                    'rows' => 6, // hauteur du champ
+                    'placeholder' => 'Décrivez votre projet, vos besoins, vos objectifs... Si vous ne savez pas quoi écrire, vous pouvez aussi me laisser un mot doux...'
+                ],
+                'row_attr' => ['class' => 'mb-3'],
+                'constraints' => [
+                    new NotBlank(message: 'Veuillez décrire votre projet.'),
+                    new Length(
+                        min: 10,
+                        max: 2000,
+                        minMessage: 'La description doit contenir au moins {{ limit }} caractères.',
+                        maxMessage: 'La description ne peut pas dépasser {{ limit }} caractères.'
                     ),
                 ],
             ])

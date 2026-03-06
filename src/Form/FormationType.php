@@ -3,17 +3,19 @@
 namespace App\Form;
 
 use App\Entity\Formation;
+use App\Enum\FormationLibelle;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Positive;
 use Symfony\Component\Validator\Constraints\Type;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class FormationType extends AbstractType
 {
@@ -21,18 +23,17 @@ class FormationType extends AbstractType
     {
         $builder
 
-            ->add('libelle', TextType::class, [
+           ->add('libelle', EnumType::class, [
+                'class' => FormationLibelle::class,
+                'choice_label' => function (FormationLibelle $choice) {
+                    return $choice->label();
+                },
+                'placeholder' => 'Choisir une formation',
                 'label' => 'Nom de la formation',
-                'attr' => ['class' => 'form-control'],
+                'attr' => ['class' => 'form-select'],
                 'row_attr' => ['class' => 'mb-3'],
                 'constraints' => [
-                    new NotBlank(message: 'Veuillez renseigner le nom de la formation.'),
-                    new Length(
-                        min: 3,
-                        max: 255,
-                        minMessage: 'Le nom doit contenir au moins {{ limit }} caractères.',
-                        maxMessage: 'Le nom ne peut pas dépasser {{ limit }} caractères.'
-                    ),
+                    new NotBlank(message: 'Veuillez sélectionner une formation.')
                 ],
             ])
 

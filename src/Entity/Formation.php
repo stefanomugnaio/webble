@@ -30,15 +30,22 @@ class Formation
     #[ORM\Column(length: 150, unique: true)]
     private ?string $slug = null;
 
-    /**
+    /**symfony 
      * @var Collection<int, DevisFormation>
      */
     #[ORM\OneToMany(mappedBy: 'Formations', targetEntity: DevisFormation::class)]
     private Collection $DevisFormation;
 
+    /**
+     * @var Collection<int, SessionFormation>
+     */
+    #[ORM\OneToMany(mappedBy: 'formation', targetEntity: SessionFormation::class)]
+    private Collection $sessionFormations;
+
     public function __construct()
     {
         $this->DevisFormation = new ArrayCollection();
+        $this->sessionFormations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,6 +147,36 @@ class Formation
     public function setSlug($slug)
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SessionFormation>
+     */
+    public function getSessionFormations(): Collection
+    {
+        return $this->sessionFormations;
+    }
+
+    public function addSessionFormation(SessionFormation $sessionFormation): static
+    {
+        if (!$this->sessionFormations->contains($sessionFormation)) {
+            $this->sessionFormations->add($sessionFormation);
+            $sessionFormation->setFormation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSessionFormation(SessionFormation $sessionFormation): static
+    {
+        if ($this->sessionFormations->removeElement($sessionFormation)) {
+            // set the owning side to null (unless already changed)
+            if ($sessionFormation->getFormation() === $this) {
+                $sessionFormation->setFormation(null);
+            }
+        }
 
         return $this;
     }

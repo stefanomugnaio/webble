@@ -33,6 +33,8 @@ final class FormationController extends AbstractController
         ]);
     }
 
+    
+
     /*
     |--------------------------------------------------------------------------
     | PAGE DÉTAIL FORMATION (exemple statique)
@@ -47,11 +49,15 @@ final class FormationController extends AbstractController
 
     /*
     |--------------------------------------------------------------------------
-    | DEMANDE DE DEVIS POUR UNE FORMATION
+    | PLANNING FORMATIONS
     |--------------------------------------------------------------------------
     */
 
-    
+    #[Route('/formations/planning', name: 'app_planning_formations')]
+    public function planningFormation(): Response
+    {
+        return $this->render('formation/liste_session_formation.html.twig');
+    }
 
 
 
@@ -62,10 +68,7 @@ final class FormationController extends AbstractController
     */
 
     #[Route('/admin/formation/ajouter-session', name: 'app_ajouter_session')]
-    public function ajouterSessionFormation(
-        Request $request,
-        SessionFormationService $sessionFormationService
-    ): Response
+    public function ajouterSessionFormation(Request $request, SessionFormationService $sessionFormationService): Response
     {
         $session = new SessionFormation();
 
@@ -88,7 +91,7 @@ final class FormationController extends AbstractController
             return $this->redirectToRoute('app_liste_formations');
         }
 
-        return $this->render('session_formation/new.html.twig', [
+        return $this->render('formation/ajouter_session_formation.html.twig', [
             'form' => $formulaire,
         ]);
     }
@@ -110,7 +113,7 @@ final class FormationController extends AbstractController
 
         if ($formulaire->isSubmitted() && $formulaire->isValid()) {
 
-            // 🔥 Génération automatique du slug
+         
             $slug = strtolower(
                 trim(
                     preg_replace('/[^A-Za-z0-9-]+/', '-', $formation->getLibelle())
@@ -118,7 +121,7 @@ final class FormationController extends AbstractController
             );
 
             $formation->setSlug($slug);
-
+            dd($formation);
             $formationService->enregistrerFormation($formation);
 
             $this->addFlash(

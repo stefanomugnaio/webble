@@ -2,14 +2,15 @@
 
 namespace App\Controller;
 
+use App\Config\AppConfig;
 use App\Entity\DevisFormation;
 use App\Form\DevisFormationType;
 use App\Service\EnvoiDevisFormationService;
 use App\Service\NotificationEmailService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EnvoiDevisFormationController extends AbstractController
 {
@@ -21,13 +22,13 @@ class EnvoiDevisFormationController extends AbstractController
         NotificationEmailService $notificationEmailService
     ): Response
     {
-        // 1. Données de la formation (comme recupererDonneesOffre)
+        
         $donneesFormation = $formationService->recupererDonneesFormation($formation);
 
         // 2. Montants
         $montants = $formationService->calculerMontants(
             $donneesFormation,
-            0.20
+            AppConfig::TAUX_TVA
         );
 
         // 3. Formulaire
@@ -38,7 +39,7 @@ class EnvoiDevisFormationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             if ($formationService->enregistrerDemande($devisFormation,$donneesFormation->getLibelle())) {
-                // $notificationEmailService->envoyerNotificationFormation($donneesFormation['libelle']);
+                $notificationEmailService->envoyerNotificationFormation($form->getData());
             }
 
             return $this->render('formation/confirmation.html.twig', [
@@ -51,7 +52,7 @@ class EnvoiDevisFormationController extends AbstractController
             'form' => $form,
             'formation' => $donneesFormation,
             'montants' => $montants,
-            'taux_tva' => 0.20,
+            'taux_tva' => AppConfig::TAUX_TVA,
         ]);
     }
 }

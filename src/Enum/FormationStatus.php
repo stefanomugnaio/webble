@@ -19,3 +19,15 @@ enum FormationStatus: string
         };
     }
 }
+
+enum FormationLibelle: string
+{
+    case DECOUVERTE = 'decouverte_informatique';
+
+    public function label(): string
+    {
+        return match ($this) {
+            self::DECOUVERTE => 'Découverte informatique',
+        };
+    }
+}

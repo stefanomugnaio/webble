@@ -31,6 +31,13 @@ class SessionFormation
     #[ORM\OneToMany(mappedBy: 'sessionFormation', targetEntity: DevisFormation::class)]
     private Collection $DevisFormation;
 
+    #[ORM\ManyToOne(inversedBy: 'sessionFormations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Formation $formation = null;
+
+    #[ORM\Column]
+    private ?int $duree = null;
+
     public function __construct()
     {
         $this->DevisFormation = new ArrayCollection();
@@ -103,6 +110,30 @@ class SessionFormation
                 $devisFormation->setSessionFormation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFormation(): ?Formation
+    {
+        return $this->formation;
+    }
+
+    public function setFormation(?Formation $formation): static
+    {
+        $this->formation = $formation;
+
+        return $this;
+    }
+
+    public function getDuree(): ?int
+    {
+        return $this->duree;
+    }
+
+    public function setDuree(int $duree): static
+    {
+        $this->duree = $duree;
 
         return $this;
     }

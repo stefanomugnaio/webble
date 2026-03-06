@@ -123,12 +123,17 @@ class DevisFormationType extends AbstractType
             ->add('sessionFormation', EntityType::class, [
                 'class' => SessionFormation::class,
                 'label' => 'Session disponible',
-                'choice_label' => function (SessionFormation $session) {
-                    return sprintf(
-                        'Du %s au %s',
-                        $session->getDateDebut()->format('d/m/Y'),
-                        $session->getDateFin()->format('d/m/Y')
-                    );
+                'choice_label' => function (SessionFormation $s) {
+                    $fmt = new \IntlDateFormatter('fr_FR', \IntlDateFormatter::NONE, \IntlDateFormatter::NONE);
+                    $fmt->setPattern('EEE d MMM y'); // Ven 21 fév 2026
+
+                    $debut = $fmt->format($s->getDateDebut());
+                    $fin   = $fmt->format($s->getDateFin());
+
+                    $heures = $s->getDuree();
+                    $duree = $heures . 'h';
+
+                    return sprintf('%s → %s • %s', $debut, $fin, $duree);
                 },
                 'placeholder' => 'Choisissez une session',
                 'attr' => ['class' => 'form-select'],

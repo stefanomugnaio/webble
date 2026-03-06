@@ -2,13 +2,9 @@ import '../styles/envoi_devis.scss';
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    console.log("JS envoi_devis chargé.");
-
-    // ID réel généré par Symfony
     const check = document.getElementById("devis_contrat_maintenance");
 
     if (!check) {
-        console.error("❌ Checkbox introuvable dans le DOM !");
         return;
     }
 
@@ -20,9 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const siteHT = parseFloat(window.montantSiteHT ?? 0);
     const maintenanceHTNormal = parseFloat(window.maintenanceHT ?? 0);
     const offer = (window.offerLabel ?? "").toLowerCase();
-    const tauxTVA = parseFloat(window.tauxTVA ?? 0.20);
+    // const tauxTVA = parseFloat(window.tauxTVA ?? 0);
+    const tauxTVA = 0;
 
-    // ====== OPTIONS Domaine + Hébergement (IDs Symfony) ======
     const domaineCheck = document.getElementById("devis_domaine");
     const hebergementCheck = document.getElementById("devis_hebergement");
     const domaineRow = document.getElementById("domaineRow");

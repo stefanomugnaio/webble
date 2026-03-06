@@ -2,12 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
+use App\Entity\Devis;
 use App\Entity\Document;
-use App\Form\ProfilClientType;
+use App\Entity\SessionFormation;
 use App\Form\NotificationClientType;
+use App\Form\ProfilClientType;
 use App\Repository\ContactRepository;
 use App\Repository\DevisRepository;
 use App\Service\DocumentService;
+use App\Service\SessionFormationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -18,13 +22,48 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ProfilController extends AbstractController
 {
+
+    #[Route('/admin/devis/{id}', name: 'admin_devis_delete', methods: ['POST'])]
+    public function delete(Devis $devis, Request $request, EntityManagerInterface $em): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$devis->getId(), $request->request->get('_token'))) {
+            $em->remove($devis);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('app_profil');
+    }
+
+    #[Route('/admin/sessions-formation/{id}', name: 'admin_session_formation_delete', methods: ['POST'])]
+    public function deleteSession(SessionFormation $session, Request $request, EntityManagerInterface $em): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$session->getId(), $request->request->get('_token'))) {
+            $em->remove($session);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('app_profil');
+    }
+
+    #[Route('/admin/contact/{id}', name: 'admin_contact_delete', methods: ['POST'])]
+    public function deleteContact(Contact $contact, Request $request, EntityManagerInterface $em): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$contact->getId(), $request->request->get('_token'))) {
+            $em->remove($contact);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('app_profil');
+    }
+
     #[Route('/profil', name: 'app_profil')]
     public function index(
         Request $request,
         EntityManagerInterface $em,
         DocumentService $documentService,
         ContactRepository $contactRepository,
-        DevisRepository $devisRepository
+        DevisRepository $devisRepository,
+        SessionFormationService $sessionFormationService
     ): Response {
         $client = $this->getUser();
 
@@ -101,6 +140,12 @@ class ProfilController extends AbstractController
         }
 
         // --------------------------------------------------
+        // LISTE DES SESSIONS  
+        // --------------------------------------------------
+
+        $sessions = $sessionFormationService->recupererToutesLesSessions();
+
+        // --------------------------------------------------
         // RENDER
         // --------------------------------------------------
         return $this->render('profil/index.html.twig', [
@@ -119,6 +164,9 @@ class ProfilController extends AbstractController
 
             // devis (Devis)
             'devisList'         => $devisList,
+
+            // formations
+            'sessionsFormations' => $sessions,
         ]);
     }
 

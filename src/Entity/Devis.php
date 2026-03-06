@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\DevisRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DevisRepository::class)]
@@ -48,6 +49,9 @@ class Devis
 
     #[ORM\Column]
     private ?bool $hebergement = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $Description = null;
 
     public function getId(): ?int
     {
@@ -194,6 +198,18 @@ class Devis
     public function setHebergement(bool $hebergement): static
     {
         $this->hebergement = $hebergement;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->Description;
+    }
+
+    public function setDescription(?string $Description): static
+    {
+        $this->Description = $Description;
 
         return $this;
     }

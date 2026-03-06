@@ -69,9 +69,12 @@
                                                href="{{ path('app_profil', { section: 'devis' }) }}">
                                                 <i class="bi bi-file-text"></i> Devis
                                             </a>
-
+                                            <a class="list-group-item border-0 d-flex align-items-center gap-2 {% if section == 'formations' %}fw-semibold{% endif %}"
+                                                href="{{ path('app_profil', { section: 'formations' }) }}">
+                                                <i class="bi bi-calendar-event"></i> Sessions de formation
+                                            </a>
                                             <a class="list-group-item border-0 d-flex align-items-center gap-2 {% if section == 'devis' %}fw-semibold{% endif %}"
-                                               href="{{ path('app_ajouter_formation', { section: 'formation' }) }}">
+                                               href="{{ path('app_ajouter_session', { section: 'formation' }) }}">
                                                 <i class="bi bi-file-text"></i> Ajouter une session de formation
                                             </a>
                                         {% endif %}
@@ -171,16 +174,20 @@
 
                                             {% if contacts is not empty %}
                                                 <div class="table-responsive">
-                                                    <table class="table table-sm align-middle">
-                                                        <thead>
+                                                    <table class="table table-sm align-middle table-striped table-hover"
+                                                        style="table-layout: fixed; width: 100%;">
+
+                                                        <thead class="table-light">
                                                             <tr>
-                                                                <th>Reçu le</th>
-                                                                <th>Nom</th>
-                                                                <th>Email</th>
-                                                                <th>Sujet</th>
-                                                                <th>Message</th>
+                                                                <th style="width: 120px;">Reçu le</th>
+                                                                <th style="width: 180px;">Nom</th>
+                                                                <th style="width: 240px;">Email</th>
+                                                                <th style="width: 180px;">Sujet</th>
+                                                                <th style="width: 450px;">Message</th>
+                                                                <th style="width: 110px; text-align:center;">Actions</th>
                                                             </tr>
                                                         </thead>
+
                                                         <tbody>
                                                             {% for contact in contacts %}
                                                                 <tr>
@@ -189,7 +196,9 @@
                                                                             {{ contact.dateCreation|date('d/m/Y') }}
                                                                         {% endif %}
                                                                     </td>
+
                                                                     <td>{{ contact.prenom }} {{ contact.nom }}</td>
+
                                                                     <td>
                                                                         {% if contact.email %}
                                                                             <a href="mailto:{{ contact.email }}">
@@ -197,13 +206,32 @@
                                                                             </a>
                                                                         {% endif %}
                                                                     </td>
+
                                                                     <td>{{ contact.sujet }}</td>
-                                                                    <td class="small">
+
+                                                                    <td style="word-wrap: break-word; white-space: normal;" class="small">
                                                                         {{ contact.description|default('')|nl2br }}
                                                                     </td>
+
+                                                                    <!-- BOUTON SUPPRIMER -->
+                                                                    <td class="text-center">
+                                                                        <form method="post"
+                                                                            action="{{ path('admin_contact_delete', {'id': contact.id}) }}"
+                                                                            onsubmit="return confirm('Confirmer la suppression de ce message ?');">
+
+                                                                            <input type="hidden" name="_token"
+                                                                                value="{{ csrf_token('delete' ~ contact.id) }}">
+
+                                                                            <button class="btn btn-sm btn-danger">
+                                                                                🗑 Supprimer
+                                                                            </button>
+                                                                        </form>
+                                                                    </td>
+
                                                                 </tr>
                                                             {% endfor %}
                                                         </tbody>
+
                                                     </table>
                                                 </div>
                                             {% else %}
@@ -232,24 +260,35 @@
 
                                             {% if devisList is not empty %}
                                                 <div class="table-responsive">
-                                                    <table class="table table-sm align-middle">
-                                                        <thead>
+                                                    <table class="table table-sm align-middle table-striped table-hover"
+                                                        style="table-layout: fixed; width: 100%;">
+
+                                                        <thead class="table-light">
                                                             <tr>
-                                                                <th>#</th>
-                                                                <th>Nom</th>
-                                                                <th>Email</th>
-                                                                <th>Téléphone</th>
-                                                                <th>Ville</th>
-                                                                <th>Offre</th>
-                                                                <th>Contrat maint.</th>
-                                                                <th>RGPD</th>
+                                                                <th style="width: 60px;">#</th>
+                                                                <th style="width: 150px;">Nom</th>
+                                                                <th style="width: 220px;">Email</th>
+                                                                <th style="width: 140px;">Téléphone</th>
+                                                                <th style="width: 200px;">Adresse</th>
+                                                                <th style="width: 140px;">Ville</th>
+                                                                <th style="width: 110px;">Code postal</th>
+                                                                <th style="width: 400px;">Description</th>
+                                                                <th style="width: 120px;">Offre</th>
+                                                                <th style="width: 130px;">Contrat maint.</th>
+                                                                <th style="width: 120px;">Hébergement</th>
+                                                                <th style="width: 110px;">Domaine</th>
+                                                                <th style="width: 80px;">RGPD</th>
+                                                                <th style="width: 110px; text-align:center;">Actions</th>
                                                             </tr>
                                                         </thead>
+
                                                         <tbody>
                                                             {% for devis in devisList %}
                                                                 <tr>
                                                                     <td>{{ devis.id }}</td>
+
                                                                     <td>{{ devis.prenom }} {{ devis.nom }}</td>
+
                                                                     <td>
                                                                         {% if devis.email %}
                                                                             <a href="mailto:{{ devis.email }}">
@@ -257,9 +296,18 @@
                                                                             </a>
                                                                         {% endif %}
                                                                     </td>
+
                                                                     <td>{{ devis.telephone }}</td>
+                                                                    <td>{{ devis.adresse }}</td>
                                                                     <td>{{ devis.ville }}</td>
+                                                                    <td>{{ devis.codepostal }}</td>
+
+                                                                    <td style="word-wrap: break-word; white-space: normal;">
+                                                                        {{ devis.description }}
+                                                                    </td>
+
                                                                     <td>{{ devis.offre }}</td>
+
                                                                     <td>
                                                                         {% if devis.contratMaintenance %}
                                                                             <span class="badge bg-success">Oui</span>
@@ -267,6 +315,23 @@
                                                                             <span class="badge bg-secondary">Non</span>
                                                                         {% endif %}
                                                                     </td>
+
+                                                                    <td>
+                                                                        {% if devis.hebergement %}
+                                                                            <span class="badge bg-success">OK</span>
+                                                                        {% else %}
+                                                                            <span class="badge bg-danger">Non</span>
+                                                                        {% endif %}
+                                                                    </td>
+
+                                                                    <td>
+                                                                        {% if devis.domaine %}
+                                                                            <span class="badge bg-success">OK</span>
+                                                                        {% else %}
+                                                                            <span class="badge bg-danger">Non</span>
+                                                                        {% endif %}
+                                                                    </td>
+
                                                                     <td>
                                                                         {% if devis.rgpd %}
                                                                             <span class="badge bg-success">OK</span>
@@ -274,9 +339,23 @@
                                                                             <span class="badge bg-danger">Non</span>
                                                                         {% endif %}
                                                                     </td>
+                                                                    <td class="text-center">
+                                                                        <form method="post"
+                                                                            action="{{ path('admin_devis_delete', {'id': devis.id}) }}"
+                                                                            onsubmit="return confirm('Confirmer la suppression de ce devis ?');">
+
+                                                                            <input type="hidden" name="_token"
+                                                                                value="{{ csrf_token('delete' ~ devis.id) }}">
+
+                                                                            <button class="btn btn-sm btn-danger">
+                                                                                🗑 Supprimer
+                                                                            </button>
+                                                                        </form>
+                                                                    </td>
                                                                 </tr>
                                                             {% endfor %}
                                                         </tbody>
+
                                                     </table>
                                                 </div>
                                             {% else %}
@@ -305,6 +384,115 @@
                                         </p>
                                     </div>
                                 </div>
+
+                            {# ====================== BLOC SESSIONS FORMATION ====================== #}
+                            {% elseif section == 'formations' %}
+
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <div class="card border-0 shadow-sm rounded-4">
+                                        <div class="card-body p-4">
+
+                                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                                <h5 class="mb-0">
+                                                    <i class="bi bi-calendar-event me-2"></i>
+                                                    Sessions de formation
+                                                </h5>
+
+                                                <a class="btn btn-sm btn-primary"
+                                                href="{{ path('app_ajouter_session') }}">
+                                                    <i class="bi bi-plus-lg me-1"></i> Ajouter une session
+                                                </a>
+                                            </div>
+
+                                            {% if sessionsFormations is not empty %}
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm align-middle table-striped table-hover"
+                                                        style="table-layout: fixed; width: 100%;">
+
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th style="width: 70px;">#</th>
+                                                                <th style="width: 140px;">Début</th>
+                                                                <th style="width: 140px;">Fin</th>
+                                                                <th style="width: 160px;">Statut</th>
+                                                                <th>Formation</th>
+                                                                <th style="width: 120px; text-align:center;">Actions</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                            {% for sessionF in sessionsFormations %}
+                                                                <tr>
+                                                                    <td>{{ sessionF.id }}</td>
+
+                                                                    <td>
+                                                                        {% if sessionF.dateDebut %}
+                                                                            {{ sessionF.dateDebut|date('d/m/Y') }}
+                                                                        {% else %}
+                                                                            <span class="text-muted">—</span>
+                                                                        {% endif %}
+                                                                    </td>
+
+                                                                    <td>
+                                                                        {% if sessionF.dateFin %}
+                                                                            {{ sessionF.dateFin|date('d/m/Y') }}
+                                                                        {% else %}
+                                                                            <span class="text-muted">—</span>
+                                                                        {% endif %}
+                                                                    </td>
+
+                                                                    <td>
+                                                                        {% set s = sessionF.status|lower %}
+                                                                        <span class="badge
+                                                                            {% if s in ['disponible','ouverte','open'] %} bg-success
+                                                                            {% elseif s in ['complet','complète','complete'] %} bg-warning text-dark
+                                                                            {% elseif s in ['annulee','annulée','annule','cancelled'] %} bg-danger
+                                                                            {% else %} bg-secondary
+                                                                            {% endif %}
+                                                                        ">
+                                                                            {{ sessionF.status }}
+                                                                        </span>
+                                                                    </td>
+
+                                                                    <td style="word-wrap: break-word; white-space: normal;">
+                                                                        {% if sessionF.formation %}
+                                                                            {# Mets ici le champ de Formation que tu as (ex: libelle / titre / nom) #}
+                                                                            {{ sessionF.formation.libelle ?? sessionF.formation.titre ?? sessionF.formation.nom ?? 'Formation' }}
+                                                                        {% else %}
+                                                                            <span class="text-muted">Non liée</span>
+                                                                        {% endif %}
+                                                                    </td>
+
+                                                                    <td class="text-center">
+                                                                        {# Exemple bouton supprimer (si tu as la route) #}
+                                                                        {% if path('admin_session_formation_delete', {id: sessionF.id}) is defined %}
+                                                                            <form method="post"
+                                                                                action="{{ path('admin_session_formation_delete', {id: sessionF.id}) }}"
+                                                                                onsubmit="return confirm('Confirmer la suppression de cette session ?');">
+                                                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ sessionF.id) }}">
+                                                                                <button class="btn btn-sm btn-danger">🗑</button>
+                                                                            </form>
+                                                                        {% else %}
+                                                                            <span class="text-muted small">—</span>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+                                            {% else %}
+                                                <p class="text-muted mb-0">
+                                                    Aucune session de formation enregistrée pour le moment.
+                                                </p>
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <p class="text-danger">Accès non autorisé.</p>
+                                {% endif %}
 
                             {# ====================== BLOC PROFIL ====================== #}
                             {% else %}

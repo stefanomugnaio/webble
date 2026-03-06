@@ -85,6 +85,8 @@
                         {{ form_errors(form.sessionFormation) }}
                     </div>
                 </div>
+
+                <p class="mt-4">Pour consulter les horaires et jours précis des formations, consultez le <a href="{{ path('app_planning_formations') }}">planning détaillé des formations</a></p>
             </div>
         </div>
 
@@ -139,7 +141,7 @@
 
                 <div class="row mb-2">
                     <div class="col-6 text-muted small">
-                        TVA (20 %)
+                        TVA (0 %)
                     </div>
                     <div class="col-6 text-end fw-semibold">
                         {{ montants.total_tva|number_format(2, ',', ' ') }} €
@@ -195,4 +197,10 @@
 
     </div>
 </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>
+    {{ encore_entry_script_tags('devis_formation') }}
 {% endblock %}

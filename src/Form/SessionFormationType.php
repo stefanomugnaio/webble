@@ -2,16 +2,18 @@
 
 namespace App\Form;
 
+use App\Entity\Formation;
 use App\Entity\SessionFormation;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Positive;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Positive;
 
 class SessionFormationType extends AbstractType
 {
@@ -50,6 +52,35 @@ class SessionFormationType extends AbstractType
                 'row_attr' => ['class' => 'mb-3'],
                 'constraints' => [
                     new NotBlank(message: 'Veuillez sélectionner un statut.')
+                ],
+            ])
+
+            ->add('duree', NumberType::class, [
+                'label' => 'Durée (heures)',
+                'html5' => true,
+                'attr' => [
+                    'class' => 'form-control',
+                    'min' => 1
+                ],
+                'row_attr' => ['class' => 'mb-3'],
+                'constraints' => [
+                    new NotBlank(message: 'Veuillez renseigner la durée.'),
+                    new Positive(message: 'La durée doit être un nombre positif.')
+                ],
+            ])
+
+            ->add('formation', EntityType::class, [
+                'class' => Formation::class,
+                'label' => 'Formation',
+                'choice_label' => function (Formation $libelle) {
+                    return $libelle->getLibelle();
+                    
+                },
+                'placeholder' => 'Choisissez une formation',
+                'attr' => ['class' => 'form-select'],
+                'row_attr' => ['class' => 'mb-3'],
+                'constraints' => [
+                    new NotBlank(message: 'Veuillez sélectionner une session.')
                 ],
             ])
         ;
