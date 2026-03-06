@@ -145,9 +145,9 @@ class NotificationEmailService
                 <p>Adresse : <strong>{$devisFormation->getAdresse()}</strong></p>
                 
                 <h3> Détail de la formation : </h3>
-                <p>Session choisie : <strong>Du {$sessionFormation->getDateDebut()} au {$sessionFormation->getDateFin()}</strong></p>
+                <p>Session choisie : <strong>Du {$sessionFormation->getDateDebut()->format('d/m/Y')} au {$sessionFormation->getDateFin()->format('d/m/Y')}</strong></p>
                 <p>Formation : <strong>{$formation->getLibelle()}</strong></p>
-                <p>Formation : <strong>{$formation->getDuree()}</strong></p>
+                <p>Durée : <strong>{$formation->getDuree()}</strong></p>
 
             ");
 
@@ -162,8 +162,6 @@ class NotificationEmailService
             ->to($devisFormation->getEmail())
             ->subject('Confirmation de réception de votre demande de formation')
             ->html("
-                <p>Bonjour,</p>
-
                 <p>Bonjour,</p>
 
                 <p>
