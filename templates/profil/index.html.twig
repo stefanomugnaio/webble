@@ -10,7 +10,6 @@
 {% block body %}
 <section class="py-5">
     <div class="container">
-
         <div class="row justify-content-center mt-5">
             <div class="col-12">
                 <div class="rounded-4 p-4">
@@ -28,79 +27,96 @@
                         {# ============================================================ #
                            COLONNE GAUCHE — MENU
                            ============================================================ #}
-                        <div class="col-md-4">
-                            <div class="card border-0 shadow-sm rounded-4">
+                        <div class="col-lg-4 col-xl-3">
+                            <div class="card border-0 shadow-sm rounded-4 h-100">
                                 <div class="card-body p-4">
 
                                     <div class="mb-4">
-                                        <h5 class="mb-0">{{ client.prenom }} {{ client.nom }}</h5>
+                                        <h5 class="mb-1">{{ client.prenom }} {{ client.nom }}</h5>
                                         <small class="text-muted">{{ client.email }}</small>
                                     </div>
 
-                                    <ul class="list-group list-group-flush">
+                                    <div class="list-group list-group-flush">
 
-                                        <a class="list-group-item border-0 d-flex align-items-center gap-2 {% if section == 'profil' %}fw-semibold{% endif %}"
+                                        <a class="list-group-item list-group-item-action border-0 px-0 d-flex align-items-center gap-2 {% if section == 'profil' %}fw-semibold{% endif %}"
                                            href="{{ path('app_profil', { section: 'profil' }) }}">
-                                            <i class="bi bi-person"></i> Mon profil
+                                            <i class="bi bi-person"></i>
+                                            <span>Mon profil</span>
                                         </a>
 
-                                        <a class="list-group-item border-0 d-flex align-items-center gap-2 {% if section == 'documents' %}fw-semibold{% endif %}"
+                                        <a class="list-group-item list-group-item-action border-0 px-0 d-flex align-items-center gap-2 {% if section == 'documents' %}fw-semibold{% endif %}"
                                            href="{{ path('app_profil', { section: 'documents' }) }}">
-                                            <i class="bi bi-file-earmark-text"></i> Mes documents
+                                            <i class="bi bi-file-earmark-text"></i>
+                                            <span>Mes documents</span>
                                         </a>
 
-                                        <a class="d-none list-group-item border-0 d-flex align-items-center gap-2 {% if section == 'projets' %}fw-semibold{% endif %}"
+                                        <a class="d-none list-group-item list-group-item-action border-0 px-0 d-flex align-items-center gap-2 {% if section == 'projets' %}fw-semibold{% endif %}"
                                            href="{{ path('app_profil', { section: 'projets' }) }}">
-                                            <i class="bi bi-gear"></i> Mes projets
+                                            <i class="bi bi-gear"></i>
+                                            <span>Mes projets</span>
                                         </a>
 
-                                        <a class="list-group-item border-0 d-flex align-items-center gap-2 {% if section == 'notifications' %}fw-semibold{% endif %}"
+                                        <a class="list-group-item list-group-item-action border-0 px-0 d-flex align-items-center gap-2 {% if section == 'notifications' %}fw-semibold{% endif %}"
                                            href="{{ path('app_profil', { section: 'notifications' }) }}">
-                                            <i class="bi bi-bell"></i> Notifications
+                                            <i class="bi bi-bell"></i>
+                                            <span>Notifications</span>
                                         </a>
 
                                         {% if is_granted('ROLE_ADMIN') %}
-                                            <a class="list-group-item border-0 d-flex align-items-center gap-2 {% if section == 'messages' %}fw-semibold{% endif %}"
+                                        <hr>
+                                            <a class="list-group-item list-group-item-action border-0 px-0 d-flex align-items-center gap-2 {% if section == 'messages' %}fw-semibold{% endif %}"
                                                href="{{ path('app_profil', { section: 'messages' }) }}">
-                                                <i class="bi bi-envelope"></i> Messages
+                                                <i class="bi bi-envelope"></i>
+                                                <span>Messages</span>
                                             </a>
 
-                                            <a class="list-group-item border-0 d-flex align-items-center gap-2 {% if section == 'devis' %}fw-semibold{% endif %}"
+                                            <a class="list-group-item list-group-item-action border-0 px-0 d-flex align-items-center gap-2 {% if section == 'devis' %}fw-semibold{% endif %}"
                                                href="{{ path('app_profil', { section: 'devis' }) }}">
-                                                <i class="bi bi-file-text"></i> Devis
+                                                <i class="bi bi-file-text"></i>
+                                                <span>Devis</span>
                                             </a>
-                                            <a class="list-group-item border-0 d-flex align-items-center gap-2 {% if section == 'formations' %}fw-semibold{% endif %}"
-                                                href="{{ path('app_profil', { section: 'formations' }) }}">
-                                                <i class="bi bi-calendar-event"></i> Sessions de formation
+
+                                            <a class="list-group-item list-group-item-action border-0 px-0 d-flex align-items-center gap-2 {% if section == 'devisFormation' %}fw-semibold{% endif %}"
+                                               href="{{ path('app_profil', { section: 'devisFormation' }) }}">
+                                                <i class="bi bi-file-text"></i>
+                                                <span>Devis formation</span>
                                             </a>
-                                            <a class="list-group-item border-0 d-flex align-items-center gap-2 {% if section == 'devis' %}fw-semibold{% endif %}"
+
+                                            <a class="list-group-item list-group-item-action border-0 px-0 d-flex align-items-center gap-2 {% if section == 'formations' %}fw-semibold{% endif %}"
+                                               href="{{ path('app_profil', { section: 'formations' }) }}">
+                                                <i class="bi bi-calendar-event"></i>
+                                                <span>Sessions de formation</span>
+                                            </a>
+
+                                            <a class="list-group-item list-group-item-action border-0 px-0 d-flex align-items-center gap-2"
                                                href="{{ path('app_ajouter_session', { section: 'formation' }) }}">
-                                                <i class="bi bi-file-text"></i> Ajouter une session de formation
+                                                <i class="bi bi-plus-square"></i>
+                                                <span>Ajouter une session de formation</span>
                                             </a>
                                         {% endif %}
 
-                                        <a class="list-group-item border-0 d-flex align-items-center gap-2 text-decoration-none text-dark"
+                                        <a class="list-group-item list-group-item-action border-0 px-0 d-flex align-items-center gap-2 text-decoration-none text-dark"
                                            href="{{ path('app_logout') }}">
-                                            <i class="bi bi-box-arrow-right"></i> Déconnexion
+                                            <i class="bi bi-box-arrow-right"></i>
+                                            <span>Déconnexion</span>
                                         </a>
 
-                                    </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         {# ============================================================ #
-                           COLONNE DROITE — CONTENU (UN SEUL BLOC)
+                           COLONNE DROITE — CONTENU
                            ============================================================ #}
-                        <div class="col-md-8">
+                        <div class="col-lg-8 col-xl-9">
 
                             {# ====================== BLOC DOCUMENTS ====================== #}
                             {% if section == 'documents' %}
 
                                 <div class="card border-0 shadow-sm rounded-4">
                                     <div class="card-body p-4">
-
-                                        <h5 class="mb-3">
+                                        <h5 class="mb-4">
                                             <i class="bi bi-file-earmark-pdf me-2"></i>
                                             Mes documents
                                         </h5>
@@ -108,7 +124,7 @@
                                         {% if documents is not empty %}
                                             <div class="list-group list-group-flush">
                                                 {% for document in documents %}
-                                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <div class="list-group-item px-0 d-flex justify-content-between align-items-center">
                                                         <div class="d-flex align-items-center">
                                                             <i class="bi bi-file-earmark-pdf text-danger me-2"></i>
                                                             <span>{{ document.nom }}</span>
@@ -124,7 +140,6 @@
                                         {% else %}
                                             <p class="text-muted mb-0">Aucun document disponible.</p>
                                         {% endif %}
-
                                     </div>
                                 </div>
 
@@ -133,7 +148,6 @@
 
                                 <div class="card border-0 shadow-sm rounded-4">
                                     <div class="card-body p-4">
-
                                         <h5 class="mb-4">
                                             <i class="bi bi-bell me-2"></i>
                                             Notifications
@@ -146,7 +160,7 @@
                                             <div class="form-check form-switch">
                                                 {{ form_widget(formNotifications.notification_document, {
                                                     attr: {
-                                                        class: 'form-check-input',
+                                                        class: 'form-check-input'
                                                     }
                                                 }) }}
 
@@ -156,11 +170,10 @@
                                             </div>
 
                                         {{ form_end(formNotifications) }}
-
                                     </div>
                                 </div>
 
-                            {# ====================== BLOC MESSAGES (TABLE CONTACT) ====================== #}
+                            {# ====================== BLOC MESSAGES ====================== #}
                             {% elseif section == 'messages' %}
 
                                 {% if is_granted('ROLE_ADMIN') %}
@@ -174,9 +187,7 @@
 
                                             {% if contacts is not empty %}
                                                 <div class="table-responsive">
-                                                    <table class="table table-sm align-middle table-striped table-hover"
-                                                        style="table-layout: fixed; width: 100%;">
-
+                                                    <table class="table table-sm align-middle table-striped table-hover mb-0" style="table-layout: fixed; width: 100%;">
                                                         <thead class="table-light">
                                                             <tr>
                                                                 <th style="width: 120px;">Reçu le</th>
@@ -187,7 +198,6 @@
                                                                 <th style="width: 110px; text-align:center;">Actions</th>
                                                             </tr>
                                                         </thead>
-
                                                         <tbody>
                                                             {% for contact in contacts %}
                                                                 <tr>
@@ -209,29 +219,23 @@
 
                                                                     <td>{{ contact.sujet }}</td>
 
-                                                                    <td style="word-wrap: break-word; white-space: normal;" class="small">
+                                                                    <td class="small" style="word-wrap: break-word; white-space: normal;">
                                                                         {{ contact.description|default('')|nl2br }}
                                                                     </td>
 
-                                                                    <!-- BOUTON SUPPRIMER -->
                                                                     <td class="text-center">
                                                                         <form method="post"
-                                                                            action="{{ path('admin_contact_delete', {'id': contact.id}) }}"
-                                                                            onsubmit="return confirm('Confirmer la suppression de ce message ?');">
-
-                                                                            <input type="hidden" name="_token"
-                                                                                value="{{ csrf_token('delete' ~ contact.id) }}">
-
+                                                                              action="{{ path('admin_contact_delete', { id: contact.id }) }}"
+                                                                              onsubmit="return confirm('Confirmer la suppression de ce message ?');">
+                                                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact.id) }}">
                                                                             <button class="btn btn-sm btn-danger">
                                                                                 🗑 Supprimer
                                                                             </button>
                                                                         </form>
                                                                     </td>
-
                                                                 </tr>
                                                             {% endfor %}
                                                         </tbody>
-
                                                     </table>
                                                 </div>
                                             {% else %}
@@ -246,7 +250,7 @@
                                     <p class="text-danger">Accès non autorisé.</p>
                                 {% endif %}
 
-                            {# ====================== BLOC DEVIS (TABLE DEVIS) ====================== #}
+                            {# ====================== BLOC DEVIS ====================== #}
                             {% elseif section == 'devis' %}
 
                                 {% if is_granted('ROLE_ADMIN') %}
@@ -260,9 +264,7 @@
 
                                             {% if devisList is not empty %}
                                                 <div class="table-responsive">
-                                                    <table class="table table-sm align-middle table-striped table-hover"
-                                                        style="table-layout: fixed; width: 100%;">
-
+                                                    <table class="table table-sm align-middle table-striped table-hover mb-0" style="table-layout: fixed; width: 100%;">
                                                         <thead class="table-light">
                                                             <tr>
                                                                 <th style="width: 60px;">#</th>
@@ -281,12 +283,10 @@
                                                                 <th style="width: 110px; text-align:center;">Actions</th>
                                                             </tr>
                                                         </thead>
-
                                                         <tbody>
                                                             {% for devis in devisList %}
                                                                 <tr>
                                                                     <td>{{ devis.id }}</td>
-
                                                                     <td>{{ devis.prenom }} {{ devis.nom }}</td>
 
                                                                     <td>
@@ -339,14 +339,12 @@
                                                                             <span class="badge bg-danger">Non</span>
                                                                         {% endif %}
                                                                     </td>
+
                                                                     <td class="text-center">
                                                                         <form method="post"
-                                                                            action="{{ path('admin_devis_delete', {'id': devis.id}) }}"
-                                                                            onsubmit="return confirm('Confirmer la suppression de ce devis ?');">
-
-                                                                            <input type="hidden" name="_token"
-                                                                                value="{{ csrf_token('delete' ~ devis.id) }}">
-
+                                                                              action="{{ path('admin_devis_delete', { id: devis.id }) }}"
+                                                                              onsubmit="return confirm('Confirmer la suppression de ce devis ?');">
+                                                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ devis.id) }}">
                                                                             <button class="btn btn-sm btn-danger">
                                                                                 🗑 Supprimer
                                                                             </button>
@@ -355,7 +353,103 @@
                                                                 </tr>
                                                             {% endfor %}
                                                         </tbody>
+                                                    </table>
+                                                </div>
+                                            {% else %}
+                                                <p class="text-muted mb-0">
+                                                    Aucune demande de devis pour le moment.
+                                                </p>
+                                            {% endif %}
 
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <p class="text-danger">Accès non autorisé.</p>
+                                {% endif %}
+
+                            {# ====================== BLOC DEVIS FORMATION ============= #}
+
+                            {% elseif section == 'devisFormation' %}
+
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <div class="card border-0 shadow-sm rounded-4">
+                                        <div class="card-body p-4">
+
+                                            <h5 class="mb-4">
+                                                <i class="bi bi-file-text me-2"></i>
+                                                Demandes de formation
+                                            </h5>
+
+                                            {% if devisFormation is not empty %}
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm align-middle table-striped table-hover mb-0" style="table-layout: fixed; width: 100%;">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th style="width: 60px;">#</th>
+                                                                <th style="width: 150px;">Nom</th>
+                                                                <th style="width: 220px;">Email</th>
+                                                                <th style="width: 140px;">Téléphone</th>
+                                                                <th style="width: 200px;">Adresse</th>
+                                                                <th style="width: 140px;">Ville</th>
+                                                                <th style="width: 110px;">Code postal</th>
+                                                                <th style="width: 400px;">Date début</th>
+                                                                <th style="width: 400px;">Date fin</th>
+                                                                <th style="width: 120px;">Formation</th>
+                                                                <th style="width: 80px;">RGPD</th>
+                                                                <th style="width: 110px; text-align:center;">Actions</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for devisFormation in devisFormation %}
+                                                                <tr>
+                                                                    <td>{{ devisFormation.id }}</td>
+                                                                    <td>{{ devisFormation.prenom }} {{ devisFormation.nom }}</td>
+
+                                                                    <td>
+                                                                        {% if devisFormation.email %}
+                                                                            <a href="mailto:{{ devisFormation.email }}">
+                                                                                {{ devisFormation.email }}
+                                                                            </a>
+                                                                        {% endif %}
+                                                                    </td>
+
+                                                                    <td>{{ devisFormation.telephone }}</td>
+                                                                    <td>{{ devisFormation.adresse }}</td>
+                                                                    <td>{{ devisFormation.ville }}</td>
+                                                                    <td>{{ devisFormation.codepostal }}</td>
+
+                                                                    <td style="word-wrap: break-word; white-space: normal;">
+                                                                        {{ devisFormation.sessionFormation.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }} 
+                                                                    </td>
+
+                                                                    <td style="word-wrap: break-word; white-space: normal;">
+                                                                        {{ devisFormation.sessionFormation.dateFin|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}
+                                                                    </td>
+
+                                                                    <td>{{ devisFormation.formations.libelle }}</td>
+                                                                    
+
+                                                                    <td>
+                                                                        {% if devisFormation.rgpd %}
+                                                                            <span class="badge bg-success">OK</span>
+                                                                        {% else %}
+                                                                            <span class="badge bg-danger">Non</span>
+                                                                        {% endif %}
+                                                                    </td>
+
+                                                                    <td class="text-center">
+                                                                        <form method="post"
+                                                                              action="{{ path('admin_devis_formation_delete', { id: devisFormation.id }) }}"
+                                                                              onsubmit="return confirm('Confirmer la suppression de ce devis ?');">
+                                                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ devisFormation.id) }}">
+                                                                            <button class="btn btn-sm btn-danger">
+                                                                                🗑 Supprimer
+                                                                            </button>
+                                                                        </form>
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
                                                     </table>
                                                 </div>
                                             {% else %}
@@ -385,30 +479,29 @@
                                     </div>
                                 </div>
 
-                            {# ====================== BLOC SESSIONS FORMATION ====================== #}
+                            {# ====================== BLOC SESSIONS DE FORMATION ====================== #}
                             {% elseif section == 'formations' %}
 
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <div class="card border-0 shadow-sm rounded-4">
                                         <div class="card-body p-4">
 
-                                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
                                                 <h5 class="mb-0">
                                                     <i class="bi bi-calendar-event me-2"></i>
                                                     Sessions de formation
                                                 </h5>
 
                                                 <a class="btn btn-sm btn-primary"
-                                                href="{{ path('app_ajouter_session') }}">
-                                                    <i class="bi bi-plus-lg me-1"></i> Ajouter une session
+                                                   href="{{ path('app_ajouter_session') }}">
+                                                    <i class="bi bi-plus-lg me-1"></i>
+                                                    Ajouter une session
                                                 </a>
                                             </div>
 
                                             {% if sessionsFormations is not empty %}
                                                 <div class="table-responsive">
-                                                    <table class="table table-sm align-middle table-striped table-hover"
-                                                        style="table-layout: fixed; width: 100%;">
-
+                                                    <table class="table table-sm align-middle table-striped table-hover mb-0" style="table-layout: fixed; width: 100%;">
                                                         <thead class="table-light">
                                                             <tr>
                                                                 <th style="width: 70px;">#</th>
@@ -419,9 +512,9 @@
                                                                 <th style="width: 120px; text-align:center;">Actions</th>
                                                             </tr>
                                                         </thead>
-
                                                         <tbody>
                                                             {% for sessionF in sessionsFormations %}
+                                                                {% set s = sessionF.status|lower %}
                                                                 <tr>
                                                                     <td>{{ sessionF.id }}</td>
 
@@ -442,21 +535,17 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        {% set s = sessionF.status|lower %}
                                                                         <span class="badge
-                                                                            {% if s in ['disponible','ouverte','open'] %} bg-success
-                                                                            {% elseif s in ['complet','complète','complete'] %} bg-warning text-dark
-                                                                            {% elseif s in ['annulee','annulée','annule','cancelled'] %} bg-danger
-                                                                            {% else %} bg-secondary
-                                                                            {% endif %}
-                                                                        ">
+                                                                            {% if s in ['disponible', 'ouverte', 'open'] %}bg-success
+                                                                            {% elseif s in ['complet', 'complète', 'complete'] %}bg-warning text-dark
+                                                                            {% elseif s in ['annulee', 'annulée', 'annule', 'cancelled'] %}bg-danger
+                                                                            {% else %}bg-secondary{% endif %}">
                                                                             {{ sessionF.status }}
                                                                         </span>
                                                                     </td>
 
                                                                     <td style="word-wrap: break-word; white-space: normal;">
                                                                         {% if sessionF.formation %}
-                                                                            {# Mets ici le champ de Formation que tu as (ex: libelle / titre / nom) #}
                                                                             {{ sessionF.formation.libelle ?? sessionF.formation.titre ?? sessionF.formation.nom ?? 'Formation' }}
                                                                         {% else %}
                                                                             <span class="text-muted">Non liée</span>
@@ -464,22 +553,18 @@
                                                                     </td>
 
                                                                     <td class="text-center">
-                                                                        {# Exemple bouton supprimer (si tu as la route) #}
-                                                                        {% if path('admin_session_formation_delete', {id: sessionF.id}) is defined %}
-                                                                            <form method="post"
-                                                                                action="{{ path('admin_session_formation_delete', {id: sessionF.id}) }}"
-                                                                                onsubmit="return confirm('Confirmer la suppression de cette session ?');">
-                                                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ sessionF.id) }}">
-                                                                                <button class="btn btn-sm btn-danger">🗑</button>
-                                                                            </form>
-                                                                        {% else %}
-                                                                            <span class="text-muted small">—</span>
-                                                                        {% endif %}
+                                                                        <form method="post"
+                                                                              action="{{ path('admin_session_formation_delete', { id: sessionF.id }) }}"
+                                                                              onsubmit="return confirm('Confirmer la suppression de cette session ?');">
+                                                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ sessionF.id) }}">
+                                                                            <button class="btn btn-sm btn-danger">
+                                                                                🗑
+                                                                            </button>
+                                                                        </form>
                                                                     </td>
                                                                 </tr>
                                                             {% endfor %}
                                                         </tbody>
-
                                                     </table>
                                                 </div>
                                             {% else %}
@@ -500,75 +585,82 @@
                                 <div class="card border-0 shadow-sm rounded-4">
                                     <div class="card-body p-4">
 
+                                        <h5 class="mb-4">
+                                            <i class="bi bi-person me-2"></i>
+                                            Mon profil
+                                        </h5>
+
                                         {{ form_start(form) }}
 
-                                        <div class="mb-3">
-                                            {{ form_label(form.nom) }}
-                                            {{ form_widget(form.nom, {
-                                                attr: form.nom.vars.attr|merge({
-                                                    class: 'form-control profil-champ',
-                                                    readonly: true
-                                                })
-                                            }) }}
-                                            {{ form_errors(form.nom) }}
-                                        </div>
+                                            <div class="mb-3">
+                                                {{ form_label(form.nom) }}
+                                                {{ form_widget(form.nom, {
+                                                    attr: form.nom.vars.attr|merge({
+                                                        class: 'form-control profil-champ',
+                                                        readonly: true
+                                                    })
+                                                }) }}
+                                                {{ form_errors(form.nom) }}
+                                            </div>
 
-                                        <div class="mb-3">
-                                            {{ form_label(form.prenom) }}
-                                            {{ form_widget(form.prenom, {
-                                                attr: form.prenom.vars.attr|merge({
-                                                    class: 'form-control profil-champ',
-                                                    readonly: true
-                                                })
-                                            }) }}
-                                            {{ form_errors(form.prenom) }}
-                                        </div>
+                                            <div class="mb-3">
+                                                {{ form_label(form.prenom) }}
+                                                {{ form_widget(form.prenom, {
+                                                    attr: form.prenom.vars.attr|merge({
+                                                        class: 'form-control profil-champ',
+                                                        readonly: true
+                                                    })
+                                                }) }}
+                                                {{ form_errors(form.prenom) }}
+                                            </div>
 
-                                        <div class="mb-3">
-                                            {{ form_label(form.email) }}
-                                            {{ form_widget(form.email, {
-                                                attr: form.email.vars.attr|merge({
-                                                    class: 'form-control profil-champ',
-                                                    readonly: true
-                                                })
-                                            }) }}
-                                            {{ form_errors(form.email) }}
-                                        </div>
+                                            <div class="mb-3">
+                                                {{ form_label(form.email) }}
+                                                {{ form_widget(form.email, {
+                                                    attr: form.email.vars.attr|merge({
+                                                        class: 'form-control profil-champ',
+                                                        readonly: true
+                                                    })
+                                                }) }}
+                                                {{ form_errors(form.email) }}
+                                            </div>
 
-                                        <div class="mb-3">
-                                            {{ form_label(form.telephone) }}
-                                            {{ form_widget(form.telephone, {
-                                                attr: form.telephone.vars.attr|merge({
-                                                    class: 'form-control profil-champ',
-                                                    readonly: true
-                                                })
-                                            }) }}
-                                            {{ form_errors(form.telephone) }}
-                                        </div>
+                                            <div class="mb-3">
+                                                {{ form_label(form.telephone) }}
+                                                {{ form_widget(form.telephone, {
+                                                    attr: form.telephone.vars.attr|merge({
+                                                        class: 'form-control profil-champ',
+                                                        readonly: true
+                                                    })
+                                                }) }}
+                                                {{ form_errors(form.telephone) }}
+                                            </div>
 
-                                        <div class="mb-4">
-                                            {{ form_label(form.pays) }}
-                                            {{ form_widget(form.pays, {
-                                                attr: form.pays.vars.attr|merge({
-                                                    class: 'form-control profil-champ',
-                                                    readonly: true
-                                                })
-                                            }) }}
-                                            {{ form_errors(form.pays) }}
-                                        </div>
+                                            <div class="mb-4">
+                                                {{ form_label(form.pays) }}
+                                                {{ form_widget(form.pays, {
+                                                    attr: form.pays.vars.attr|merge({
+                                                        class: 'form-control profil-champ',
+                                                        readonly: true
+                                                    })
+                                                }) }}
+                                                {{ form_errors(form.pays) }}
+                                            </div>
 
-                                        <button id="btn-save"
-                                                type="submit"
-                                                class="btn btn-primary px-4 py-2 rounded-3"
-                                                disabled>
-                                            Enregistrer
-                                        </button>
+                                            <div class="d-flex gap-2 flex-wrap">
+                                                <button id="btn-save"
+                                                        type="submit"
+                                                        class="btn btn-primary px-4 py-2 rounded-3"
+                                                        disabled>
+                                                    Enregistrer
+                                                </button>
 
-                                        <button id="btn-edit"
-                                                type="button"
-                                                class="btn btn-secondary px-4 py-2 rounded-3">
-                                            Modifier
-                                        </button>
+                                                <button id="btn-edit"
+                                                        type="button"
+                                                        class="btn btn-secondary px-4 py-2 rounded-3">
+                                                    Modifier
+                                                </button>
+                                            </div>
 
                                         {{ form_end(form) }}
 
@@ -578,12 +670,10 @@
                             {% endif %}
 
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </section>
 {% endblock %}

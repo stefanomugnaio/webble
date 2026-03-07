@@ -32,6 +32,7 @@
         "symfony/yaml": "^7.2",
         "twbs/bootstrap": "5.3.8",
         "twig/extra-bundle": "*",
+        "twig/intl-extra": "*",
         "twig/twig": "^3.0"
     },
 

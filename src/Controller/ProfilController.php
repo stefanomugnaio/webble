@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Entity\Devis;
+use App\Entity\DevisFormation;
 use App\Entity\Document;
 use App\Entity\SessionFormation;
 use App\Form\NotificationClientType;
 use App\Form\ProfilClientType;
 use App\Repository\ContactRepository;
+use App\Repository\DevisFormationRepository;
 use App\Repository\DevisRepository;
 use App\Service\DocumentService;
 use App\Service\SessionFormationService;
@@ -28,6 +30,17 @@ class ProfilController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$devis->getId(), $request->request->get('_token'))) {
             $em->remove($devis);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('app_profil');
+    }
+
+    #[Route('/admin/formation/{id}', name: 'admin_devis_formation_delete', methods: ['POST'])]
+    public function deleteDevisFormation(DevisFormation $devisFormation, Request $request, EntityManagerInterface $em): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$devisFormation->getId(), $request->request->get('_token'))) {
+            $em->remove($devisFormation);
             $em->flush();
         }
 
@@ -56,6 +69,8 @@ class ProfilController extends AbstractController
         return $this->redirectToRoute('app_profil');
     }
 
+
+
     #[Route('/profil', name: 'app_profil')]
     public function index(
         Request $request,
@@ -63,6 +78,7 @@ class ProfilController extends AbstractController
         DocumentService $documentService,
         ContactRepository $contactRepository,
         DevisRepository $devisRepository,
+        DevisFormationRepository $devisFormationRepository,
         SessionFormationService $sessionFormationService
     ): Response {
         $client = $this->getUser();
@@ -140,6 +156,21 @@ class ProfilController extends AbstractController
         }
 
         // --------------------------------------------------
+        // DEVIS FORMATION = TABLE DEVIS FORMATION (admin uniquement)
+        // --------------------------------------------------
+        $devisFormationList = [];
+        if ($section === 'devisFormation') {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+            // Tous les devis, les plus récents en premier (par id)
+            $devisFormationList = $devisFormationRepository->findBy([], [
+                'id' => 'DESC',
+            ]);
+
+           
+        }
+
+        // --------------------------------------------------
         // LISTE DES SESSIONS  
         // --------------------------------------------------
 
@@ -155,6 +186,9 @@ class ProfilController extends AbstractController
             // formulaires
             'form'              => $formProfil->createView(),
             'formNotifications' => $formNotifications->createView(),
+
+            // Formations
+            'devisFormation'    => $devisFormationList,
 
             // documents
             'documents'         => $documents,
