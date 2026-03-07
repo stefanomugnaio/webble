@@ -38,6 +38,15 @@ class SessionFormation
     #[ORM\Column]
     private ?int $duree = null;
 
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTime $heure_debut = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTime $heure_fin = null;
+
+    #[ORM\Column]
+    private ?int $bloc = null;
+
     public function __construct()
     {
         $this->DevisFormation = new ArrayCollection();
@@ -134,6 +143,42 @@ class SessionFormation
     public function setDuree(int $duree): static
     {
         $this->duree = $duree;
+
+        return $this;
+    }
+
+    public function getHeureDebut(): ?\DateTime
+    {
+        return $this->heure_debut;
+    }
+
+    public function setHeureDebut(\DateTime $heure_debut): static
+    {
+        $this->heure_debut = $heure_debut;
+
+        return $this;
+    }
+
+    public function getHeureFin(): ?\DateTime
+    {
+        return $this->heure_fin;
+    }
+
+    public function setHeureFin(\DateTime $heure_fin): static
+    {
+        $this->heure_fin = $heure_fin;
+
+        return $this;
+    }
+
+    public function getBloc(): ?int
+    {
+        return $this->bloc;
+    }
+
+    public function setBloc(int $bloc): static
+    {
+        $this->bloc = $bloc;
 
         return $this;
     }

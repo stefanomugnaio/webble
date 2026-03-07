@@ -28,6 +28,7 @@ Encore
     .addEntry('contact', './assets/pages/contact.js')
     .addEntry('formation', './assets/pages/formation.js')
     .addEntry('devis_formation', './assets/pages/devis_formation.js')
+    .addEntry('planning', './assets/pages/planning.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

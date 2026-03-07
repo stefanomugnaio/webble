@@ -2,113 +2,78 @@
 
 namespace App\Controller;
 
-use App\Entity\SessionFormation;
+use App\Repository\SessionFormationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class PlanningController extends AbstractController
 {
-    #[Route('/admin/session-formation/{id}/planning', name: 'admin_session_formation_planning', methods: ['GET'])]
-    public function planning(SessionFormation $sessionFormation): Response
+    #[Route('/planning', name: 'app_planning', methods: ['GET'])]
+    public function planning(): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        return $this->render('planning/index.html.twig');
+    }
 
-        /**
-         * IMPORTANT :
-         * ------------------------------------------------------
-         * Pour faire un vrai planning, il faut idéalement une entité
-         * de créneaux liée à SessionFormation.
-         *
-         * Exemple futur :
-         * $sessionFormation->getCreneaux()
-         *
-         * Comme tu ne m’as pas encore donné cette entité,
-         * je prépare ici un tableau vide + exemple de structure.
-         */
+    #[Route('/planning/evenements', name: 'planning_formations_evenements', methods: ['GET'])]
+    public function planningEvents(SessionFormationRepository $sessionFormationRepository): JsonResponse
+    {
+        $sessions = $sessionFormationRepository->findAll();
 
-        $creneaux = [];
+        $events = [];
 
-        /**
-         * EXEMPLE DE CE QU’ON FERA PLUS TARD :
-         *
-         * foreach ($sessionFormation->getCreneaux() as $creneau) {
-         *     $dateDebut = $creneau->getDateDebut();
-         *     $dateFin = $creneau->getDateFin();
-         *
-         *     if (!$dateDebut || !$dateFin) {
-         *         continue;
-         *     }
-         *
-         *     $creneaux[] = [
-         *         'id'         => $creneau->getId(),
-         *         'jour'       => (int) $dateDebut->format('N'), // 1 = lundi, 7 = dimanche
-         *         'date'       => $dateDebut,
-         *         'heureDebut' => $dateDebut->format('H:i'),
-         *         'heureFin'   => $dateFin->format('H:i'),
-         *         'titre'      => $sessionFormation->getFormation()?->getLibelle() ?? 'Formation',
-         *         'couleur'    => $this->getCouleurByStatus($sessionFormation->getStatus()),
-         *     ];
-         * }
-         */
+        foreach ($sessions as $session) {
+            $formation = $session->getFormation();
 
-        /**
-         * TEMPORAIRE :
-         * ------------------------------------------------------
-         * On génère quelques blocs fictifs si tu veux tester le rendu
-         * avant d’avoir créé l’entité des créneaux.
-         */
-        if (empty($creneaux)) {
-            $titre = $sessionFormation->getFormation()?->getLibelle()
-                ?? $sessionFormation->getFormation()?->getLibelle()
-                ?? 'Formation';
+            $libelle = $formation?->getLibelle() ?? 'Formation';
 
-            $creneaux = [
-                [
-                    'id'         => 1,
-                    'jour'       => 1,
-                    'date'       => new \DateTime('next monday'),
-                    'heureDebut' => '18:00',
-                    'heureFin'   => '20:00',
-                    'titre'      => $titre . ' - Cours 1',
-                    'couleur'    => $this->getCouleurByStatus($sessionFormation->getStatus()),
-                ],
-                [
-                    'id'         => 2,
-                    'jour'       => 3,
-                    'date'       => new \DateTime('next wednesday'),
-                    'heureDebut' => '18:00',
-                    'heureFin'   => '20:00',
-                    'titre'      => $titre . ' - Cours 2',
-                    'couleur'    => $this->getCouleurByStatus($sessionFormation->getStatus()),
-                ],
-                [
-                    'id'         => 3,
-                    'jour'       => 6,
-                    'date'       => new \DateTime('next saturday'),
-                    'heureDebut' => '09:00',
-                    'heureFin'   => '13:00',
-                    'titre'      => $titre . ' - Atelier',
-                    'couleur'    => $this->getCouleurByStatus($sessionFormation->getStatus()),
+            $dateDebut = $session->getDateDebut();
+            $dateFin = $session->getDateFin();
+
+            if (!$dateDebut || !$dateFin) {
+                continue;
+            }
+
+            $couleur = match (mb_strtolower((string) $session->getStatus())) {
+                'disponible', 'ouverte', 'open' => '#198754',
+                'complet', 'complète', 'complete' => '#ffc107',
+                'annulee', 'annulée', 'annule', 'cancelled' => '#dc3545',
+                default => '#0d6efd',
+            };
+
+            $bloc = $session->getBloc();
+            $heureDebut = $session->getHeureDebut();
+            $heureFin = $session->getHeureFin();
+
+            $title = $libelle;
+
+            if ($bloc !== null) {
+                $title .= ' - Bloc ' . $bloc;
+            }
+
+            if ($heureDebut && $heureFin) {
+                $title .= ' - ' . $heureDebut->format('H:i') . ' à ' . $heureFin->format('H:i');
+            }
+
+            $events[] = [
+                'id' => $session->getId(),
+                'title' => $title,
+                'start' => $dateDebut->format('Y-m-d'),
+                'end' => (clone $dateFin)->modify('+1 day')->format('Y-m-d'),
+                'backgroundColor' => $couleur,
+                'borderColor' => $couleur,
+                'textColor' => '#ffffff',
+                'extendedProps' => [
+                    'status' => $session->getStatus(),
+                    'duree' => $session->getDuree(),
+                    'bloc' => $bloc,
+                    'heureDebut' => $heureDebut ? $heureDebut->format('H:i') : null,
+                    'heureFin' => $heureFin ? $heureFin->format('H:i') : null,
                 ],
             ];
         }
 
-        return $this->render('session_formation/planning.html.twig', [
-            'sessionFormation' => $sessionFormation,
-            'creneaux' => $creneaux,
-        ]);
-    }
-
-    private function getCouleurByStatus(?string $status): string
-    {
-        $status = mb_strtolower((string) $status);
-
-        return match ($status) {
-            'disponible', 'ouverte', 'open' => '#198754',
-            'complet', 'complète', 'complete' => '#ffc107',
-            'annulee', 'annulée', 'annule', 'cancelled' => '#dc3545',
-            default => '#0d6efd',
-        };
+        return $this->json($events);
     }
 }
