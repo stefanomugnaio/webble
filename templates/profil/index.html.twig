@@ -380,7 +380,7 @@
                                                 Demandes de formation
                                             </h5>
 
-                                            {% if devisFormation is not empty %}
+                                            {% if devisFormationList is not empty %}
                                                 <div class="table-responsive">
                                                     <table class="table table-sm align-middle table-striped table-hover mb-0" style="table-layout: fixed; width: 100%;">
                                                         <thead class="table-light">
@@ -400,7 +400,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            {% for devisFormation in devisFormation %}
+                                                            {% for devisFormation in devisFormationList %}
                                                                 <tr>
                                                                     <td>{{ devisFormation.id }}</td>
                                                                     <td>{{ devisFormation.prenom }} {{ devisFormation.nom }}</td>
@@ -427,6 +427,7 @@
                                                                     </td>
 
                                                                     <td>{{ devisFormation.formations.libelle }}</td>
+
                                                                     
 
                                                                     <td>
@@ -507,7 +508,8 @@
                                                                 <th style="width: 70px;">#</th>
                                                                 <th style="width: 140px;">Début</th>
                                                                 <th style="width: 140px;">Fin</th>
-                                                                <th style="width: 160px;">Statut</th>
+                                                                <th style="width: 140px;">Heure Début</th>
+                                                                <th style="width: 140px;">Heure Fin</th>
                                                                 <th>Formation</th>
                                                                 <th style="width: 120px; text-align:center;">Actions</th>
                                                             </tr>
@@ -534,6 +536,10 @@
                                                                         {% endif %}
                                                                     </td>
 
+                                                                    <td>{{ sessionF.heureDebut|date('H:i') }}</td>
+
+                                                                    <td>{{ sessionF.heureFin|date('H:i') }}</td>
+                                
                                                                     <td>
                                                                         <span class="badge
                                                                             {% if s in ['disponible', 'ouverte', 'open'] %}bg-success

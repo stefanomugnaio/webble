@@ -8,7 +8,9 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
@@ -66,6 +68,41 @@ class SessionFormationType extends AbstractType
                 'constraints' => [
                     new NotBlank(message: 'Veuillez renseigner la durée.'),
                     new Positive(message: 'La durée doit être un nombre positif.')
+                ],
+            ])
+
+            ->add('heure_debut', TimeType::class, [
+                'label' => 'Heure de début',
+                'widget' => 'single_text',
+                'input' => 'datetime',
+                'attr' => ['class' => 'form-control'],
+                'row_attr' => ['class' => 'mb-3'],
+                'constraints' => [
+                    new NotBlank(message: 'Veuillez renseigner l\'heure de début.')
+                ],
+            ])
+
+            ->add('heure_fin', TimeType::class, [
+                'label' => 'Heure de fin',
+                'widget' => 'single_text',
+                'input' => 'datetime',
+                'attr' => ['class' => 'form-control'],
+                'row_attr' => ['class' => 'mb-3'],
+                'constraints' => [
+                    new NotBlank(message: 'Veuillez renseigner l\'heure de fin.')
+                ],
+            ])
+
+            ->add('bloc', IntegerType::class, [
+                'label' => 'Bloc',
+                'attr' => [
+                    'class' => 'form-control',
+                    'min' => 1
+                ],
+                'row_attr' => ['class' => 'mb-3'],
+                'constraints' => [
+                    new NotBlank(message: 'Veuillez renseigner le bloc.'),
+                    new Positive(message: 'Le bloc doit être un nombre positif.')
                 ],
             ])
 
