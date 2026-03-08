@@ -24,52 +24,49 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ProfilController extends AbstractController
 {
-
     #[Route('/admin/devis/{id}', name: 'admin_devis_delete', methods: ['POST'])]
     public function delete(Devis $devis, Request $request, EntityManagerInterface $em): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$devis->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $devis->getId(), $request->request->get('_token'))) {
             $em->remove($devis);
             $em->flush();
         }
 
-        return $this->redirectToRoute('app_profil');
+        return $this->redirectToRoute('app_profil', ['section' => 'devis']);
     }
 
     #[Route('/admin/formation/{id}', name: 'admin_devis_formation_delete', methods: ['POST'])]
     public function deleteDevisFormation(DevisFormation $devisFormation, Request $request, EntityManagerInterface $em): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$devisFormation->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $devisFormation->getId(), $request->request->get('_token'))) {
             $em->remove($devisFormation);
             $em->flush();
         }
 
-        return $this->redirectToRoute('app_profil');
+        return $this->redirectToRoute('app_profil', ['section' => 'devisFormation']);
     }
 
     #[Route('/admin/sessions-formation/{id}', name: 'admin_session_formation_delete', methods: ['POST'])]
     public function deleteSession(SessionFormation $session, Request $request, EntityManagerInterface $em): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$session->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $session->getId(), $request->request->get('_token'))) {
             $em->remove($session);
             $em->flush();
         }
 
-        return $this->redirectToRoute('app_profil');
+        return $this->redirectToRoute('app_profil', ['section' => 'formations']);
     }
 
     #[Route('/admin/contact/{id}', name: 'admin_contact_delete', methods: ['POST'])]
     public function deleteContact(Contact $contact, Request $request, EntityManagerInterface $em): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$contact->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $contact->getId(), $request->request->get('_token'))) {
             $em->remove($contact);
             $em->flush();
         }
 
-        return $this->redirectToRoute('app_profil');
+        return $this->redirectToRoute('app_profil', ['section' => 'messages']);
     }
-
-
 
     #[Route('/profil', name: 'app_profil')]
     public function index(
@@ -117,8 +114,6 @@ class ProfilController extends AbstractController
             && $formNotifications->isValid()
         ) {
             $em->flush();
-            // $this->addFlash('success', 'Préférences de notification mises à jour.');
-            // return $this->redirectToRoute('app_profil', ['section' => 'notifications']);
         }
 
         // --------------------------------------------------
@@ -136,7 +131,6 @@ class ProfilController extends AbstractController
         if ($section === 'messages') {
             $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-            // On trie par date de création décroissante
             $contacts = $contactRepository->findBy([], [
                 'date_creation' => 'DESC',
             ]);
@@ -149,7 +143,6 @@ class ProfilController extends AbstractController
         if ($section === 'devis') {
             $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-            // Tous les devis, les plus récents en premier (par id)
             $devisList = $devisRepository->findBy([], [
                 'id' => 'DESC',
             ]);
@@ -162,45 +155,41 @@ class ProfilController extends AbstractController
         if ($section === 'devisFormation') {
             $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-            // Tous les devis, les plus récents en premier (par id)
             $devisFormationList = $devisFormationRepository->findBy([], [
                 'id' => 'DESC',
             ]);
-
-           
         }
 
         // --------------------------------------------------
-        // LISTE DES SESSIONS  
+        // LISTE DES SESSIONS
         // --------------------------------------------------
-
         $sessions = $sessionFormationService->recupererToutesLesSessions();
 
         // --------------------------------------------------
         // RENDER
         // --------------------------------------------------
         return $this->render('profil/index.html.twig', [
-            'client'            => $client,
-            'section'           => $section,
+            'client'              => $client,
+            'section'             => $section,
 
             // formulaires
-            'form'              => $formProfil->createView(),
-            'formNotifications' => $formNotifications->createView(),
+            'form'                => $formProfil->createView(),
+            'formNotifications'   => $formNotifications->createView(),
 
-            // Formations
-            'devisFormation'    => $devisFormationList,
+            // devis formation
+            'devisFormationList'  => $devisFormationList,
 
             // documents
-            'documents'         => $documents,
+            'documents'           => $documents,
 
-            // messages (Contact)
-            'contacts'          => $contacts,
+            // messages
+            'contacts'            => $contacts,
 
-            // devis (Devis)
-            'devisList'         => $devisList,
+            // devis
+            'devisList'           => $devisList,
 
-            // formations
-            'sessionsFormations' => $sessions,
+            // sessions
+            'sessionsFormations'  => $sessions,
         ]);
     }
 
@@ -216,7 +205,6 @@ class ProfilController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        // Sécurité : le document doit appartenir au client
         if ($document->getClient() !== $client) {
             throw $this->createAccessDeniedException();
         }
@@ -237,4 +225,6 @@ class ProfilController extends AbstractController
 
         return $response;
     }
+
+    
 }
