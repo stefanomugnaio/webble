@@ -14,6 +14,7 @@ use App\Repository\DevisFormationRepository;
 use App\Repository\DevisRepository;
 use App\Service\DocumentService;
 use App\Service\SessionFormationService;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -49,9 +50,15 @@ class ProfilController extends AbstractController
     #[Route('/admin/sessions-formation/{id}', name: 'admin_session_formation_delete', methods: ['POST'])]
     public function deleteSession(SessionFormation $session, Request $request, EntityManagerInterface $em): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $session->getId(), $request->request->get('_token'))) {
+        try {
             $em->remove($session);
             $em->flush();
+
+            $this->addFlash('success', 'La session a été supprimée avec succès.');
+
+        } catch (ForeignKeyConstraintViolationException $e) {
+
+            $this->addFlash('danger', 'Impossible de supprimer cette session car elle est utilisée dans un devis.');
         }
 
         return $this->redirectToRoute('app_profil', ['section' => 'formations']);
