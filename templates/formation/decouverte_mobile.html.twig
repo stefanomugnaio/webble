@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Formation – Découverte informatique{% endblock %}
+{% block title %}Formation – Découverte mobile{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -18,11 +18,11 @@
             <div class="col-lg-6">
 
                 <h1 class="fw-bold mb-3">
-                    Découverte informatique
+                    Découverte mobile
                 </h1>
 
                 <p class="fs-5 text-muted mb-4">
-                    Maîtrisez les fondamentaux de l’informatique pour utiliser un ordinateur et naviguer sur internet en toute confiance.
+                    Maîtrisez les bases du smartphone pour communiquer, naviguer sur Internet et utiliser les applications du quotidien.
                 </p>
 
                 <div class="bg-light rounded p-3 mb-4">
@@ -35,19 +35,19 @@
 
                         <div class="col-md-4 d-flex align-items-center">
                             <i class="bi bi-clock-history me-2"></i>
-                            Durée : 8 heures
+                            Durée : 4 heures
                         </div>
 
                         <div class="col-md-4 d-flex align-items-center">
                             <i class="bi bi-house-door me-2"></i>
-                            À domicile ou à distance
+                            À domicile
                         </div>
 
                     </div>
                 </div>
 
                 <div class="d-flex flex-wrap gap-3">
-                    <a href="{{ path('app_formation', { formation: 'decouverte-informatique' }) }}" 
+                    <a href="{{ path('app_formation', { formation: 'decouverte-mobile' }) }}" 
                     class="btn btn-primary rounded-pill px-4">
                         Démarrer mon inscription
                     </a>
@@ -56,7 +56,7 @@
                         Planning
                     </a>
                     <a
-                        href="{{ asset('Documents/Formation - Découverte informatique.pdf') }}"
+                        href="{{ asset('Documents/Formation - Découverte mobile.pdf') }}"
                         class="btn btn-link text-decoration-none"
                         download
                     >
@@ -69,7 +69,7 @@
             {# IMAGE DROITE #}
             <div class="col-lg-6 text-center mt-5 mt-lg-0 rounded">
                 <img
-                    src="{{ asset('images/windows11.png') }}"
+                    src="{{ asset('images/mobile.png') }}"
                     alt="Découverte informatique"
                     class="img-fluid rounded"
                 >
@@ -89,8 +89,7 @@
                         Une formation accessible
                     </h5>
                     <p class="text-muted mb-1">
-                        Formation adaptée aux débutants, sans prérequis, avec un rythme
-                        adapté à chacun.
+                        Formation adaptée aux débutants, sans prérequis, pour apprendre à utiliser un smartphone simplement et en toute autonomie.
                     </p>
                 </div>
             </div>
@@ -102,8 +101,7 @@
                         Un accompagnement personnalisé
                     </h5>
                     <p class="text-muted mb-1">
-                        Formation individuelle ou en petit groupe pour favoriser
-                        l’échange et la pratique.
+                        Formation individuelle ou en petit groupe pour pratiquer directement sur son téléphone.
                     </p>
                 </div>
             </div>
@@ -114,46 +112,59 @@
 
         {# ================= PROGRAMME ================= #}
         <div class="row">
-            <div class="col-lg-8">
+    <div class="col-lg-8">
 
-                <h2 class="fw-bold mb-4">
-                    Programme de la formation
-                </h2>
+        <h2 class="fw-bold mb-4">
+            Programme de la formation
+        </h2>
 
-                <p class="text-muted mb-4">
-                    Cette formation vous permet d’acquérir les bases essentielles
-                    pour utiliser un ordinateur et Internet en toute autonomie.
-                </p>
+        <p class="text-muted mb-4">
+            Cette formation vous permet d’acquérir les bases essentielles
+            pour utiliser un ordinateur et Internet en toute autonomie.
+        </p>
 
-                <ul class="list-unstyled text-muted">
-                    <li class="mb-3">
-                        <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        Découverte de l’ordinateur (écran, clavier, souris)
-                    </li>
-                    <li class="mb-3">
-                        <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        Comprendre l’environnement Windows et le bureau
-                    </li>
-                    <li class="mb-3">
-                        <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        Gérer les fichiers et dossiers (créer, déplacer, supprimer)
-                    </li>
-                    <li class="mb-3">
-                        <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        Naviguer sur Internet et effectuer des recherches simples
-                    </li>
-                    <li class="mb-3">
-                        <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        Créer et utiliser une adresse e-mail
-                    </li>
-                    <li>
-                        <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        Bonnes pratiques de sécurité numérique
-                    </li>
-                </ul>
+        <ul class="list-unstyled text-muted">
+                <div class="row">
+                <div class="col-lg-8">
 
+                    <h2 class="fw-bold mb-4">
+                        Programme de la formation
+                    </h2>
+
+                    <p class="text-muted mb-4">
+                        Cette formation vous permet d’acquérir les bases essentielles
+                        pour utiliser un smartphone et les applications du quotidien en toute autonomie.
+                    </p>
+
+                    <ul class="list-unstyled text-muted">
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            Découverte du smartphone (écran tactile, boutons, gestes de base)
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            Comprendre l’interface du téléphone (écran d’accueil, applications, paramètres)
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            Passer des appels et envoyer des SMS
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            Se connecter au Wi-Fi et naviguer sur Internet
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            Télécharger et utiliser des applications utiles du quotidien
+                        </li>
+                        <li>
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            Bonnes pratiques de sécurité mobile
+                        </li>
+                    </ul>
+
+                </div>
             </div>
-        </div>
 
         {# ================= ACTIONS ================= #}
         <div class="d-flex flex-column gap-3 flex-md-row justify-content-between mt-5">

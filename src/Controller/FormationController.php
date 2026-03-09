@@ -47,6 +47,12 @@ final class FormationController extends AbstractController
         return $this->render('formation/decouverte_informatique.html.twig');
     }
 
+    #[Route('/decouverte-mobile', name: 'app_decouverte_mobile')]
+    public function decouverteMobile(): Response
+    {
+        return $this->render('formation/decouverte_mobile.html.twig');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | PLANNING FORMATIONS
