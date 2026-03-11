@@ -3,189 +3,209 @@
 
 {% block title %}Formules & tarifs{% endblock %}
 
-{# On charge le CSS spécifique de la page création de site #}
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('creation_site') }}
 {% endblock %}
 
 {% block body %}
-<section class="text-white py-5 d-flex align-items-center margin-top-responsive" style="min-height: 100vh;">
-    <div class="container py-3">
+<section class="pricing-page py-5 min-vh-100 d-flex align-items-start">
+    <div class="container py-4 py-lg-5">
 
-        <div class="text-center mb-4">
-            <p class="text-uppercase fs-4 text-white mb-2">
+        <div class="text-center mx-auto mb-5" style="max-width: 760px;">
+            <p class="text-uppercase small fw-semibold text-secondary mb-2 letter-spacing-1">
                 Formules
             </p>
-            <h1 class="fw-bold mb-2 fs-2 fs-lg-1">
+            <h1 class="fw-semibold text-dark mb-3 display-6">
                 Des offres simples, adaptées à votre budget.
             </h1>
-            <p class="text-white mb-0 fs-6">
+            <p class="text-secondary mb-0">
                 Choisissez le niveau d’accompagnement qui correspond à votre projet.
             </p>
         </div>
 
-        <div class="row g-3 g-lg-4 justify-content-center">
-            {# Tranquille #}
-            <div class="col-md-6 col-lg-4">
-                <div class="card pricing-card h-100 border-0 shadow-sm">
-                    <div class="card-body d-flex flex-column p-3 p-md-4">
-                        <p class="text-uppercase small text-primary  fw-semibold mb-2 text-center">
-                            Offre Tranquille
-                        </p>
-                        <div class="text-center mb-3">
-                            <div class="fw-bold text-dark mb-0 fs-lg-1 fs-price">
-                                150&nbsp;€
-                            </div>
-                            <div class="text-muted small mt-1">
-                                Pour enfin avoir un vrai site (et plus juste une page Facebook).
-                            </div>
+        <div class="row g-4 justify-content-center align-items-stretch">
+
+            {# Offre Tranquille #}
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 pricing-card-google">
+                    <div class="card-body p-4 p-lg-5 d-flex flex-column">
+
+                        <div class="mb-4">
+                            <span class="badge rounded-pill text-primary bg-primary-subtle px-3 py-2 fw-semibold text-uppercase small">
+                                Offre Tranquille
+                            </span>
                         </div>
 
-                        <a href="{{ path('app_devis', {'offre': 'tranquille'}) }}" class="btn btn-outline-primary w-100 rounded-pill mb-3">
-                            C'est parti !
-                        </a>
+                        <div class="mb-4">
+                            <h2 class="text-dark fw-bold display-4 mb-2">150&nbsp;€</h2>
+                            <p class="text-secondary mb-0">
+                                Pour enfin avoir un vrai site (et plus juste une page Facebook).
+                            </p>
+                        </div>
 
-                        <p class="text-muted small mb-3">
+                        <div class="mb-4">
+                            <a href="{{ path('app_devis', {'offre': 'tranquille'}) }}"
+                               class="btn btn-outline-primary rounded-pill px-4 py-2 w-100">
+                                C'est parti !
+                            </a>
+                        </div>
+
+                        <p class="text-secondary mb-4">
                             Idéal pour lancer rapidement votre présence en ligne avec une page claire et professionnelle.
                         </p>
 
-                        <ul class="list-unstyled text-muted small mb-0">
-                            <li class="mb-2">
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                1 page principale (landing page)
+                        <ul class="list-unstyled text-secondary small mb-0">
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>1 page principale (landing page)</span>
                             </li>
-                            <li class="mb-2">
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                Design responsive (mobile, tablette, desktop)
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>Design responsive (mobile, tablette, desktop)</span>
                             </li>
-                            <li class="mb-2">
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                Intégration de votre logo et de vos couleurs
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>Intégration de votre logo et de vos couleurs</span>
                             </li>
-                            <li>
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                Livraison clé en main, prête à être mise en ligne
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>Livraison clé en main, prête à être mise en ligne</span>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            {# Sérieux (bloc central mis en avant) #}
-            <div class="col-md-6 col-lg-4">
-                <div class="card pricing-card pricing-card-featured h-100 border-0 shadow-lg">
-                    <div class="card-body d-flex flex-column p-3 p-md-4">
-                        <p class="text-uppercase small text-warning fw-semibold mb-2 text-center">
-                            Offre Sérieuse
-                        </p>
-                        <div class="text-center mb-3">
-                            <div class="fw-bold text-dark mb-0 fs-price fs-lg-1">
-                                550&nbsp;€
-                            </div>
-                            <div class="text-muted small mt-1">
-                                Pour ceux qui en ont marre que le site du voisin soit mieux que le leur.
-                            </div>
+            {# Offre Sérieuse #}
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 pricing-card-google pricing-card-featured">
+                    <div class="card-body p-4 p-lg-5 d-flex flex-column">
+
+                        <div class="mb-4 d-flex align-items-center justify-content-between flex-wrap gap-2">
+                            <span class="badge rounded-pill text-warning-emphasis bg-warning-subtle px-3 py-2 fw-semibold text-uppercase small">
+                                Offre Sérieuse
+                            </span>
+                            <span class="badge rounded-pill bg-dark text-white px-3 py-2 small fw-medium">
+                                Recommandée
+                            </span>
                         </div>
 
-                        <a href="{{ path('app_devis', {'offre': 'serieuse'}) }}" class="btn btn-outline-warning  w-100 rounded-pill mb-3">
-                            C'est parti !
-                        </a>
+                        <div class="mb-4">
+                            <h2 class="text-dark fw-bold display-4 mb-2">550&nbsp;€</h2>
+                            <p class="text-secondary mb-0">
+                                Pour ceux qui en ont marre que le site du voisin soit mieux que le leur.
+                            </p>
+                        </div>
 
-                        <p class="text-muted small mb-3">
+                        <div class="mb-4">
+                            <a href="{{ path('app_devis', {'offre': 'serieuse'}) }}"
+                               class="btn btn-warning rounded-pill px-4 py-2 w-100 fw-medium">
+                                C'est parti !
+                            </a>
+                        </div>
+
+                        <p class="text-secondary mb-4">
                             La formule idéale pour les indépendants et petites structures qui veulent un site solide et évolutif.
                         </p>
 
-                        <ul class="list-unstyled text-muted small mb-0">
-                            <li class="mb-2">
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                Tout ce qui est inclus dans l'offre Tranquille
+                        <ul class="list-unstyled text-secondary small mb-0 mt-auto">
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>Tout ce qui est inclus dans l'offre Tranquille</span>
                             </li>
-                            <li class="mb-2">
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                Jusqu’à 5 pages (Accueil, Services, À propos, Contact, etc.)
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>Jusqu’à 5 pages (Accueil, Services, À propos, Contact, etc.)</span>
                             </li>
-                            <li class="mb-2">
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                Optimisation de base pour le référencement (SEO)
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>Optimisation de base pour le référencement (SEO)</span>
                             </li>
-                            <li class="mb-2">
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                Intégration de vos réseaux sociaux
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>Intégration de vos réseaux sociaux</span>
                             </li>
-                            <li class="mb-2">
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                Formation rapide à la prise en main du site
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>Formation rapide à la prise en main du site</span>
                             </li>
-                            <li>
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                Espace administrateur basique pour la gestion du contenu
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>Espace administrateur basique pour la gestion du contenu</span>
                             </li>
-                            <li>
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                3 mois de contrat de maintenance après la mise en ligne
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>3 mois de contrat de maintenance après la mise en ligne</span>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            {# Fou #}
-            <div class="col-md-6 col-lg-4">
-                <div class="card pricing-card h-100 border-0 shadow-sm">
-                    <div class="card-body d-flex flex-column p-3 p-md-4">
-                        <p class="text-uppercase small text-danger fw-semibold mb-2 text-center">
-                            Offre Pro
-                        </p>
-                        <div class="text-center mb-3">
-                            <div class="fw-bold text-dark mb-0 fs-3 fs-lg-2">
-                                Sur devis
-                            </div>
-                            <div class="text-muted small mt-1">
-                                Pour les idées qui ne rentrent dans aucune case (et c’est très bien comme ça).
-                            </div>
+            {# Offre Pro #}
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 pricing-card-google">
+                    <div class="card-body p-4 p-lg-5 d-flex flex-column">
+
+                        <div class="mb-4">
+                            <span class="badge rounded-pill text-danger bg-danger-subtle px-3 py-2 fw-semibold text-uppercase small">
+                                Offre Pro
+                            </span>
                         </div>
 
-                        <a href="{{ path('app_contact') }}" class="btn btn-outline-danger w-100 rounded-pill mb-3">
-                            Contactez-moi !
-                        </a>
+                        <div class="mb-4">
+                            <h2 class="text-dark fw-bold mb-2" style="font-size: clamp(2rem, 4vw, 3rem);">
+                                Sur devis
+                            </h2>
+                            <p class="text-secondary mb-0">
+                                Pour les idées qui ne rentrent dans aucune case (et c’est très bien comme ça).
+                            </p>
+                        </div>
 
-                        <p class="text-muted small mb-3">
+                        <div class="mb-4">
+                            <a href="{{ path('app_contact') }}"
+                               class="btn btn-outline-danger rounded-pill px-4 py-2 w-100">
+                                Contactez-moi !
+                            </a>
+                        </div>
+
+                        <p class="text-secondary mb-4">
                             Pour les projets qui sortent du cadre : fonctionnalités avancées, espace client, etc.
                         </p>
 
-                        <ul class="list-unstyled text-muted small mb-0">
-                            <li class="mb-2">
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                Nombre de pages et structure adaptés à votre activité
+                        <ul class="list-unstyled text-secondary small mb-0 mt-auto">
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>Nombre de pages et structure adaptés à votre activité</span>
                             </li>
-                            <li class="mb-2">
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                Fonctionnalités spécifiques (blog, espace client, réservation, etc.)
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>Fonctionnalités spécifiques (blog, espace client, réservation, etc.)</span>
                             </li>
-                            <li>
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                Devis détaillé et transparent avant lancement
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>Devis détaillé et transparent avant lancement</span>
                             </li>
-                            <li class="mb-2">
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                Intégration de vos réseaux sociaux
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>Intégration de vos réseaux sociaux</span>
                             </li>
-                            <li class="mb-2">
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                Optimisation de base pour le référencement (SEO)
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>Optimisation de base pour le référencement (SEO)</span>
                             </li>
-                            <li>
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                Espace administrateur avancé pour la gestion du contenu
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>Espace administrateur avancé pour la gestion du contenu</span>
                             </li>
-                            <li>
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                Formation à la prise en main du site
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>Formation à la prise en main du site</span>
                             </li>
-                            <li>
-                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                6 mois de contrat de maintenance après la mise en ligne
+                            <li class="d-flex">
+                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                <span>6 mois de contrat de maintenance après la mise en ligne</span>
                             </li>
                         </ul>
                     </div>
@@ -194,7 +214,14 @@
 
         </div>
 
-        <p class="small my-2"><a  class="text-light" href="/contrat-de-maintenance">En savoir plus sur le contrat de maintenance</a></p>
+        <div class="text-center mt-4">
+            <p class="small mb-0">
+                <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                   href="/contrat-de-maintenance">
+                    En savoir plus sur le contrat de maintenance
+                </a>
+            </p>
+        </div>
 
     </div>
 </section>

@@ -3,36 +3,50 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-<section class="d-flex align-items-center justify-content-center" style="min-height: 100vh;">
-    <div class="container">
+<section class="py-5 min-vh-100 margin-top-responsive" style="background:#f8f9fa;">
+    <div class="container py-4 py-lg-5">
         <div class="row justify-content-center">
-            <div class="col-md-5 col-lg-4">
+            <div class="col-md-6 col-lg-4">
 
-                <div class="card shadow-lg border-0">
-                    <div class="card-body p-4">
+                <div class="card border-0 shadow-sm rounded-4">
+                    <div class="card-body p-4 p-lg-5">
 
-                        <h1 class="h4 mb-4 text-center fw-bold">Connexion à votre compte</h1>
+                        <div class="text-center mb-4">
+                            <p class="text-uppercase small fw-semibold text-secondary mb-2" style="letter-spacing:.08em;">
+                                Espace client
+                            </p>
+
+                            <h1 class="h4 fw-semibold text-dark mb-0">
+                                Connexion à votre compte
+                            </h1>
+                        </div>
 
                         {# --- Message d’erreur --- #}
                         {% if error %}
-                            <div class="alert alert-danger">
+                            <div class="alert alert-danger rounded-3">
                                 Adresse email ou mot de passe incorrect.
                             </div>
                         {% endif %}
 
                         {# --- Déjà connecté ? --- #}
                         {% if app.user %}
-                            <div class="alert alert-info text-center mb-3">
-                                Vous êtes connecté en tant que <strong>{{ app.user.userIdentifier }}</strong>.
+                            <div class="alert alert-info text-center mb-3 rounded-3">
+                                Vous êtes connecté en tant que
+                                <strong>{{ app.user.userIdentifier }}</strong>.
                                 <br>
-                                <a href="{{ path('app_logout') }}" class="text-decoration-underline">Se déconnecter</a>
+                                <a href="{{ path('app_logout') }}" class="text-decoration-underline">
+                                    Se déconnecter
+                                </a>
                             </div>
                         {% endif %}
 
                         <form method="post">
 
                             <div class="mb-3">
-                                <label for="inputEmail" class="form-label fw-semibold">Adresse email</label>
+                                <label for="inputEmail" class="form-label fw-medium text-dark">
+                                    Adresse email
+                                </label>
+
                                 <input
                                     type="email"
                                     name="email"
@@ -45,8 +59,11 @@
                                 >
                             </div>
 
-                            <div class="mb-3">
-                                <label for="inputPassword" class="form-label fw-semibold">Mot de passe</label>
+                            <div class="mb-4">
+                                <label for="inputPassword" class="form-label fw-medium text-dark">
+                                    Mot de passe
+                                </label>
+
                                 <input
                                     type="password"
                                     name="password"
@@ -63,20 +80,18 @@
                                 value="{{ csrf_token('authenticate') }}"
                             >
 
-                            {# <div class="form-check mb-3">
-                                <input type="checkbox" class="form-check-input" name="_remember_me" id="rememberMe">
-                                <label class="form-check-label" for="rememberMe">Se souvenir de moi</label>
-                            </div> #}
-
                             <button class="btn btn-primary w-100 py-2 fw-semibold rounded-pill" type="submit">
                                 Se connecter
                             </button>
+
                         </form>
 
-                        <p class="text-center mt-4 small">
+                        <div class="text-center mt-4 small text-secondary">
                             Mot de passe oublié ?
-                            <a href="{{ path('app_contact') }}">Contactez-moi</a>
-                        </p>
+                            <a href="{{ path('app_contact') }}" class="text-decoration-underline">
+                                Contactez-moi
+                            </a>
+                        </div>
 
                     </div>
                 </div>

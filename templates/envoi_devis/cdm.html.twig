@@ -4,66 +4,105 @@
 {% block title %}Contrat de maintenance{% endblock %}
 
 {% block body %}
-<div class="container mt-5">
+<section class="py-5 min-vh-100 margin-top-responsive" style="background:#f8f9fa;">
+    <div class="container py-4 py-lg-5">
 
-    <div class="row justify-content-center mt-5">
-        <div class="col-lg-8 mt-5">
+        <div class="text-center mx-auto mb-5" style="max-width:720px;">
+            <p class="text-uppercase small fw-semibold text-secondary mb-2" style="letter-spacing:.08em;">
+                Maintenance
+            </p>
 
-            <div class="card shadow-sm border-0">
-                <div class="card-body p-4">
+            <h1 class="fw-semibold text-dark mb-3">
+                Contrat de maintenance
+            </h1>
 
-                    <h3 class="card-title mb-3 text-primary">
-                        Contrat de maintenance
-                    </h3>
-
-                    <p class="card-text">
-                        Le contrat de maintenance vous permet de garder un site web fiable,
-                        sécurisé et à jour.
-                    </p>
-
-                    <ul class="list-group list-group-flush small mb-3">
-                        <li class="list-group-item">
-                            🔐 <strong>Sécurité et mises à jour</strong> pour protéger votre site contre les problèmes et les failles
-                        </li>
-                        <li class="list-group-item">
-                            🛡️ Surveillance et corrections en cas de dysfonctionnement
-                        </li>
-                        <li class="list-group-item">
-                            🐞 Correction de bugs mineurs affectant le bon fonctionnement du site
-                        </li>
-                        <li class="list-group-item">
-                            ✏️ Modifications mineures de contenu (textes, images, informations)
-                        </li>
-                        <li class="list-group-item">
-                            🗑️ Suppression ou mise à jour de contenus existants
-                        </li>
-                        <li class="list-group-item">
-                            ⚙️ Ajustements simples pour améliorer ou corriger des fonctionnalités existantes
-                        </li>
-                        <li class="list-group-item">
-                            📊 Vérification régulière du bon fonctionnement et des performances du site
-                        </li>
-                        <li class="list-group-item">
-                            💾 Sauvegardes régulières afin de pouvoir restaurer le site en cas de problème
-                        </li>
-                        <li class="list-group-item">
-                            📞 Assistance et support en cas de question ou de souci technique
-                        </li>
-                        <li class="list-group-item">
-                            💶 Tarif préférentiel sur les développements spécifiques.
-                        </li>
-                    </ul>
-
-                    <div class="alert alert-warning small mb-0">
-                        Le contrat de maintenance ne comprend pas la création de nouvelles fonctionnalités,
-                        les évolutions majeures du site ou les refontes complètes.
-                    </div>
-
-                </div>
-            </div>
-
+            <p class="text-secondary mb-0">
+                Le contrat de maintenance vous permet de garder un site web fiable,
+                sécurisé et toujours à jour.
+            </p>
         </div>
-    </div>
 
-</div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="card border-0 shadow-sm rounded-4">
+                    <div class="card-body p-4 p-lg-5">
+
+                        <h2 class="h5 fw-semibold text-dark mb-4">
+                            Ce que comprend le contrat
+                        </h2>
+
+                        <ul class="list-unstyled text-secondary mb-4">
+
+                            <li class="d-flex mb-2">
+                                <span class="me-2">🔐</span>
+                                <span><strong>Sécurité et mises à jour</strong> pour protéger votre site contre les failles</span>
+                            </li>
+
+                            <li class="d-flex mb-2">
+                                <span class="me-2">🛡️</span>
+                                <span>Surveillance et corrections en cas de dysfonctionnement</span>
+                            </li>
+
+                            <li class="d-flex mb-2">
+                                <span class="me-2">🐞</span>
+                                <span>Correction de bugs mineurs affectant le fonctionnement du site</span>
+                            </li>
+
+                            <li class="d-flex mb-2">
+                                <span class="me-2">✏️</span>
+                                <span>Modifications mineures de contenu (textes, images, informations)</span>
+                            </li>
+
+                            <li class="d-flex mb-2">
+                                <span class="me-2">🗑️</span>
+                                <span>Suppression ou mise à jour de contenus existants</span>
+                            </li>
+
+                            <li class="d-flex mb-2">
+                                <span class="me-2">⚙️</span>
+                                <span>Ajustements simples pour améliorer des fonctionnalités existantes</span>
+                            </li>
+
+                            <li class="d-flex mb-2">
+                                <span class="me-2">📊</span>
+                                <span>Vérification régulière du bon fonctionnement et des performances</span>
+                            </li>
+
+                            <li class="d-flex mb-2">
+                                <span class="me-2">💾</span>
+                                <span>Sauvegardes régulières pour restaurer le site en cas de problème</span>
+                            </li>
+
+                            <li class="d-flex mb-2">
+                                <span class="me-2">📞</span>
+                                <span>Assistance et support en cas de question technique</span>
+                            </li>
+
+                            <li class="d-flex">
+                                <span class="me-2">💶</span>
+                                <span>Tarif préférentiel sur les développements spécifiques</span>
+                            </li>
+
+                        </ul>
+
+                        <div class="border rounded-4 bg-light p-3 small text-secondary">
+                            Le contrat de maintenance ne comprend pas la création de nouvelles fonctionnalités,
+                            les évolutions majeures du site ou les refontes complètes.
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="{{ path('app_creation_site') }}" class="btn btn-outline-secondary rounded-pill px-4">
+                        Retour aux offres
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
 {% endblock %}

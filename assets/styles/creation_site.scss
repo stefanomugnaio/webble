@@ -1,22 +1,22 @@
-/* assets/styles/pricing.scss */
-
-.pricing-card {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+.pricing-page {
+    background: #f8f9fa;
 }
 
-.pricing-card:hover {
-  transform: translateY(-8px) scale(1.01);
-  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.35);
+.pricing-card-google {
+    background: #ffffff;
+    border: 1px solid #e9ecef !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pricing-card-google:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.06) !important;
 }
 
 .pricing-card-featured {
-  transform: scale(1.01);
+    border: 1px solid #dee2e6 !important;
 }
 
-.pricing-card-featured:hover {
-  transform: translateY(-8px) scale(1.02);
-}
-
-.fs-price {
-  font-size: clamp(2rem, 5vw, 3.5rem);
+.letter-spacing-1 {
+    letter-spacing: 0.08em;
 }

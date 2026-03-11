@@ -8,164 +8,202 @@
 {% endblock %}
 
 {% block body %}
-<section class="py-5 margin-top-responsive mt-5">
-    <div class="container mt-5 p-5 bg-white rounded">
+<section class="py-5 min-vh-100 margin-top-responsive" style="background: #f8f9fa;">
+    <div class="container py-4 py-lg-5">
 
-        {# ================= HEADER ================= #}
-        <div class="row align-items-center mb-5">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="card-body p-4 p-lg-5">
 
-            {# TEXTE GAUCHE #}
-            <div class="col-lg-6">
+                {# ================= HEADER ================= #}
+                <div class="row align-items-center g-5 mb-5">
 
-                <h1 class="fw-bold mb-3">
-                    Découverte informatique
-                </h1>
+                    {# TEXTE GAUCHE #}
+                    <div class="col-lg-6">
 
-                <p class="fs-5 text-muted mb-4">
-                    Maîtrisez les fondamentaux de l’informatique pour utiliser un ordinateur et naviguer sur internet en toute confiance.
-                </p>
+                        <p class="text-uppercase small fw-semibold text-secondary mb-2" style="letter-spacing: .08em;">
+                            Formation
+                        </p>
 
-                <div class="bg-light rounded p-3 mb-4">
-                    <div class="row g-3 small text-muted">
+                        <h1 class="fw-semibold text-dark mb-3">
+                            Découverte informatique
+                        </h1>
 
-                        <div class="col-md-4 d-flex align-items-center">
-                            <i class="bi bi-calendar-event me-2"></i>
-                            Formation ponctuelle
+                        <p class="fs-5 text-secondary mb-4">
+                            Maîtrisez les fondamentaux de l’informatique pour utiliser un ordinateur
+                            et naviguer sur Internet en toute confiance.
+                        </p>
+
+                        <div class="border rounded-4 bg-light p-3 p-md-4 mb-4">
+                            <div class="row g-3 small text-secondary">
+
+                                <div class="col-md-4 d-flex align-items-center">
+                                    <i class="bi bi-calendar-event me-2"></i>
+                                    Formation ponctuelle
+                                </div>
+
+                                <div class="col-md-4 d-flex align-items-center">
+                                    <i class="bi bi-clock-history me-2"></i>
+                                    Durée : 8 heures
+                                </div>
+
+                                <div class="col-md-4 d-flex align-items-center">
+                                    <i class="bi bi-house-door me-2"></i>
+                                    À domicile ou à distance
+                                </div>
+
+                            </div>
                         </div>
 
-                        <div class="col-md-4 d-flex align-items-center">
-                            <i class="bi bi-clock-history me-2"></i>
-                            Durée : 8 heures
-                        </div>
+                        <div class="d-flex flex-wrap gap-3">
+                            <a href="{{ path('app_formation', { formation: 'decouverte-informatique' }) }}"
+                               class="btn btn-primary rounded-pill px-4">
+                                Démarrer mon inscription
+                            </a>
 
-                        <div class="col-md-4 d-flex align-items-center">
-                            <i class="bi bi-house-door me-2"></i>
-                            À domicile ou à distance
+                            <a href="{{ path('app_planning') }}"
+                               class="btn btn-outline-secondary rounded-pill px-4">
+                                Planning
+                            </a>
+
+                            <a href="{{ asset('Documents/Formation - Découverte informatique.pdf') }}"
+                               class="btn btn-link text-decoration-none px-0"
+                               download>
+                                Télécharger le programme
+                            </a>
                         </div>
 
                     </div>
+
+                    {# IMAGE DROITE #}
+                    <div class="col-lg-6 text-center">
+                        <div class="border rounded-4 bg-light p-3">
+                            <img
+                                src="{{ asset('images/windows11.png') }}"
+                                alt="Découverte informatique"
+                                class="img-fluid rounded-4"
+                            >
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="d-flex flex-wrap gap-3">
-                    <a href="{{ path('app_formation', { formation: 'decouverte-informatique' }) }}" 
-                    class="btn btn-primary rounded-pill px-4">
-                        Démarrer mon inscription
+                {# ================= AVANTAGES ================= #}
+                <div class="row g-4 mb-5">
+
+                    <div class="col-md-6">
+                        <div class="border rounded-4 bg-light p-4 h-100 d-flex gap-3">
+                            <i class="bi bi-wifi fs-2 text-primary"></i>
+                            <div>
+                                <h5 class="fw-semibold text-dark mb-2">
+                                    Une formation accessible
+                                </h5>
+                                <p class="text-secondary mb-0">
+                                    Formation adaptée aux débutants, sans prérequis,
+                                    avec un rythme progressif et rassurant.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="border rounded-4 bg-light p-4 h-100 d-flex gap-3">
+                            <i class="bi bi-person-check fs-2 text-primary"></i>
+                            <div>
+                                <h5 class="fw-semibold text-dark mb-2">
+                                    Un accompagnement personnalisé
+                                </h5>
+                                <p class="text-secondary mb-0">
+                                    Formation individuelle ou en petit groupe pour favoriser
+                                    l’échange, la pratique et la compréhension.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                {# ================= PROGRAMME ================= #}
+                <div class="row g-4 align-items-start">
+                    <div class="col-lg-8">
+
+                        <h2 class="fw-semibold text-dark mb-3">
+                            Programme de la formation
+                        </h2>
+
+                        <p class="text-secondary mb-4">
+                            Cette formation vous permet d’acquérir les bases essentielles
+                            pour utiliser un ordinateur et Internet en toute autonomie.
+                        </p>
+
+                        <div class="border rounded-4 bg-light p-4">
+                            <ul class="list-unstyled text-secondary mb-0">
+                                <li class="d-flex mb-2">
+                                    <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                    <span>Découverte de l’ordinateur (écran, clavier, souris)</span>
+                                </li>
+                                <li class="d-flex mb-2">
+                                    <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                    <span>Comprendre l’environnement Windows et le bureau</span>
+                                </li>
+                                <li class="d-flex mb-2">
+                                    <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                    <span>Gérer les fichiers et dossiers (créer, déplacer, supprimer)</span>
+                                </li>
+                                <li class="d-flex mb-2">
+                                    <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                    <span>Naviguer sur Internet et effectuer des recherches simples</span>
+                                </li>
+                                <li class="d-flex mb-2">
+                                    <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                    <span>Créer et utiliser une adresse e-mail</span>
+                                </li>
+                                <li class="d-flex">
+                                    <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
+                                    <span>Bonnes pratiques de sécurité numérique</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="border rounded-4 bg-light p-4">
+                            <span class="badge rounded-pill bg-dark text-white px-3 py-2 small fw-medium mb-3">
+                                En bref
+                            </span>
+
+                            <div class="small text-secondary">
+                                <div class="mb-2">
+                                    <strong class="text-dark">Niveau :</strong> Débutant
+                                </div>
+                                <div class="mb-2">
+                                    <strong class="text-dark">Durée :</strong> 8 heures
+                                </div>
+                                <div class="mb-2">
+                                    <strong class="text-dark">Format :</strong> Ponctuel
+                                </div>
+                                <div>
+                                    <strong class="text-dark">Lieu :</strong> À domicile ou à distance
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {# ================= ACTIONS ================= #}
+                <div class="d-flex flex-column gap-3 flex-md-row justify-content-between mt-5">
+
+                    <a href="{{ path('app_liste_formations') }}" class="btn btn-outline-secondary rounded-pill px-4">
+                        Retour aux formations
                     </a>
-                    <a href="{{ path('app_planning') }}" 
-                    class="btn btn-primary rounded-pill px-4">
-                        Planning
+
+                    <a href="{{ path('app_contact') }}" class="btn btn-primary rounded-pill px-4">
+                        Demander des informations
                     </a>
-                    <a
-                        href="{{ asset('Documents/Formation - Découverte informatique.pdf') }}"
-                        class="btn btn-link text-decoration-none"
-                        download
-                    >
-                        Télécharger le programme
-                    </a>
+
                 </div>
 
             </div>
-
-            {# IMAGE DROITE #}
-            <div class="col-lg-6 text-center mt-5 mt-lg-0 rounded">
-                <img
-                    src="{{ asset('images/windows11.png') }}"
-                    alt="Découverte informatique"
-                    class="img-fluid rounded"
-                >
-            </div>
-
-        </div>
-
-        <hr class="my-5">
-
-        {# ================= AVANTAGES ================= #}
-        <div class="row g-4 mb-5">
-
-            <div class="col-md-6 d-flex gap-3">
-                <i class="bi bi-wifi fs-2 text-primary"></i>
-                <div>
-                    <h5 class="fw-semibold">
-                        Une formation accessible
-                    </h5>
-                    <p class="text-muted mb-1">
-                        Formation adaptée aux débutants, sans prérequis, avec un rythme
-                        adapté à chacun.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-md-6 d-flex gap-3">
-                <i class="bi bi-person-check fs-2 text-primary"></i>
-                <div>
-                    <h5 class="fw-semibold">
-                        Un accompagnement personnalisé
-                    </h5>
-                    <p class="text-muted mb-1">
-                        Formation individuelle ou en petit groupe pour favoriser
-                        l’échange et la pratique.
-                    </p>
-                </div>
-            </div>
-
-        </div>
-
-        <hr class="my-5">
-
-        {# ================= PROGRAMME ================= #}
-        <div class="row">
-            <div class="col-lg-8">
-
-                <h2 class="fw-bold mb-4">
-                    Programme de la formation
-                </h2>
-
-                <p class="text-muted mb-4">
-                    Cette formation vous permet d’acquérir les bases essentielles
-                    pour utiliser un ordinateur et Internet en toute autonomie.
-                </p>
-
-                <ul class="list-unstyled text-muted">
-                    <li class="mb-3">
-                        <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        Découverte de l’ordinateur (écran, clavier, souris)
-                    </li>
-                    <li class="mb-3">
-                        <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        Comprendre l’environnement Windows et le bureau
-                    </li>
-                    <li class="mb-3">
-                        <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        Gérer les fichiers et dossiers (créer, déplacer, supprimer)
-                    </li>
-                    <li class="mb-3">
-                        <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        Naviguer sur Internet et effectuer des recherches simples
-                    </li>
-                    <li class="mb-3">
-                        <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        Créer et utiliser une adresse e-mail
-                    </li>
-                    <li>
-                        <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        Bonnes pratiques de sécurité numérique
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-
-        {# ================= ACTIONS ================= #}
-        <div class="d-flex flex-column gap-3 flex-md-row justify-content-between mt-5">
-
-            <a href="{{ path('app_liste_formations') }}" class="btn btn-outline-secondary rounded-pill">
-                Retour aux formations
-            </a>
-
-            <a href="{{ path('app_contact') }}" class="btn btn-primary rounded-pill px-4">
-                Demander des informations
-            </a>
-
         </div>
 
     </div>

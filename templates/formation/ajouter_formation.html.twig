@@ -3,19 +3,22 @@
 {% block title %}Ajouter une formation{% endblock %}
 
 {% block body %}
-<section class="py-5 margin-top-responsive" style="min-height: 100vh;">
-    <div class="container" style="max-width: 800px;">
+<section class="py-5 min-vh-100 margin-top-responsive" style="background: #f8f9fa;">
+    <div class="container py-4 py-lg-5" style="max-width: 800px;">
 
-        <div class="text-center mb-5">
-            <p class="text-uppercase small text-muted mb-1">
+        <div class="text-center mx-auto mb-5" style="max-width: 640px;">
+            <p class="text-uppercase small fw-semibold text-secondary mb-2" style="letter-spacing: .08em;">
                 Administration
             </p>
-            <h1 class="fw-bold">
+            <h1 class="fw-semibold text-dark mb-3">
                 Ajouter une formation
             </h1>
+            <p class="text-secondary mb-0">
+                Renseignez les informations principales pour créer une nouvelle formation.
+            </p>
         </div>
 
-        <div class="card shadow-sm border-0">
+        <div class="card border-0 shadow-sm rounded-4">
             <div class="card-body p-4 p-md-5">
 
                 {{ form_start(form, {
@@ -24,43 +27,50 @@
                     }
                 }) }}
 
-                {# Erreurs globales #}
                 {{ form_errors(form) }}
 
-                <div class="mb-3">
-                    {{ form_label(form.libelle) }}
+                <div class="mb-4">
+                    {{ form_label(form.libelle, null, { label_attr: { class: 'form-label text-dark fw-medium' } }) }}
                     {{ form_widget(form.libelle) }}
-                    {{ form_errors(form.libelle) }}
+                    <div class="error-message">
+                        {{ form_errors(form.libelle) }}
+                    </div>
                 </div>
 
-                <div class="mb-3">
-                    {{ form_label(form.prix) }}
+                <div class="mb-4">
+                    {{ form_label(form.prix, null, { label_attr: { class: 'form-label text-dark fw-medium' } }) }}
                     <div class="input-group">
                         {{ form_widget(form.prix) }}
                         <span class="input-group-text">€</span>
                     </div>
-                    {{ form_errors(form.prix) }}
+                    <div class="error-message">
+                        {{ form_errors(form.prix) }}
+                    </div>
                 </div>
 
-                <div class="mb-3">
-                    {{ form_label(form.description) }}
+                <div class="mb-4">
+                    {{ form_label(form.description, null, { label_attr: { class: 'form-label text-dark fw-medium' } }) }}
                     {{ form_widget(form.description) }}
-                    {{ form_errors(form.description) }}
+                    <div class="error-message">
+                        {{ form_errors(form.description) }}
+                    </div>
                 </div>
 
-                <div class="mb-3">
-                    {{ form_label(form.duree) }}
+                <div class="mb-4">
+                    {{ form_label(form.duree, null, { label_attr: { class: 'form-label text-dark fw-medium' } }) }}
                     <div class="input-group">
                         {{ form_widget(form.duree) }}
                         <span class="input-group-text">heures</span>
                     </div>
-                    {{ form_errors(form.duree) }}
+                    <div class="error-message">
+                        {{ form_errors(form.duree) }}
+                    </div>
                 </div>
 
-                <div class="d-flex justify-content-between mt-4">
+                <div class="d-flex flex-column flex-sm-row justify-content-between gap-3 mt-4">
 
                     <a href="{{ path('app_liste_formations') }}"
-                       class="btn btn-outline-secondary rounded-pill">
+                       class="btn btn-outline-secondary rounded-pill px-4">
                         Retour
                     </a>
 
