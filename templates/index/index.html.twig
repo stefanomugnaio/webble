@@ -2,44 +2,237 @@
 
 {% block title %}Création de sites internet{% endblock %}
 
-{# On ajoute le CSS spécifique de la page "index" #}
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('index') }}
 {% endblock %}
 
 {% block body %}
-    {# Section hero sous la navbar #}
-    <section class="position-relative text-white min-vh-100 d-flex align-items-center overflow-hidden">
-        {# Fond animé (halos + bruit) #}
-        <div id="hero-bg" class="position-absolute top-0 start-0 w-100 h-100">
-            <div class="hero-orb hero-orb-1"></div>
-            <div class="hero-orb hero-orb-2"></div>
-            <div class="hero-orb hero-orb-3"></div>
-            <div class="hero-noise"></div>
-        </div>
+<section class="py-5 min-vh-100 margin-top-responsive overflow-hidden position-relative" style="background: #f8f9fa;">
+    <div class="container py-5 py-lg-5 position-relative">
 
-        {# Contenu au-dessus du fond #}
-        <div class="container position-relative flex-grow-1 d-flex flex-column justify-content-around text-center">
+        {# ================= HERO ================= #}
+        <div class="row align-items-center pt-5 g-5 mb-5">
 
-            <div class="mb-5 pt-5 hero-content">
-                <h1 class="display-4 fw-bold mb-3 hero-title">
-                    Votre présence en ligne, sans exploser votre budget.
+            {# TEXTE GAUCHE #}
+            <div class="col-lg-6 pt-5">
+
+                <h1 class="fw-semibold text-dark mb-4" style="font-size: clamp(2.8rem, 5vw, 4.8rem); line-height: 1.05;">
+                    Des solutions web simples, claires et efficaces
                 </h1>
-                <p class="lead mb-5 hero-subtitle">
-                    Création de site web sur mesure & formations web.
+
+                <p class="text-secondary mb-4" style="font-size: 1.25rem; max-width: 640px; line-height: 1.6;">
+                    Création de sites internet, accompagnement digital et formations accessibles
+                    pour vous aider à développer votre présence en ligne sans complexité inutile.
                 </p>
 
-                <a href="/creation-site" class="btn btn-light btn-lg rounded-pill px-5 hero-cta">
-                    Devis en ligne gratuit
-                </a>
+                <div class="d-flex flex-column flex-sm-row gap-3 mb-4">
+                    <a href="/creation-site" class="btn btn-dark rounded px-4 py-3 fw-semibold">
+                        Voir les offres
+                    </a>
+
+                    <a href="{{ path('app_contact') }}" class="btn btn-outline-secondary rounded px-4 py-3">
+                        Me contacter
+                    </a>
+                </div>
             </div>
 
+            {# VISUEL DROITE #}
+            <div class="col-lg-6">
+                <div class="text-center">
+
+                    <img 
+                        src="{{ asset('images/image_base.jpg') }}" 
+                        alt="Site web responsive sur ordinateur, tablette et mobile"
+                        class="img-fluid hero-image shadow-sm"
+                        style="max-width: 100%; height: auto; border-radius: 1%"
+                    >
+
+                </div>
+            </div>
+
+        {# ================= NAV PILULE ================= #}
+        <div class="row justify-content-center mb-5">
+            <div class="col-xl-8">
+                <div class="border bg-white rounded-pill shadow-sm px-3 py-2 d-none d-md-flex justify-content-center flex-wrap gap-2 home-pill-nav">
+                    <a href="#services" class="btn btn-link text-dark text-decoration-none rounded-pill px-3 py-2 fw-medium">Services</a>
+                    <a href="#avantages" class="btn btn-link text-secondary text-decoration-none rounded-pill px-3 py-2">Avantages</a>
+                    <a href="#process" class="btn btn-link text-secondary text-decoration-none rounded-pill px-3 py-2">Méthode</a>
+                    <a href="#contact-home" class="btn btn-link text-secondary text-decoration-none rounded-pill px-3 py-2">Contact</a>
+                </div>
+            </div>
         </div>
-    </section>
+
+        {# ================= INTRO ================= #}
+        <div class="text-center mx-auto mb-5" id="services" style="max-width: 900px;">
+            <h2 class="fw-semibold text-dark mb-3" style="font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.15;">
+                Tous les outils dont vous avez besoin,<br>
+                et un accompagnement que vous allez apprécier
+            </h2>
+        </div>
+
+        {# ================= SERVICES ================= #}
+        <div class="row g-4 mb-5">
+            <div class="col-md-6 col-xl-4">
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+                    <div class="card-body p-4 p-lg-5">
+                        <div class="mb-3">
+                            <i class="bi bi-window text-primary" style="font-size: 2rem;"></i>
+                        </div>
+
+                        <h3 class="h4 fw-semibold text-dark mb-3">
+                            Sites web professionnels
+                        </h3>
+
+                        <p class="text-secondary mb-0" style="line-height: 1.7;">
+                            Des sites pensés pour être clairs, modernes, responsive et adaptés à votre activité.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+                    <div class="card-body p-4 p-lg-5">
+                        <div class="mb-3">
+                            <i class="bi bi-cloud-check text-primary" style="font-size: 2rem;"></i>
+                        </div>
+
+                        <h3 class="h4 fw-semibold text-dark mb-3">
+                            Accompagnement technique
+                        </h3>
+
+                        <p class="text-secondary mb-0" style="line-height: 1.7;">
+                            Hébergement, domaine, maintenance, conseils : tout ce qu’il faut pour rester serein.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+                <div class="card border-0 shadow-sm rounded-4 h-100">
+                    <div class="card-body p-4 p-lg-5">
+                        <div class="mb-3">
+                            <i class="bi bi-mortarboard text-primary" style="font-size: 2rem;"></i>
+                        </div>
+
+                        <h3 class="h4 fw-semibold text-dark mb-3">
+                            Formations accessibles
+                        </h3>
+
+                        <p class="text-secondary mb-0" style="line-height: 1.7;">
+                            Des formations simples et concrètes pour apprendre à utiliser les outils numériques.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# ================= AVANTAGES ================= #}
+        <div class="row g-4 mb-5" id="avantages">
+            <div class="col-md-6 col-xl-4">
+                <div class="border rounded-4 bg-white p-4 h-100 shadow-sm">
+                    <h3 class="h4 fw-semibold text-dark mb-3">Budget maîtrisé</h3>
+                    <p class="text-secondary mb-0">
+                        Des offres simples et transparentes, avec des tarifs accessibles pour les entrepreneurs et les petits budgets.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+                <div class="border rounded-4 bg-white p-4 h-100 shadow-sm">
+                    <h3 class="h4 fw-semibold text-dark mb-3">Accompagnement humain</h3>
+                    <p class="text-secondary mb-0">
+                        Un échange clair, simple et adapté à votre niveau.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+                <div class="border rounded-4 bg-white p-4 h-100 shadow-sm">
+                    <h3 class="h4 fw-semibold text-dark mb-3">Résultat concret</h3>
+                    <p class="text-secondary mb-0">
+                        L’objectif : vous aider à avancer avec quelque chose d’utile, propre et durable.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        {# ================= PROCESS ================= #}
+        <div class="card border-0 shadow-sm rounded-4 mb-5" id="process">
+            <div class="card-body p-4 p-lg-5">
+                <div class="text-center mx-auto mb-5" style="max-width: 760px;">
+                    <p class="text-uppercase small fw-semibold text-secondary mb-2" style="letter-spacing: .08em;">
+                        Méthode
+                    </p>
+                    <h2 class="fw-semibold text-dark mb-3">
+                        Un fonctionnement simple
+                    </h2>
+                    <p class="text-secondary mb-0">
+                        Pas de blabla inutile : un échange, une proposition claire, puis une mise en place propre.
+                    </p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="border rounded-4 bg-light p-4 h-100">
+                            <div class="badge bg-dark text-white rounded-pill px-3 py-2 mb-3">1</div>
+                            <h3 class="h6 fw-semibold text-dark mb-2">On échange</h3>
+                            <p class="text-secondary mb-0">Vous expliquez votre besoin, votre contexte et vos objectifs.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="border rounded-4 bg-light p-4 h-100">
+                            <div class="badge bg-dark text-white rounded-pill px-3 py-2 mb-3">2</div>
+                            <h3 class="h6 fw-semibold text-dark mb-2">Je vous guide</h3>
+                            <p class="text-secondary mb-0">Je vous propose une solution claire, adaptée et réaliste.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="border rounded-4 bg-light p-4 h-100">
+                            <div class="badge bg-dark text-white rounded-pill px-3 py-2 mb-3">3</div>
+                            <h3 class="h6 fw-semibold text-dark mb-2">On met en place</h3>
+                            <p class="text-secondary mb-0">Création, accompagnement et suivi jusqu’à un résultat utile.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# ================= CTA FINAL ================= #}
+        <div class="card border-0 shadow-sm rounded-4 bg-white" id="contact-home">
+            <div class="card-body p-4 p-lg-5 text-center">
+                <p class="text-uppercase small fw-semibold text-secondary mb-2" style="letter-spacing: .08em;">
+                    Prêt à démarrer ?
+                </p>
+
+                <h2 class="fw-semibold text-dark mb-3">
+                    Parlons de votre projet
+                </h2>
+
+                <p class="text-secondary mb-4 mx-auto" style="max-width: 680px;">
+                    Site web, accompagnement ou formation : on peut avancer simplement,
+                    avec une solution adaptée à votre besoin.
+                </p>
+
+                <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                    <a href="/creation-site" class="btn btn-dark rounded px-4 py-3 fw-semibold">
+                        Demander un devis
+                    </a>
+
+                    <a href="{{ path('app_contact') }}" class="btn btn-outline-secondary rounded px-4 py-3">
+                        Me contacter
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
 {% endblock %}
 
-{# On ajoute le JS spécifique de la page "index" (celui qui anime les halos) #}
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('index') }}

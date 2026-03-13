@@ -112,8 +112,7 @@ class NotificationEmailService
 
                 <p>
                     Bien cordialement,<br>
-                    <strong>Stéfano Maniero</strong><br>
-                    Webble
+                    <strong>Webble</strong><br>
                 </p>
             ");
 
