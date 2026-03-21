@@ -38,7 +38,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <h2 class="text-dark fw-bold display-4 mb-2">150&nbsp;€</h2>
+                            <h2 class="text-dark fw-bold display-4 mb-2">{{montantsOffreTranquille.site_ht}} €</h2>
                             <p class="text-secondary mb-0">
                                 Pour enfin avoir un vrai site (et plus juste une page Facebook).
                             </p>
@@ -79,20 +79,26 @@
 
             {# Offre Sérieuse #}
             <div class="col-12 col-md-6 col-xl-4">
-                <div class="card h-100 border-0 shadow-sm rounded-4 pricing-card-google pricing-card-featured">
+                <div class="card h-100 border-5 shadow-sm rounded-4 pricing-card-google pricing-card-featured promo-active" style="border: 5px solid black">
                     <div class="card-body p-4 p-lg-5 d-flex flex-column">
 
                         <div class="mb-4 d-flex align-items-center justify-content-between flex-wrap gap-2">
                             <span class="badge rounded-pill text-warning-emphasis bg-warning-subtle px-3 py-2 fw-semibold text-uppercase small">
                                 Offre Sérieuse
                             </span>
-                            <span class="badge rounded-pill bg-dark text-white px-3 py-2 small fw-medium">
-                                Recommandée
-                            </span>
+                            <div class="d-flex gap-2">
+                                <span class="badge rounded-pill bg-dark text-white px-3 py-2 small fw-medium">
+                                    Recommandée
+                                </span>
+                                <span class="promo-label">-30%</span>
+                            </div>
                         </div>
 
                         <div class="mb-4">
-                            <h2 class="text-dark fw-bold display-4 mb-2">550&nbsp;€</h2>
+                            <h2 class="text-dark fw-bold display-4 mb-2"
+                                data-old-price="{{ (montantsOffreSerieuse.site_ht / 0.7)|round }}">
+                                {{montantsOffreSerieuse.site_ht}} €
+                            </h2>
                             <p class="text-secondary mb-0">
                                 Pour ceux qui en ont marre que le site du voisin soit mieux que le leur.
                             </p>

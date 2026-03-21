@@ -20,3 +20,29 @@
 .letter-spacing-1 {
     letter-spacing: 0.08em;
 }
+
+/* Activation promo */
+.promo-active .promo-label {
+    background: #1ba10f;
+    color: white;
+    font-weight: 700;
+    font-size: 0.7rem;
+    padding: 6px 10px;
+    border-radius: 999px;
+}
+
+/* Prix barré auto */
+.promo-active h2::before {
+    content: attr(data-old-price) " €";
+    display: block;
+    font-size: 1rem;
+    color: #999;
+    text-decoration: line-through;
+    font-weight: 400;
+}
+
+/* Petit effet glow */
+.promo-active {
+    box-shadow: 0 10px 30px rgba(255, 0, 0, 0.1);
+    position: relative;
+}

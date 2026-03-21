@@ -17,6 +17,22 @@ class EnvoiDevisService
      */
     public function recupererDonneesOffre(string $codeOffre): array
     {
+        // Prix de base
+        $prixHtTranquille = 150;
+        $prixHtSerieuse = 550;
+
+        // Pourcentage de réduction
+        $poucentageReductionTranquille = 0;
+        $poucentageReductionSerieuse = 0.30;
+
+        // Calcul du prix offre tranquille
+        $prixFinalOffreTranquille = ($prixHtTranquille*$poucentageReductionTranquille);
+        $prixFinalOffreTranquille = $prixHtTranquille - $prixFinalOffreTranquille;
+
+        // Calcul du prix offre sérieuse
+        $prixFinalOffreSerieuse = ($prixHtSerieuse*$poucentageReductionSerieuse);
+        $prixFinalOffreSerieuse = $prixHtSerieuse - $prixFinalOffreSerieuse;
+
         $offres = [
 
             'tranquille' => [
@@ -28,7 +44,7 @@ class EnvoiDevisService
                     'Intégration de votre logo et de vos couleurs',
                     'Livraison clé en main, prête à être mise en ligne',
                 ],
-                'prix_site_ht' => 150,
+                'prix_site_ht' => $prixFinalOffreTranquille,
                 'prix_maintenance_annuelle' => 360,
             ],
 
@@ -43,7 +59,7 @@ class EnvoiDevisService
                     'Formation rapide à la prise en main',
                     'Support pendant 3 mois après la mise en ligne',
                 ],
-                'prix_site_ht' => 550,
+                'prix_site_ht' => $prixFinalOffreSerieuse,
                 'prix_maintenance_annuelle' => 360,
             ],
         ];
