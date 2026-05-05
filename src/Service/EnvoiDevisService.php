@@ -20,6 +20,7 @@ class EnvoiDevisService
         // Prix de base
         $prixHtTranquille = 150;
         $prixHtSerieuse = 550;
+        $prixContratMaintenance = 360;
 
         // Pourcentage de réduction
         $poucentageReductionTranquille = 0;
@@ -45,7 +46,7 @@ class EnvoiDevisService
                     'Livraison clé en main, prête à être mise en ligne',
                 ],
                 'prix_site_ht' => $prixFinalOffreTranquille,
-                'prix_maintenance_annuelle' => 360,
+                'prix_maintenance_annuelle' => $prixContratMaintenance,
             ],
 
             'serieuse' => [
@@ -60,7 +61,7 @@ class EnvoiDevisService
                     'Support pendant 3 mois après la mise en ligne',
                 ],
                 'prix_site_ht' => $prixFinalOffreSerieuse,
-                'prix_maintenance_annuelle' => 360,
+                'prix_maintenance_annuelle' => $prixContratMaintenance,
             ],
         ];
 

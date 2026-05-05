@@ -11,6 +11,75 @@
 <section class="py-5 min-vh-100 margin-top-responsive overflow-hidden position-relative" style="background: #f8f9fa;">
     <div class="container py-5 py-lg-5 position-relative">
 
+        {# ================= OFFRE SPÉCIALE ================= #}
+        <div class="row justify-content-center mb-5 special-offer-row">
+            <div class="col-12">
+                <div class="position-relative rounded-5 overflow-hidden shadow-sm border"
+                     style="background: linear-gradient(135deg, #f1f3f5 0%, #e9ecef 65%, #f6ead2 160%); border-color: #dee2e6 !important;">
+
+                    <button
+                        type="button"
+                        class="btn-close position-absolute top-0 end-0 m-3"
+                        aria-label="Fermer"
+                        onclick="this.closest('.special-offer-row').remove();"
+                    ></button>
+
+                    <div class="row g-0 align-items-center">
+
+                        <div class="col-lg-8">
+                            <div class="p-4 p-lg-5">
+
+                                <div class="d-inline-flex align-items-center gap-2 rounded-pill px-3 py-2 mb-3"
+                                     style="background: #ffffff; border: 1px solid #dee2e6;">
+                                    <i class="bi bi-tags-fill" style="color: #c98b1f;"></i>
+                                    <span class="small fw-semibold text-dark">
+                                        Offre spéciale -30%
+                                    </span>
+                                </div>
+
+                                <h2 class="h3 fw-semibold text-dark mb-3">
+                                    La formule Sérieuse est en promotion
+                                </h2>
+
+                                <p class="text-secondary mb-4" style="max-width: 760px;">
+                                    Profitez de <strong>-30%</strong> sur la formule Sérieuse pour lancer votre site internet
+                                    avec une solution complète, claire et professionnelle.
+                                </p>
+
+                                <div class="d-flex flex-column flex-sm-row gap-3 align-items-sm-center">
+                                    <a href="{{ path('app_devis', { offre: 'serieuse' }) }}" class="btn btn-dark rounded px-4 py-3 fw-semibold">
+                                        Voir l’offre Sérieuse
+                                    </a>
+
+                                    <a href="/creation-site" class="text-dark text-decoration-none fw-semibold">
+                                        Découvrir les formules
+                                        <i class="bi bi-arrow-right ms-1"></i>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 d-none d-lg-flex justify-content-center align-items-center p-4">
+                            <div class="rounded-circle d-flex flex-column align-items-center justify-content-center"
+                                 style="width: 180px; height: 180px; background: #ffffff; border: 1px solid #dee2e6; box-shadow: 0 18px 45px rgba(0,0,0,.08);">
+
+                                <div class="rounded-circle d-flex flex-column align-items-center justify-content-center"
+                                     style="width: 150px; height: 150px; background: #f6ead2;">
+
+                                    <div class="fw-bold lh-1" style="font-size: 2.2rem; color: #c98b1f;">
+                                        -30%
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {# ================= HERO ================= #}
         <div class="row align-items-center pt-5 g-5 mb-5">
 
@@ -18,12 +87,11 @@
             <div class="col-lg-6 pt-5">
 
                 <h1 class="fw-semibold text-dark mb-4" style="font-size: clamp(2.8rem, 5vw, 4.8rem); line-height: 1.05;">
-                    Des solutions web simples, claires et efficaces
+                    Un site web professionnel, sans se ruiner
                 </h1>
 
                 <p class="text-secondary mb-4" style="font-size: 1.25rem; max-width: 640px; line-height: 1.6;">
-                    Création de sites internet, accompagnement digital et formations accessibles
-                    pour vous aider à développer votre présence en ligne sans complexité inutile.
+                    Création de sites internet simples, modernes et efficaces pour les indépendants, petites entreprises et porteurs de projet qui veulent développer leur présence en ligne avec un budget limité.
                 </p>
 
                 <div class="d-flex flex-column flex-sm-row gap-3 mb-5 pb-5">
@@ -41,21 +109,23 @@
             <div class="col-lg-6">
                 <div class="text-center">
 
-                    <img 
-                        src="{{ asset('images/image_base.jpg') }}" 
+                    <img
+                        src="{{ asset('images/image_base.png') }}"
                         alt="Site web responsive sur ordinateur, tablette et mobile"
-                        class="img-fluid hero-image shadow-sm"
+                        class="img-fluid hero-image"
                         style="max-width: 100%; height: auto; border-radius: 1%"
                     >
 
                 </div>
             </div>
+        </div>
 
         {# ================= NAV PILULE ================= #}
         <div class="row justify-content-center my-5 pt-5">
             <div class="col-xl-8">
                 <div class="border bg-white rounded-pill shadow-sm px-3 py-2 d-none d-md-flex justify-content-center flex-wrap gap-2 home-pill-nav">
                     <a href="#services" class="btn btn-link text-dark text-decoration-none rounded-pill px-3 py-2 fw-medium">Services</a>
+                    <a href="#references" class="btn btn-link text-secondary text-decoration-none rounded-pill px-3 py-2">Références</a>
                     <a href="#avantages" class="btn btn-link text-secondary text-decoration-none rounded-pill px-3 py-2">Avantages</a>
                     <a href="#process" class="btn btn-link text-secondary text-decoration-none rounded-pill px-3 py-2">Méthode</a>
                     <a href="#contact-home" class="btn btn-link text-secondary text-decoration-none rounded-pill px-3 py-2">Contact</a>
@@ -103,7 +173,7 @@
                         </h3>
 
                         <p class="text-secondary mb-0" style="line-height: 1.7;">
-                            Hébergement, domaine, maintenance, conseils : tout ce qu’il faut pour rester serein.
+                            Hébergement, domaine, maintenance... Une présence en ligne expliquée simplement.
                         </p>
                     </div>
                 </div>
@@ -128,22 +198,56 @@
             </div>
         </div>
 
+        {# ================= RÉFÉRENCES CLIENTS ================= #}
+        <div class="py-5 my-5" id="references">
+            <div class="text-center mx-auto mb-4" style="max-width: 760px;">
+                <p class="text-uppercase small fw-semibold text-secondary mb-2" style="letter-spacing: .08em;">
+                    Références
+                </p>
+
+                <h2 class="fw-semibold text-dark mb-3" style="font-size: clamp(1.8rem, 3vw, 2.8rem); line-height: 1.15;">
+                    Ils ont fait confiance à Webble
+                </h2>
+
+            </div>
+
+            <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 gap-lg-4 mt-5">
+
+                {# Logo client cliquable, sans fond, sans bordure et sans ombre #}
+                <a
+                    href="https://www.jerome-paysage.fr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="d-inline-flex align-items-center justify-content-center text-decoration-none"
+                    aria-label="Visiter le site de Jérôme Paysage"
+                >
+                    <img
+                        src="{{ asset('images/logo3-jp-1.png') }}"
+                        alt="Logo Jérôme Paysage"
+                        class="img-fluid"
+                        style="max-width: 150px; height: auto; object-fit: contain;"
+                    >
+                </a>
+
+            </div>
+        </div>
+
         {# ================= AVANTAGES ================= #}
         <div class="row g-4 mb-5" id="avantages">
             <div class="col-md-6 col-xl-4">
                 <div class="border rounded-4 bg-white p-4 h-100 shadow-sm">
                     <h3 class="h4 fw-semibold text-dark mb-3">Budget maîtrisé</h3>
                     <p class="text-secondary mb-0">
-                        Des offres simples et transparentes, avec des tarifs accessibles pour les entrepreneurs et les petits budgets.
+                        Des solutions simples pour lancer votre site internet avec un budget raisonnable et sans coût superflu.
                     </p>
                 </div>
             </div>
 
             <div class="col-md-6 col-xl-4">
                 <div class="border rounded-4 bg-white p-4 h-100 shadow-sm">
-                    <h3 class="h4 fw-semibold text-dark mb-3">Accompagnement humain</h3>
+                    <h3 class="h4 fw-semibold text-dark mb-3">Suivi personnalisé</h3>
                     <p class="text-secondary mb-0">
-                        Un échange clair, simple et adapté à votre niveau.
+                        Un accompagnement adapté à votre projet et à votre emploi du temps.
                     </p>
                 </div>
             </div>
@@ -165,9 +269,11 @@
                     <p class="text-uppercase small fw-semibold text-secondary mb-2" style="letter-spacing: .08em;">
                         Méthode
                     </p>
+
                     <h2 class="fw-semibold text-dark mb-3">
                         Un fonctionnement simple
                     </h2>
+
                     <p class="text-secondary mb-0">
                         Pas de blabla inutile : un échange, une proposition claire, puis une mise en place propre.
                     </p>

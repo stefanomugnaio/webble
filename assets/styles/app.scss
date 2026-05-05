@@ -3,14 +3,122 @@ body {
 }
 
 .margin-top-responsive {
-    padding-top: 100px!important; /* ajuste si besoin : 3rem / 5rem */
+    padding-top: 100px !important;
 }
 
-/* Marge basse uniquement en mobile */
+/* Marge haute uniquement en responsive */
 @media (max-width: 1200px) {
     .padding-top-creation-site-responsive {
-        padding-top: 150px!important; /* ajuste si besoin : 3rem / 5rem */
+        padding-top: 150px !important;
     }
 }
 
+/* ===============================
+   LOADER SITE
+================================ */
 
+body.site-loading {
+    overflow: hidden;
+}
+
+.site-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.site-loader.loader-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-content {
+    text-align: center;
+    padding: 2rem;
+}
+
+.loader-logo {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.05em;
+    margin-bottom: 1.5rem;
+}
+
+.loader-logo-img {
+    width: 180px;
+    max-width: 70vw;
+    height: auto;
+    display: block;
+    margin: 0 auto 1.5rem auto;
+}
+
+.loader-bar {
+    width: 240px;
+    max-width: 70vw;
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 0 auto 1rem auto;
+}
+
+.loader-bar span {
+    display: block;
+    width: 40%;
+    height: 100%;
+    background: #111;
+    border-radius: 999px;
+    animation: loaderMove 1.2s ease-in-out infinite;
+}
+
+.loader-content p {
+    color: #6c757d;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+@keyframes loaderMove {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    50% {
+        transform: translateX(180%);
+    }
+
+    100% {
+        transform: translateX(420%);
+    }
+}
+
+/* ===============================
+   APPARITION SMOOTH AU SCROLL
+================================ */
+
+.smooth-reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+    will-change: opacity, transform;
+}
+
+.smooth-reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .smooth-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
