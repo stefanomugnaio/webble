@@ -1,239 +1,612 @@
 {# templates/pricing/index.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Formules & tarifs{% endblock %}
+{% block title %}Formules & tarifs
+{% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('creation_site') }}
+	{{ parent() }}
+	{{ encore_entry_link_tags('creation_site') }}
 {% endblock %}
 
 {% block body %}
-<section class="pricing-page py-5 min-vh-100 d-flex align-items-start">
-    <div class="container py-4 py-lg-5">
+	<section class="page-tarifs min-vh-100">
+		<div
+			class="container conteneur-tarifs">
 
-        <div class="text-center mx-auto mb-5" style="max-width: 760px;">
-            <p class="text-uppercase small fw-semibold text-seconda ry mb-2 letter-spacing-1 padding-top-creation-site-responsive">
-                Formules
-            </p>
-            <h1 class="fw-semibold text-dark mb-3 display-6">
-                Des offres simples, adaptées à votre budget.
-            </h1>
-            <p class="text-secondary mb-0">
-                Choisissez le niveau d’accompagnement qui correspond à votre projet.
-            </p>
-        </div>
+			{# ================= EN-TÊTE ================= #}
+			<header class="entete-tarifs text-center mx-auto padding-top-creation-site-responsive">
+				<p class="surtitre-tarifs">
+					Formules
+				</p>
 
-        <div class="row g-4 justify-content-center align-items-stretch">
+				<h1 class="titre-principal-tarifs">
+					Des offres simples, adaptées à votre budget.
+				</h1>
 
-            {# Offre Tranquille #}
-            <div class="col-12 col-md-6 col-xl-4">
-                <div class="card h-100 border-0 shadow-sm rounded-4 pricing-card-google">
-                    <div class="card-body p-4 p-lg-5 d-flex flex-column">
+				<p class="description-principale-tarifs">
+					Choisissez le niveau d’accompagnement qui correspond à votre projet.
+				</p>
+			</header>
 
-                        <div class="mb-4">
-                            <span class="badge rounded-pill text-primary bg-primary-subtle px-3 py-2 fw-semibold text-uppercase small">
-                                Offre Tranquille
-                            </span>
-                        </div>
+			{# ================= COMPARATEUR ================= #}
+			<section
+				class="comparateur-tarifs">
 
-                        <div class="mb-4">
-                            <h2 class="text-dark fw-bold display-4 mb-2">{{montantsOffreTranquille.site_ht}} €</h2>
-                            <p class="text-secondary mb-0">
-                                Pour enfin avoir un vrai site (et plus juste une page Facebook).
-                            </p>
-                        </div>
+				{# Cartes positionnées au-dessus des colonnes du tableau. #}
+				<div class="entete-comparateur">
 
-                        <div class="mb-4">
-                            <a href="{{ path('app_devis', {'offre': 'tranquille'}) }}"
-                               class="btn btn-outline-primary rounded-pill px-4 py-2 w-100">
-                                C'est parti !
-                            </a>
-                        </div>
+					<div class="colonne-libelle-vide" aria-hidden="true"></div>
 
-                        <p class="text-secondary mb-4">
-                            Idéal pour lancer rapidement votre présence en ligne avec une page claire et professionnelle.
-                        </p>
+					{# Offre Tranquille #}
+					<article class="carte-formule carte-formule--tranquille">
 
-                        <ul class="list-unstyled text-secondary small mb-0">
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>1 page principale (landing page)</span>
-                            </li>
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>Design responsive (mobile, tablette, desktop)</span>
-                            </li>
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>Intégration de votre logo et de vos couleurs</span>
-                            </li>
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>Livraison clé en main, prête à être mise en ligne</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+						<div class="entete-carte-formule">
+							<span class="badge-formule">
+								Offre Tranquille
+							</span>
+						</div>
 
-            {# Offre Sérieuse #}
-            <div class="col-12 col-md-6 col-xl-4">
-                <div class="card h-100 border-5 shadow-sm rounded-4 pricing-card-google pricing-card-featured promo-active" style="border: 5px solid black">
-                    <div class="card-body p-4 p-lg-5 d-flex flex-column">
+						<p class="accroche-formule">
+							Pour enfin avoir un vrai site, et plus seulement une page Facebook.
+						</p>
 
-                        <div class="mb-4 d-flex align-items-center justify-content-between flex-wrap gap-2">
-                            <span class="badge rounded-pill text-warning-emphasis bg-warning-subtle px-3 py-2 fw-semibold text-uppercase small">
-                                Offre Sérieuse
-                            </span>
-                            <div class="d-flex gap-2">
-                                <span class="badge rounded-pill bg-dark text-white px-3 py-2 small fw-medium">
-                                    Recommandée
-                                </span>
-                                <span class="promo-label">-30%</span>
-                            </div>
-                        </div>
+						<div class="zone-prix-formule">
+							<strong class="prix-formule">
+								{{ montantsOffreTranquille.site_ht }}
+								€
+							</strong>
+						</div>
 
-                        <div class="mb-4">
-                            <h2 class="text-dark fw-bold display-4 mb-2"
-                                data-old-price="{{ (montantsOffreSerieuse.site_ht / 0.7)|round }}">
-                                {{montantsOffreSerieuse.site_ht}} €
-                            </h2>
-                            <p class="text-secondary mb-0">
-                                Pour ceux qui en ont marre que le site du voisin soit mieux que le leur.
-                            </p>
-                        </div>
+						<p class="resume-formule">
+							Idéal pour lancer rapidement votre présence en ligne avec une page claire et professionnelle.
+						</p>
 
-                        <div class="mb-4">
-                            <a href="{{ path('app_devis', {'offre': 'serieuse'}) }}"
-                               class="btn btn-warning rounded-pill px-4 py-2 w-100 fw-medium">
-                                C'est parti !
-                            </a>
-                        </div>
+						<a href="{{ path('app_devis', {'offre': 'tranquille'}) }}" class="btn bouton-formule">
+							C'est parti !
+						</a>
 
-                        <p class="text-secondary mb-4">
-                            La formule idéale pour les indépendants et petites structures qui veulent un site solide et évolutif.
-                        </p>
+					</article>
 
-                        <ul class="list-unstyled text-secondary small mb-0 mt-auto">
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>Tout ce qui est inclus dans l'offre Tranquille</span>
-                            </li>
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>Jusqu’à 5 pages (Accueil, Services, À propos, Contact, etc.)</span>
-                            </li>
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>Optimisation de base pour le référencement (SEO)</span>
-                            </li>
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>Intégration de vos réseaux sociaux</span>
-                            </li>
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>Formation rapide à la prise en main du site</span>
-                            </li>
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>Espace administrateur basique pour la gestion du contenu</span>
-                            </li>
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>3 mois de contrat de maintenance après la mise en ligne</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+					{# Offre Sérieuse #}
+					<article class="carte-formule carte-formule--serieuse">
 
-            {# Offre Pro #}
-            <div class="col-12 col-md-6 col-xl-4">
-                <div class="card h-100 border-0 shadow-sm rounded-4 pricing-card-google">
-                    <div class="card-body p-4 p-lg-5 d-flex flex-column">
+						<div class="entete-carte-formule">
+							<span class="badge-formule">
+								Offre Sérieuse
+							</span>
 
-                        <div class="mb-4">
-                            <span class="badge rounded-pill text-danger bg-danger-subtle px-3 py-2 fw-semibold text-uppercase small">
-                                Offre Pro
-                            </span>
-                        </div>
+							<div class="badges-mise-en-avant">
+								<span class="badge-recommandee">
+									Recommandée
+								</span>
 
-                        <div class="mb-4">
-                            <h2 class="text-dark fw-bold mb-2" style="font-size: clamp(2rem, 4vw, 3rem);">
-                                Sur devis
-                            </h2>
-                            <p class="text-secondary mb-0">
-                                Pour les idées qui ne rentrent dans aucune case (et c’est très bien comme ça).
-                            </p>
-                        </div>
+								<span class="badge-promotion">
+									-30%
+								</span>
+							</div>
+						</div>
 
-                        <div class="mb-4">
-                            <a href="{{ path('app_contact') }}"
-                               class="btn btn-outline-danger rounded-pill px-4 py-2 w-100">
-                                Contactez-moi !
-                            </a>
-                        </div>
+						<p class="accroche-formule">
+							Pour ceux qui en ont marre que le site du voisin soit mieux que le leur.
+						</p>
 
-                        <p class="text-secondary mb-4">
-                            Pour les projets qui sortent du cadre : fonctionnalités avancées, espace client, etc.
-                        </p>
+						<div class="zone-prix-formule">
+							<span class="ancien-prix-formule">
+								{{ (montantsOffreSerieuse.site_ht / 0.7)|round }}
+								€
+							</span>
 
-                        <ul class="list-unstyled text-secondary small mb-0 mt-auto">
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>Nombre de pages et structure adaptés à votre activité</span>
-                            </li>
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>Fonctionnalités spécifiques (blog, espace client, réservation, etc.)</span>
-                            </li>
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>Devis détaillé et transparent avant lancement</span>
-                            </li>
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>Intégration de vos réseaux sociaux</span>
-                            </li>
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>Optimisation de base pour le référencement (SEO)</span>
-                            </li>
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>Espace administrateur avancé pour la gestion du contenu</span>
-                            </li>
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>Formation à la prise en main du site</span>
-                            </li>
-                            <li class="d-flex">
-                                <i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
-                                <span>6 mois de contrat de maintenance après la mise en ligne</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+							<strong class="prix-formule">
+								{{ montantsOffreSerieuse.site_ht }}
+								€
+							</strong>
+						</div>
 
-        </div>
+						<p class="resume-formule">
+							La formule idéale pour les indépendants et petites structures qui veulent un site solide et évolutif.
+						</p>
 
-        <div class="text-center mt-4">
-            <p class="small mb-0">
-                <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-                   href="/contrat-de-maintenance">
+						<a href="{{ path('app_devis', {'offre': 'serieuse'}) }}" class="btn bouton-formule">
+							C'est parti !
+						</a>
+
+					</article>
+
+					{# Offre Pro #}
+					<article class="carte-formule carte-formule--pro">
+
+						<div class="entete-carte-formule">
+							<span class="badge-formule">
+								Offre Pro
+							</span>
+						</div>
+
+						<p class="accroche-formule">
+							Pour les idées qui ne rentrent dans aucune case, et c’est très bien comme ça.
+						</p>
+
+						<div class="zone-prix-formule">
+							<strong class="prix-formule prix-formule--devis">
+								Sur devis
+							</strong>
+						</div>
+
+						<p class="resume-formule">
+							Pour les projets qui sortent du cadre : fonctionnalités avancées, espace client, etc.
+						</p>
+
+						<a href="{{ path('app_contact') }}" class="btn bouton-formule">
+							Contactez-moi !
+						</a>
+
+					</article>
+
+				</div>
+
+				{# ================= STRUCTURE DU SITE ================= #}
+				<div class="titre-section-comparaison">
+					Structure et création du site
+				</div>
+
+				<div class="ligne-comparaison">
+					<div class="libelle-comparaison">
+						Design responsive sur mobile, tablette et ordinateur
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Tranquille">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Sérieuse">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Pro">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+				</div>
+
+				<div class="ligne-comparaison">
+					<div class="libelle-comparaison">
+						Intégration de votre logo et de vos couleurs
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Tranquille">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Sérieuse">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Pro">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+				</div>
+
+				<div class="ligne-comparaison">
+					<div class="libelle-comparaison">
+						Livraison clé en main, prête à être mise en ligne
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Tranquille">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Sérieuse">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Pro">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+				</div>
+
+				<div class="ligne-comparaison">
+					<div class="libelle-comparaison">
+						Nombre de pages
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Tranquille">
+						<span class="tiret-comparaison">1 (landing page)</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Sérieuse">
+
+						<span class="tiret-comparaison">Jusqu'à 5</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Pro">
+						<span class="tiret-comparaison">Illimité</span>
+					</div>
+				</div>
+
+
+				{# ================= VISIBILITÉ ================= #}
+				<div class="titre-section-comparaison">
+					Visibilité et intégrations
+				</div>
+
+				<div class="ligne-comparaison">
+					<div class="libelle-comparaison">
+						Optimisation de base pour le référencement naturel
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Tranquille">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Sérieuse">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Pro">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+				</div>
+
+				<div class="ligne-comparaison">
+					<div class="libelle-comparaison">
+						Intégration de vos réseaux sociaux
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Tranquille">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Sérieuse">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Pro">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+				</div>
+
+				{# ================= ADMINISTRATION ================= #}
+				<div class="titre-section-comparaison">
+					Administration et accompagnement
+				</div>
+
+				<div class="ligne-comparaison">
+					<div class="libelle-comparaison">
+						Formation rapide à la prise en main du site
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Tranquille">
+						<span class="tiret-comparaison">—</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Sérieuse">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Pro">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+				</div>
+
+				<div class="ligne-comparaison">
+					<div class="libelle-comparaison">
+						Espace administrateur pour la gestion du contenu
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Tranquille">
+						<span class="tiret-comparaison">—</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Sérieuse">
+						<span class="tiret-comparaison">Basique</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Pro">
+						<span class="tiret-comparaison">Avancé</span>
+					</div>
+				</div>
+
+				<div class="ligne-comparaison">
+					<div class="libelle-comparaison">
+						Formation à la prise en main du site
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Tranquille">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Sérieuse">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Pro">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+				</div>
+
+				{# ================= FONCTIONNALITÉS ================= #}
+				<div class="titre-section-comparaison">
+					Fonctionnalités et suivi
+				</div>
+
+				<div class="ligne-comparaison">
+					<div class="libelle-comparaison">
+						Fonctionnalités spécifiques : blog, espace client, réservation, etc.
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Tranquille">
+						<span class="tiret-comparaison">—</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Sérieuse">
+						<span class="tiret-comparaison">—</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Pro">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+				</div>
+
+				<div class="ligne-comparaison">
+					<div class="libelle-comparaison">
+						Contrat de maintenance après la mise en ligne
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Tranquille">
+						<span class="tiret-comparaison">En option</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Sérieuse">
+						<span class="tiret-comparaison">En option + 3 mois offerts</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Pro">
+						<span class="tiret-comparaison">En option + 6 mois offerts</span>
+					</div>
+				</div>
+
+
+				{# Boutons répétés en bas comme sur la référence. #}
+				<div class="actions-comparateur">
+					<div aria-hidden="true"></div>
+
+					<div>
+						<a href="{{ path('app_devis', {'offre': 'tranquille'}) }}" class="btn bouton-tableau">
+							C'est parti !
+						</a>
+					</div>
+
+					<div>
+						<a href="{{ path('app_devis', {'offre': 'serieuse'}) }}" class="btn bouton-tableau">
+							C'est parti !
+						</a>
+					</div>
+
+					<div>
+						<a href="{{ path('app_contact') }}" class="btn bouton-tableau">
+							Contactez-moi !
+						</a>
+					</div>
+				</div>
+
+			</section>
+
+			{# ================= CONTRAT DE MAINTENANCE ================= #}
+			<div class="lien-maintenance text-end">
+                <a href="/contrat-de-maintenance" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
                     En savoir plus sur le contrat de maintenance
                 </a>
-            </p>
-        </div>
+            </div>
 
-    </div>
-</section>
+			{# ================= PRESTATIONS COMPLÉMENTAIRES ================= #}
+			<section class="prestations-complementaires" id="prestations-complementaires">
+
+				<header class="entete-section text-center mx-auto">
+					<p class="surtitre-tarifs">
+						Prestations complémentaires
+					</p>
+
+					<h2 class="titre-section">
+						Votre site web existe déjà ?
+					</h2>
+
+					<p class="description-section">
+						Webble peut également moderniser un site existant ou faire évoluer un site déjà réalisé ensemble.
+					</p>
+				</header>
+
+				<div
+					class="row g-4 align-items-stretch">
+
+					{# Refonte d'un site existant #}
+					<div class="col-12 col-lg-6">
+						<article class="carte-prestation h-100">
+
+							<div class="entete-carte-prestation">
+								<span class="badge-prestation badge-prestation--violet">
+									Site existant
+								</span>
+
+								<span class="icone-prestation icone-prestation--violette">
+									<i class="bi bi-arrow-repeat"></i>
+								</span>
+							</div>
+
+							<h3 class="titre-prestation">
+								Refonte de site web
+							</h3>
+
+							<p class="description-prestation">
+								Votre site est vieillissant, difficile à utiliser ou ne correspond plus à votre activité ?
+								                            Une refonte permet de repartir sur une base plus claire, moderne et efficace.
+							</p>
+
+
+							<ul class="liste-prestation">
+								<li>
+									<i class="bi bi-check-circle"></i>
+									<span>Analyse de l’existant et identification des améliorations</span>
+								</li>
+
+								<li>
+									<i class="bi bi-check-circle"></i>
+									<span>Modernisation du design et de l’expérience utilisateur</span>
+								</li>
+
+								<li>
+									<i class="bi bi-check-circle"></i>
+									<span>Adaptation complète aux mobiles et aux tablettes</span>
+								</li>
+
+								<li>
+									<i class="bi bi-check-circle"></i>
+									<span>Amélioration des performances et du référencement de base</span>
+								</li>
+
+								<li>
+									<i class="bi bi-check-circle"></i>
+									<span>Reprise ou réorganisation des contenus existants</span>
+								</li>
+							</ul>
+
+							<div class="pied-carte-prestation">
+								<div class="prix-prestation">
+									<strong>Sur devis</strong>
+
+									<span>
+										Selon l’état et la complexité du site
+									</span>
+								</div>
+
+								<a href="{{ path('app_contact', {'sujet': 'refonte-site'}) }}" class="btn bouton-prestation">
+									Parler de ma refonte
+								</a>
+							</div>
+
+						</article>
+					</div>
+
+					{# Évolution d'un site développé par Webble #}
+					<div class="col-12 col-lg-6">
+						<article class="carte-prestation h-100">
+
+							<div class="entete-carte-prestation">
+								<span class="badge-prestation badge-prestation--jaune">
+									Client Webble
+								</span>
+
+								<span class="icone-prestation icone-prestation--jaune">
+									<i class="bi bi-puzzle-fill"></i>
+								</span>
+							</div>
+
+							<h3 class="titre-prestation">
+								Nouvelle fonctionnalité
+							</h3>
+
+							<p class="description-prestation">
+								Votre activité évolue ? Une nouvelle fonctionnalité peut être ajoutée à un site
+								                            déjà développé par Webble, sans avoir besoin de tout reconstruire.
+							</p>
+
+							<p class="libelle-prestation">
+								Uniquement pour les clients Webble
+							</p>
+
+							<ul class="liste-prestation">
+                                <li>
+                                    <i class="bi bi-check-circle"></i>
+                                    <span>Étude de la demande et vérification de sa faisabilité technique</span>
+                                </li>
+
+                                <li>
+                                    <i class="bi bi-check-circle"></i>
+                                    <span>Développement adapté à la structure actuelle de votre site</span>
+                                </li>
+
+                                <li>
+                                    <i class="bi bi-check-circle"></i>
+                                    <span>Intégration cohérente avec le design et les fonctionnalités existantes</span>
+                                </li>
+
+                                <li>
+                                    <i class="bi bi-check-circle"></i>
+                                    <span>Tests complets avant la mise en ligne de la nouvelle fonctionnalité</span>
+                                </li>
+
+                                <li>
+                                    <i class="bi bi-check-circle"></i>
+                                    <span>Tarif préférentiel pour les clients disposant d’un contrat de maintenance</span>
+                                </li>
+                            </ul>
+
+							<div class="pied-carte-prestation">
+								<div class="prix-prestation">
+									<strong>Sur devis</strong>
+
+									<span>
+										Selon la fonctionnalité demandée
+									</span>
+								</div>
+
+								<a href="{{ path('app_contact', {'sujet': 'nouvelle-fonctionnalite'}) }}" class="btn bouton-prestation">
+									Faire évoluer mon site
+								</a>
+							</div>
+
+						</article>
+					</div>
+
+				</div>
+			</section>
+
+			{# ================= CTA FINAL ================= #}
+			<section class="appel-action-final">
+
+				<p class="surtitre-tarifs">
+					Un besoin particulier ?
+				</p>
+
+				<h2 class="titre-appel-action">
+					Présentez-moi votre projet
+				</h2>
+
+				<p class="description-appel-action">
+					Création, refonte ou évolution : chaque demande est étudiée pour proposer une solution claire,
+					                adaptée et sans fonctionnalité inutile.
+				</p>
+
+				<a href="{{ path('app_contact') }}" class="btn bouton-appel-action">
+					Échanger sur mon projet
+				</a>
+
+			</section>
+
+		</div>
+	</section>
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('creation_site') }}
+	{{ parent() }}
+	{{ encore_entry_script_tags('creation_site') }}
 {% endblock %}

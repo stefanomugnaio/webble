@@ -12,14 +12,6 @@
     transform: translateY(0);
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .scroll-reveal {
-        opacity: 1;
-        transform: none;
-        transition: none;
-    }
-}
-
 body.site-loading {
     overflow: hidden;
 }
@@ -32,7 +24,9 @@ body.site-loading {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.6s ease, visibility 0.6s ease;
+    transition:
+        opacity 0.6s ease,
+        visibility 0.6s ease;
 }
 
 .site-loader.loader-hidden {
@@ -60,7 +54,7 @@ body.site-loading {
     background: #e5e7eb;
     border-radius: 999px;
     overflow: hidden;
-    margin: 0 auto 1rem auto;
+    margin: 0 auto 1rem;
 }
 
 .loader-bar span {
@@ -110,4 +104,214 @@ body.site-loading {
 
 .home-pill-nav.home-intro-reveal.scroll-reveal-visible {
     transform: translateY(0) scale(1);
+}
+
+/* ==================================================
+   NAVIGATION PILULE
+   ================================================== */
+
+.home-pill-nav {
+    position: relative;
+    isolation: isolate;
+    min-height: 58px;
+    transition:
+        border-color 0.5s ease,
+        box-shadow 0.5s ease;
+}
+
+/* Ajoute un léger relief lors de l'interaction. */
+.home-pill-nav:hover,
+.home-pill-nav:focus-within {
+    border-color: rgba(48, 126, 210, 0.14) !important;
+    box-shadow:
+        0 7px 22px rgba(15, 23, 42, 0.055),
+        0 0 0 1px rgba(48, 126, 210, 0.025) !important;
+}
+
+/* Halo bleu discret déplacé sous les onglets. */
+.home-pill-halo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    border: 1px solid rgba(48, 126, 210, 0.12);
+    border-radius: 999px;
+    background: linear-gradient(
+        135deg,
+        rgba(48, 126, 210, 0.035),
+        rgba(48, 126, 210, 0.09)
+    );
+    box-shadow:
+        0 5px 16px rgba(48, 126, 210, 0.07),
+        inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    transition:
+        transform 1.25s cubic-bezier(0.22, 1, 0.36, 1),
+        width 1.25s cubic-bezier(0.22, 1, 0.36, 1),
+        height 1.25s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.6s ease;
+    will-change: transform, width, height;
+}
+
+/* Ajoute une respiration lumineuse très légère. */
+.home-pill-halo::after {
+    content: "";
+    position: absolute;
+    inset: 15%;
+    border-radius: inherit;
+    background: radial-gradient(
+        circle at center,
+        rgba(75, 146, 220, 0.12),
+        transparent 70%
+    );
+    animation: respirationHalo 5s ease-in-out infinite;
+}
+
+.home-pill-halo.home-pill-halo-visible {
+    opacity: 1;
+}
+
+/* Évite un déplacement animé pendant le redimensionnement. */
+.home-pill-halo.sans-transition {
+    transition: none !important;
+}
+
+.home-pill-link {
+    position: relative;
+    z-index: 1;
+    border: 0;
+    transition:
+        color 0.45s ease,
+        transform 0.45s ease;
+}
+
+.home-pill-link:hover,
+.home-pill-link:focus-visible {
+    color: #306fae !important;
+    transform: translateY(-1px);
+    outline: none;
+}
+
+.home-pill-link.onglet-halo-actif {
+    color: #2d639c !important;
+}
+
+@keyframes respirationHalo {
+    0%,
+    100% {
+        opacity: 0.25;
+        transform: scale(0.96);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+}
+
+/* ==================================================
+   INDICATEUR DE DÉFILEMENT
+   ================================================== */
+
+.indicateur-defilement {
+    position: fixed;
+    left: 50%;
+    bottom: 1.25rem;
+    z-index: 50;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(8px);
+    transition:
+        opacity 0.55s ease,
+        visibility 0.55s ease,
+        transform 0.55s ease;
+}
+
+/* Rend la flèche visible après l'introduction. */
+.indicateur-defilement.indicateur-defilement-visible {
+    opacity: 0.78;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Masque définitivement la flèche après le premier défilement. */
+.indicateur-defilement.indicateur-defilement-cache {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(8px);
+}
+
+/* Cercle et flèche agrandis sur ordinateur. */
+.indicateur-defilement-fleche {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    color: #3978bd;
+    font-size: 1.55rem;
+    line-height: 1;
+    border: 1px solid rgba(57, 120, 189, 0.17);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow:
+        0 7px 22px rgba(57, 120, 189, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(6px);
+    animation: flottementFleche 2.8s ease-in-out infinite;
+}
+
+.indicateur-defilement-fleche i {
+    display: block;
+    line-height: 1;
+}
+
+@keyframes flottementFleche {
+    0%,
+    100% {
+        transform: translateY(-2px);
+    }
+
+    50% {
+        transform: translateY(5px);
+    }
+}
+
+/* ==================================================
+   RESPONSIVE
+   ================================================== */
+
+@media (max-width: 767.98px) {
+    .indicateur-defilement {
+        bottom: 1rem;
+    }
+
+    /* Taille légèrement réduite sur les petits écrans. */
+    .indicateur-defilement-fleche {
+        width: 42px;
+        height: 42px;
+        font-size: 1.35rem;
+    }
+}
+
+/* Respecte les préférences d'accessibilité de l'utilisateur. */
+@media (prefers-reduced-motion: reduce) {
+    .scroll-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .home-pill-halo,
+    .home-pill-halo::after,
+    .home-pill-link,
+    .indicateur-defilement-fleche {
+        animation: none;
+        transition: none;
+    }
 }

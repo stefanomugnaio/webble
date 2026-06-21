@@ -12,11 +12,12 @@
     <div class="container py-5 py-lg-5 position-relative">
 
         {# ================= OFFRE SPÉCIALE ================= #}
-        <div class="row justify-content-center mb-5 special-offer-row">
+        <div class="row justify-content-center mb-5 special-offer-row d-none">
             <div class="col-12">
-                <div class="position-relative rounded-5 overflow-hidden shadow-sm border"
-                     style="background: linear-gradient(135deg, #f1f3f5 0%, #e9ecef 65%, #f6ead2 160%); border-color: #dee2e6 !important;">
-
+                <div
+                    class="position-relative rounded-5 overflow-hidden shadow-sm border"
+                    style="background: linear-gradient(135deg, #f1f3f5 0%, #e9ecef 65%, #f6ead2 160%); border-color: #dee2e6 !important;"
+                >
                     <button
                         type="button"
                         class="btn-close position-absolute top-0 end-0 m-3"
@@ -29,9 +30,12 @@
                         <div class="col-lg-8">
                             <div class="p-4 p-lg-5">
 
-                                <div class="d-inline-flex align-items-center gap-2 rounded-pill px-3 py-2 mb-3"
-                                     style="background: #ffffff; border: 1px solid #dee2e6;">
+                                <div
+                                    class="d-inline-flex align-items-center gap-2 rounded-pill px-3 py-2 mb-3"
+                                    style="background: #ffffff; border: 1px solid #dee2e6;"
+                                >
                                     <i class="bi bi-tags-fill" style="color: #c98b1f;"></i>
+
                                     <span class="small fw-semibold text-dark">
                                         Offre spéciale -30%
                                     </span>
@@ -47,7 +51,10 @@
                                 </p>
 
                                 <div class="d-flex flex-column flex-sm-row gap-3 align-items-sm-center">
-                                    <a href="{{ path('app_devis', { offre: 'serieuse' }) }}" class="btn btn-dark rounded px-4 py-3 fw-semibold">
+                                    <a
+                                        href="{{ path('app_devis', { offre: 'serieuse' }) }}"
+                                        class="btn btn-dark rounded px-4 py-3 fw-semibold"
+                                    >
                                         Voir l’offre Sérieuse
                                     </a>
 
@@ -61,16 +68,17 @@
                         </div>
 
                         <div class="col-lg-4 d-none d-lg-flex justify-content-center align-items-center p-4">
-                            <div class="rounded-circle d-flex flex-column align-items-center justify-content-center"
-                                 style="width: 180px; height: 180px; background: #ffffff; border: 1px solid #dee2e6; box-shadow: 0 18px 45px rgba(0,0,0,.08);">
-
-                                <div class="rounded-circle d-flex flex-column align-items-center justify-content-center"
-                                     style="width: 150px; height: 150px; background: #f6ead2;">
-
+                            <div
+                                class="rounded-circle d-flex flex-column align-items-center justify-content-center"
+                                style="width: 180px; height: 180px; background: #ffffff; border: 1px solid #dee2e6; box-shadow: 0 18px 45px rgba(0,0,0,.08);"
+                            >
+                                <div
+                                    class="rounded-circle d-flex flex-column align-items-center justify-content-center"
+                                    style="width: 150px; height: 150px; background: #f6ead2;"
+                                >
                                     <div class="fw-bold lh-1" style="font-size: 2.2rem; color: #c98b1f;">
                                         -30%
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -86,12 +94,20 @@
             {# TEXTE GAUCHE #}
             <div class="col-lg-6 pt-5">
 
-                <h1 class="fw-semibold text-dark mb-4" style="font-size: clamp(2.8rem, 5vw, 4.8rem); line-height: 1.05;">
+                <h1
+                    class="fw-semibold text-dark mb-4"
+                    style="font-size: clamp(2.8rem, 5vw, 4.8rem); line-height: 1.05;"
+                >
                     Un site web professionnel, sans se ruiner
                 </h1>
 
-                <p class="text-secondary mb-4" style="font-size: 1.25rem; max-width: 640px; line-height: 1.6;">
-                    Création de sites internet simples, modernes et efficaces pour les indépendants, petites entreprises et porteurs de projet qui veulent développer leur présence en ligne avec un budget limité.
+                <p
+                    class="text-secondary mb-4"
+                    style="font-size: 1.25rem; max-width: 640px; line-height: 1.6;"
+                >
+                    Création de sites internet simples, modernes et efficaces pour les indépendants,
+                    petites entreprises et porteurs de projet qui veulent développer leur présence
+                    en ligne avec un budget limité.
                 </p>
 
                 <div class="d-flex flex-column flex-sm-row gap-3 mb-5 pb-5">
@@ -99,7 +115,10 @@
                         Voir les offres
                     </a>
 
-                    <a href="{{ path('app_contact') }}" class="btn btn-outline-secondary rounded px-4 py-3">
+                    <a
+                        href="{{ path('app_contact') }}"
+                        class="btn btn-outline-secondary rounded px-4 py-3"
+                    >
                         Me contacter
                     </a>
                 </div>
@@ -108,14 +127,12 @@
             {# VISUEL DROITE #}
             <div class="col-lg-6">
                 <div class="text-center">
-
                     <img
                         src="{{ asset('images/image_base.png') }}"
                         alt="Site web responsive sur ordinateur, tablette et mobile"
                         class="img-fluid hero-image"
                         style="max-width: 100%; height: auto; border-radius: 1%"
                     >
-
                 </div>
             </div>
         </div>
@@ -123,19 +140,70 @@
         {# ================= NAV PILULE ================= #}
         <div class="row justify-content-center my-5 pt-5">
             <div class="col-xl-8">
-                <div class="border bg-white rounded-pill shadow-sm px-3 py-2 d-none d-md-flex justify-content-center flex-wrap gap-2 home-pill-nav">
-                    <a href="#services" class="btn btn-link text-dark text-decoration-none rounded-pill px-3 py-2 fw-medium">Services</a>
-                    <a href="#references" class="btn btn-link text-secondary text-decoration-none rounded-pill px-3 py-2">Références</a>
-                    <a href="#avantages" class="btn btn-link text-secondary text-decoration-none rounded-pill px-3 py-2">Avantages</a>
-                    <a href="#process" class="btn btn-link text-secondary text-decoration-none rounded-pill px-3 py-2">Méthode</a>
-                    <a href="#contact-home" class="btn btn-link text-secondary text-decoration-none rounded-pill px-3 py-2">Contact</a>
-                </div>
+
+                <nav
+                    class="border bg-white rounded-pill shadow-sm px-3 py-2 d-none d-md-flex justify-content-center flex-wrap gap-2 home-pill-nav"
+                    aria-label="Navigation rapide de la page"
+                >
+                    {# Le halo est positionné par JavaScript. #}
+                    <span class="home-pill-halo" aria-hidden="true"></span>
+
+                    <a
+                        href="#services"
+                        class="btn btn-link text-dark text-decoration-none rounded-pill px-3 py-2 fw-medium home-pill-link"
+                    >
+                        Services
+                    </a>
+
+                    <a
+                        href="#references"
+                        class="btn btn-link text-secondary text-decoration-none rounded-pill px-3 py-2 home-pill-link"
+                    >
+                        Références
+                    </a>
+
+                    <a
+                        href="#avantages"
+                        class="btn btn-link text-secondary text-decoration-none rounded-pill px-3 py-2 home-pill-link"
+                    >
+                        Avantages
+                    </a>
+
+                    <a
+                        href="#process"
+                        class="btn btn-link text-secondary text-decoration-none rounded-pill px-3 py-2 home-pill-link"
+                    >
+                        Méthode
+                    </a>
+
+                    <a
+                        href="#contact-home"
+                        class="btn btn-link text-secondary text-decoration-none rounded-pill px-3 py-2 home-pill-link"
+                    >
+                        Contact
+                    </a>
+                </nav>
+
             </div>
+        </div>
+
+        {# ================= INDICATEUR DE DÉFILEMENT ================= #}
+        <div
+            class="indicateur-defilement"
+            data-indicateur-defilement
+            aria-hidden="true"
+        >
+            <span class="indicateur-defilement-fleche">
+                <i class="bi bi-arrow-down"></i>
+            </span>
         </div>
 
         {# ================= INTRO ================= #}
         <div class="text-center mx-auto mb-5" id="services" style="max-width: 900px;">
-            <h2 class="fw-semibold text-dark mb-3" style="font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.15;">
+            <h2
+                class="fw-semibold text-dark mb-3"
+                style="font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.15;"
+            >
                 Tous les outils dont vous avez besoin,<br>
                 et un accompagnement que vous allez apprécier
             </h2>
@@ -201,19 +269,23 @@
         {# ================= RÉFÉRENCES CLIENTS ================= #}
         <div class="py-5 my-5" id="references">
             <div class="text-center mx-auto mb-4" style="max-width: 760px;">
-                <p class="text-uppercase small fw-semibold text-secondary mb-2" style="letter-spacing: .08em;">
+                <p
+                    class="text-uppercase small fw-semibold text-secondary mb-2"
+                    style="letter-spacing: .08em;"
+                >
                     Références
                 </p>
 
-                <h2 class="fw-semibold text-dark mb-3" style="font-size: clamp(1.8rem, 3vw, 2.8rem); line-height: 1.15;">
+                <h2
+                    class="fw-semibold text-dark mb-3"
+                    style="font-size: clamp(1.8rem, 3vw, 2.8rem); line-height: 1.15;"
+                >
                     Ils ont fait confiance à Webble
                 </h2>
-
             </div>
 
             <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 gap-lg-4 mt-5">
 
-                {# Logo client cliquable, sans fond, sans bordure et sans ombre #}
                 <a
                     href="https://www.jerome-paysage.fr"
                     target="_blank"
@@ -236,16 +308,23 @@
         <div class="row g-4 mb-5" id="avantages">
             <div class="col-md-6 col-xl-4">
                 <div class="border rounded-4 bg-white p-4 h-100 shadow-sm">
-                    <h3 class="h4 fw-semibold text-dark mb-3">Budget maîtrisé</h3>
+                    <h3 class="h4 fw-semibold text-dark mb-3">
+                        Budget maîtrisé
+                    </h3>
+
                     <p class="text-secondary mb-0">
-                        Des solutions simples pour lancer votre site internet avec un budget raisonnable et sans coût superflu.
+                        Des solutions simples pour lancer votre site internet avec un budget raisonnable
+                        et sans coût superflu.
                     </p>
                 </div>
             </div>
 
             <div class="col-md-6 col-xl-4">
                 <div class="border rounded-4 bg-white p-4 h-100 shadow-sm">
-                    <h3 class="h4 fw-semibold text-dark mb-3">Suivi personnalisé</h3>
+                    <h3 class="h4 fw-semibold text-dark mb-3">
+                        Suivi personnalisé
+                    </h3>
+
                     <p class="text-secondary mb-0">
                         Un accompagnement adapté à votre projet et à votre emploi du temps.
                     </p>
@@ -254,7 +333,10 @@
 
             <div class="col-md-6 col-xl-4">
                 <div class="border rounded-4 bg-white p-4 h-100 shadow-sm">
-                    <h3 class="h4 fw-semibold text-dark mb-3">Résultat concret</h3>
+                    <h3 class="h4 fw-semibold text-dark mb-3">
+                        Résultat concret
+                    </h3>
+
                     <p class="text-secondary mb-0">
                         L’objectif : vous aider à avancer avec quelque chose d’utile, propre et durable.
                     </p>
@@ -266,7 +348,10 @@
         <div class="card border-0 shadow-sm rounded-4 mb-5" id="process">
             <div class="card-body p-4 p-lg-5">
                 <div class="text-center mx-auto mb-5" style="max-width: 760px;">
-                    <p class="text-uppercase small fw-semibold text-secondary mb-2" style="letter-spacing: .08em;">
+                    <p
+                        class="text-uppercase small fw-semibold text-secondary mb-2"
+                        style="letter-spacing: .08em;"
+                    >
                         Méthode
                     </p>
 
@@ -275,32 +360,57 @@
                     </h2>
 
                     <p class="text-secondary mb-0">
-                        Pas de blabla inutile : un échange, une proposition claire, puis une mise en place propre.
+                        Pas de blabla inutile : un échange, une proposition claire,
+                        puis une mise en place propre.
                     </p>
                 </div>
 
                 <div class="row g-4">
                     <div class="col-md-4">
                         <div class="border rounded-4 bg-light p-4 h-100">
-                            <div class="badge bg-dark text-white rounded-pill px-3 py-2 mb-3">1</div>
-                            <h3 class="h6 fw-semibold text-dark mb-2">On échange</h3>
-                            <p class="text-secondary mb-0">Vous expliquez votre besoin, votre contexte et vos objectifs.</p>
+                            <div class="badge bg-dark text-white rounded-pill px-3 py-2 mb-3">
+                                1
+                            </div>
+
+                            <h3 class="h6 fw-semibold text-dark mb-2">
+                                On échange
+                            </h3>
+
+                            <p class="text-secondary mb-0">
+                                Vous expliquez votre besoin, votre contexte et vos objectifs.
+                            </p>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="border rounded-4 bg-light p-4 h-100">
-                            <div class="badge bg-dark text-white rounded-pill px-3 py-2 mb-3">2</div>
-                            <h3 class="h6 fw-semibold text-dark mb-2">Je vous guide</h3>
-                            <p class="text-secondary mb-0">Je vous propose une solution claire, adaptée et réaliste.</p>
+                            <div class="badge bg-dark text-white rounded-pill px-3 py-2 mb-3">
+                                2
+                            </div>
+
+                            <h3 class="h6 fw-semibold text-dark mb-2">
+                                Je vous guide
+                            </h3>
+
+                            <p class="text-secondary mb-0">
+                                Je vous propose une solution claire, adaptée et réaliste.
+                            </p>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="border rounded-4 bg-light p-4 h-100">
-                            <div class="badge bg-dark text-white rounded-pill px-3 py-2 mb-3">3</div>
-                            <h3 class="h6 fw-semibold text-dark mb-2">On met en place</h3>
-                            <p class="text-secondary mb-0">Création, accompagnement et suivi jusqu’à un résultat utile.</p>
+                            <div class="badge bg-dark text-white rounded-pill px-3 py-2 mb-3">
+                                3
+                            </div>
+
+                            <h3 class="h6 fw-semibold text-dark mb-2">
+                                On met en place
+                            </h3>
+
+                            <p class="text-secondary mb-0">
+                                Création, accompagnement et suivi jusqu’à un résultat utile.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -310,7 +420,10 @@
         {# ================= CTA FINAL ================= #}
         <div class="card border-0 shadow-sm rounded-4 bg-white" id="contact-home">
             <div class="card-body p-4 p-lg-5 text-center">
-                <p class="text-uppercase small fw-semibold text-secondary mb-2" style="letter-spacing: .08em;">
+                <p
+                    class="text-uppercase small fw-semibold text-secondary mb-2"
+                    style="letter-spacing: .08em;"
+                >
                     Prêt à démarrer ?
                 </p>
 
@@ -324,11 +437,17 @@
                 </p>
 
                 <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
-                    <a href="/creation-site" class="btn btn-dark rounded px-4 py-3 fw-semibold">
+                    <a
+                        href="/creation-site"
+                        class="btn btn-dark rounded px-4 py-3 fw-semibold"
+                    >
                         Demander un devis
                     </a>
 
-                    <a href="{{ path('app_contact') }}" class="btn btn-outline-secondary rounded px-4 py-3">
+                    <a
+                        href="{{ path('app_contact') }}"
+                        class="btn btn-outline-secondary rounded px-4 py-3"
+                    >
                         Me contacter
                     </a>
                 </div>

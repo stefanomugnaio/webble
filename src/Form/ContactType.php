@@ -49,6 +49,7 @@ class ContactType extends AbstractType
                     'Développement spécifique' => 'specifique',
                     'Support / Assistance' => 'support',
                     'J\'ai perdu mon mot de passe (Espace client)' => 'password',
+                    'Refonte de mon site web' => 'refonte',
                     'Autre' => 'autre',
                 ],
                 'placeholder' => 'Choisissez un sujet...',
