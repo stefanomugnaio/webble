@@ -20,8 +20,7 @@ class EnvoiDevisController extends AbstractController
         Request $request,
         EnvoiDevisService $devisService,
         NotificationEmailService $notificationEmailService
-    ): Response
-    {
+    ): Response {
         $donneesOffre = $devisService->recupererDonneesOffre($offre);
 
         $montants = $devisService->calculerMontants(
@@ -35,7 +34,7 @@ class EnvoiDevisController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($devisService->enregistrerDevis($devis,$donneesOffre['libelle'])){
+            if ($devisService->enregistrerDevis($devis, $donneesOffre['libelle'])) {
                 $notificationEmailService->envoyerNotificationDevis($form->getData());
             }
 
@@ -43,7 +42,6 @@ class EnvoiDevisController extends AbstractController
                 'offre' => $donneesOffre,
                 'devis' => $devis,
             ]);
-
         }
 
         return $this->render('envoi_devis/index.html.twig', [
@@ -59,6 +57,4 @@ class EnvoiDevisController extends AbstractController
     {
         return $this->render('envoi_devis/cdm.html.twig');
     }
-    
-
 }

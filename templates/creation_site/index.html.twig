@@ -1,7 +1,10 @@
 {# templates/pricing/index.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Formules & tarifs
+{% block title %}Formules & tarifs{% endblock %}
+
+{% block description_seo %}
+    Découvrez les formules Webble pour créer, moderniser ou faire évoluer votre site internet selon votre projet et votre budget.
 {% endblock %}
 
 {% block stylesheets %}
@@ -81,7 +84,7 @@
 									Recommandée
 								</span>
 
-								<span class="badge-promotion">
+								<span class="badge-promotion d-none">
 									-30%
 								</span>
 							</div>
@@ -92,10 +95,10 @@
 						</p>
 
 						<div class="zone-prix-formule">
-							<span class="ancien-prix-formule">
+							{# <span class="ancien-prix-formule">
 								{{ (montantsOffreSerieuse.site_ht / 0.7)|round }}
 								€
-							</span>
+							</span> #}
 
 							<strong class="prix-formule">
 								{{ montantsOffreSerieuse.site_ht }}

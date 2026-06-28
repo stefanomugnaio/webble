@@ -20,11 +20,11 @@ class EnvoiDevisService
         // Prix de base
         $prixHtTranquille = 150;
         $prixHtSerieuse = 550;
-        $prixContratMaintenance = 360;
+        $prixContratMaintenance = 180;
 
         // Pourcentage de réduction
         $poucentageReductionTranquille = 0;
-        $poucentageReductionSerieuse = 0.30;
+        $poucentageReductionSerieuse = 0;
 
         // Calcul du prix offre tranquille
         $prixFinalOffreTranquille = ($prixHtTranquille*$poucentageReductionTranquille);

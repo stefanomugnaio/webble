@@ -141,7 +141,7 @@ class DevisType extends AbstractType
 
             // MAINTENANCE
             ->add('contrat_maintenance', CheckboxType::class, [
-                'label' => 'Contrat de maintenance annuelle (360 € HT / an)',
+                'label' => 'Contrat de maintenance annuelle (180 € HT / an)',
                 'required' => false,
                 'attr' => ['class' => 'form-check-input'],
                 'row_attr' => ['class' => 'form-check'],
