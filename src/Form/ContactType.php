@@ -50,6 +50,7 @@ class ContactType extends AbstractType
                     'Support / Assistance' => 'support',
                     'J\'ai perdu mon mot de passe (Espace client)' => 'password',
                     'Refonte de mon site web' => 'refonte',
+                    'Abonnement Webble+' => 'webble_plus',
                     'Autre' => 'autre',
                 ],
                 'placeholder' => 'Choisissez un sujet...',
