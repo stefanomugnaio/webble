@@ -1,4 +1,4 @@
-{# templates/pricing/index.html.twig #}
+{# templates/creation_site/index.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Formules & tarifs{% endblock %}
@@ -14,8 +14,7 @@
 
 {% block body %}
 	<section class="page-tarifs min-vh-100">
-		<div
-			class="container conteneur-tarifs">
+		<div class="container conteneur-tarifs">
 
 			{# ================= EN-TÊTE ================= #}
 			<header class="entete-tarifs text-center mx-auto padding-top-creation-site-responsive">
@@ -33,10 +32,8 @@
 			</header>
 
 			{# ================= COMPARATEUR ================= #}
-			<section
-				class="comparateur-tarifs">
+			<section class="comparateur-tarifs">
 
-				{# Cartes positionnées au-dessus des colonnes du tableau. #}
 				<div class="entete-comparateur">
 
 					<div class="colonne-libelle-vide" aria-hidden="true"></div>
@@ -46,23 +43,23 @@
 
 						<div class="entete-carte-formule">
 							<span class="badge-formule">
-								Offre Tranquille
+								{{ offres.tranquille.donnees.titre_carte }}
 							</span>
 						</div>
 
 						<p class="accroche-formule">
-							Pour enfin avoir un vrai site, et plus seulement une page Facebook.
+							{{ offres.tranquille.donnees.accroche_creation_site }}
 						</p>
 
 						<div class="zone-prix-formule">
 							<strong class="prix-formule">
-								{{ montantsOffreTranquille.site_ht }}
+								{{ offres.tranquille.montants.site_ht|number_format(0, ',', ' ') }}
 								€
 							</strong>
 						</div>
 
 						<p class="resume-formule">
-							Idéal pour lancer rapidement votre présence en ligne avec une page claire et professionnelle.
+							{{ offres.tranquille.donnees.resume_creation_site }}
 						</p>
 
 						<a href="{{ path('app_devis', {'offre': 'tranquille'}) }}" class="btn bouton-formule">
@@ -76,7 +73,7 @@
 
 						<div class="entete-carte-formule">
 							<span class="badge-formule">
-								Offre Sérieuse
+								{{ offres.serieuse.donnees.titre_carte }}
 							</span>
 
 							<div class="badges-mise-en-avant">
@@ -84,30 +81,34 @@
 									Recommandée
 								</span>
 
-								<span class="badge-promotion d-none">
-									-30%
-								</span>
+								{% if offres.serieuse.donnees.pourcentage_reduction > 0 %}
+									<span class="badge-promotion">
+										-{{ (offres.serieuse.donnees.pourcentage_reduction * 100)|round }}%
+									</span>
+								{% endif %}
 							</div>
 						</div>
 
 						<p class="accroche-formule">
-							Pour ceux qui en ont marre que le site du voisin soit mieux que le leur.
+							{{ offres.serieuse.donnees.accroche_creation_site }}
 						</p>
 
 						<div class="zone-prix-formule">
-							{# <span class="ancien-prix-formule">
-								{{ (montantsOffreSerieuse.site_ht / 0.7)|round }}
-								€
-							</span> #}
+							{% if offres.serieuse.donnees.pourcentage_reduction > 0 %}
+								<span class="ancien-prix-formule">
+									{{ offres.serieuse.donnees.prix_site_ht_avant_reduction|number_format(0, ',', ' ') }}
+									€
+								</span>
+							{% endif %}
 
 							<strong class="prix-formule">
-								{{ montantsOffreSerieuse.site_ht }}
+								{{ offres.serieuse.montants.site_ht|number_format(0, ',', ' ') }}
 								€
 							</strong>
 						</div>
 
 						<p class="resume-formule">
-							La formule idéale pour les indépendants et petites structures qui veulent un site solide et évolutif.
+							{{ offres.serieuse.donnees.resume_creation_site }}
 						</p>
 
 						<a href="{{ path('app_devis', {'offre': 'serieuse'}) }}" class="btn bouton-formule">
@@ -121,22 +122,26 @@
 
 						<div class="entete-carte-formule">
 							<span class="badge-formule">
-								Offre Pro
+								{{ offres.pro.donnees.titre_carte }}
 							</span>
 						</div>
 
 						<p class="accroche-formule">
-							Pour les idées qui ne rentrent dans aucune case, et c’est très bien comme ça.
+							{{ offres.pro.donnees.accroche_creation_site }}
 						</p>
 
 						<div class="zone-prix-formule">
 							<strong class="prix-formule prix-formule--devis">
-								Sur devis
+								{% if offres.pro.donnees.prix_site_ht is same as(null) %}
+									Sur devis
+								{% else %}
+									{{ offres.pro.montants.site_ht|number_format(0, ',', ' ') }} €
+								{% endif %}
 							</strong>
 						</div>
 
 						<p class="resume-formule">
-							Pour les projets qui sortent du cadre : fonctionnalités avancées, espace client, etc.
+							{{ offres.pro.donnees.resume_creation_site }}
 						</p>
 
 						<a href="{{ path('app_contact') }}" class="btn bouton-formule">
@@ -225,7 +230,6 @@
 					</div>
 
 					<div class="valeur-comparaison" data-formule="Sérieuse">
-
 						<span class="tiret-comparaison">Jusqu'à 5</span>
 					</div>
 
@@ -233,7 +237,6 @@
 						<span class="tiret-comparaison">Illimité</span>
 					</div>
 				</div>
-
 
 				{# ================= VISIBILITÉ ================= #}
 				<div class="titre-section-comparaison">
@@ -372,24 +375,23 @@
 
 				<div class="ligne-comparaison">
 					<div class="libelle-comparaison">
-						Contrat de maintenance après la mise en ligne
+						Abonnement Webble+
 					</div>
 
-					<div class="valeur-comparaison" data-formule="Tranquille">
-						<span class="tiret-comparaison">En option</span>
-					</div>
-
-					<div class="valeur-comparaison" data-formule="Sérieuse">
-						<span class="tiret-comparaison">En option + 3 mois offerts</span>
-					</div>
-
-					<div class="valeur-comparaison" data-formule="Pro">
-						<span class="tiret-comparaison">En option + 6 mois offerts</span>
-					</div>
+					{% for codeOffre, offre in offres %}
+						<div class="valeur-comparaison" data-formule="{{ offre.donnees.libelle }}">
+							<span class="tiret-comparaison">
+								{% if offre.donnees.webble_plus_mois_offerts > 0 %}
+									En option + {{ offre.donnees.webble_plus_mois_offerts }} mois offerts
+								{% else %}
+									En option
+								{% endif %}
+							</span>
+						</div>
+					{% endfor %}
 				</div>
 
-
-				{# Boutons répétés en bas comme sur la référence. #}
+				{# Boutons répétés en bas #}
 				<div class="actions-comparateur">
 					<div aria-hidden="true"></div>
 
@@ -414,12 +416,12 @@
 
 			</section>
 
-			{# ================= CONTRAT DE MAINTENANCE ================= #}
+			{# ================= WEBBLE+ ================= #}
 			<div class="lien-maintenance text-end">
-                <a href="/contrat-de-maintenance" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
-                    En savoir plus sur le contrat de maintenance
-                </a>
-            </div>
+				<a href="/webble-plus" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+					En savoir plus sur l'offre Webble+
+				</a>
+			</div>
 
 			{# ================= PRESTATIONS COMPLÉMENTAIRES ================= #}
 			<section class="prestations-complementaires" id="prestations-complementaires">
@@ -438,147 +440,66 @@
 					</p>
 				</header>
 
-				<div
-					class="row g-4 align-items-stretch">
+				<div class="row g-4 align-items-stretch">
 
-					{# Refonte d'un site existant #}
-					<div class="col-12 col-lg-6">
-						<article class="carte-prestation h-100">
+					{% for prestation in prestationsComplementaires %}
+						{% set classeIconeTheme = prestation.theme == 'violet' ? 'violette' : prestation.theme %}
 
-							<div class="entete-carte-prestation">
-								<span class="badge-prestation badge-prestation--violet">
-									Site existant
-								</span>
+						<div class="col-12 col-lg-6">
+							<article class="carte-prestation h-100">
 
-								<span class="icone-prestation icone-prestation--violette">
-									<i class="bi bi-arrow-repeat"></i>
-								</span>
-							</div>
+								<div class="entete-carte-prestation">
+									<span class="badge-prestation badge-prestation--{{ prestation.theme }}">
+										{{ prestation.badge }}
+									</span>
 
-							<h3 class="titre-prestation">
-								Refonte de site web
-							</h3>
-
-							<p class="description-prestation">
-								Votre site est vieillissant, difficile à utiliser ou ne correspond plus à votre activité ?
-								                            Une refonte permet de repartir sur une base plus claire, moderne et efficace.
-							</p>
-
-
-							<ul class="liste-prestation">
-								<li>
-									<i class="bi bi-check-circle"></i>
-									<span>Analyse de l’existant et identification des améliorations</span>
-								</li>
-
-								<li>
-									<i class="bi bi-check-circle"></i>
-									<span>Modernisation du design et de l’expérience utilisateur</span>
-								</li>
-
-								<li>
-									<i class="bi bi-check-circle"></i>
-									<span>Adaptation complète aux mobiles et aux tablettes</span>
-								</li>
-
-								<li>
-									<i class="bi bi-check-circle"></i>
-									<span>Amélioration des performances et du référencement de base</span>
-								</li>
-
-								<li>
-									<i class="bi bi-check-circle"></i>
-									<span>Reprise ou réorganisation des contenus existants</span>
-								</li>
-							</ul>
-
-							<div class="pied-carte-prestation">
-								<div class="prix-prestation">
-									<strong>Sur devis</strong>
-
-									<span>
-										Selon l’état et la complexité du site
+									<span class="icone-prestation icone-prestation--{{ classeIconeTheme }}">
+										<i class="{{ prestation.icone }}"></i>
 									</span>
 								</div>
 
-								<a href="{{ path('app_contact', {'sujet': 'refonte-site'}) }}" class="btn bouton-prestation">
-									Parler de ma refonte
-								</a>
-							</div>
+								<h3 class="titre-prestation">
+									{{ prestation.titre }}
+								</h3>
 
-						</article>
-					</div>
+								<p class="description-prestation">
+									{{ prestation.description }}
+								</p>
 
-					{# Évolution d'un site développé par Webble #}
-					<div class="col-12 col-lg-6">
-						<article class="carte-prestation h-100">
+								{% if prestation.libelle_condition %}
+									<p class="libelle-prestation">
+										{{ prestation.libelle_condition }}
+									</p>
+								{% endif %}
 
-							<div class="entete-carte-prestation">
-								<span class="badge-prestation badge-prestation--jaune">
-									Client Webble
-								</span>
+								<ul class="liste-prestation">
+									{% for caracteristique in prestation.caracteristiques %}
+										<li>
+											<i class="bi bi-check-circle"></i>
+											<span>{{ caracteristique }}</span>
+										</li>
+									{% endfor %}
+								</ul>
 
-								<span class="icone-prestation icone-prestation--jaune">
-									<i class="bi bi-puzzle-fill"></i>
-								</span>
-							</div>
+								<div class="pied-carte-prestation">
+									<div class="prix-prestation">
+										<strong>
+											{{ prestation.prix_libelle }}
+										</strong>
 
-							<h3 class="titre-prestation">
-								Nouvelle fonctionnalité
-							</h3>
+										<span>
+											{{ prestation.prix_description }}
+										</span>
+									</div>
 
-							<p class="description-prestation">
-								Votre activité évolue ? Une nouvelle fonctionnalité peut être ajoutée à un site
-								                            déjà développé par Webble, sans avoir besoin de tout reconstruire.
-							</p>
-
-							<p class="libelle-prestation">
-								Uniquement pour les clients Webble
-							</p>
-
-							<ul class="liste-prestation">
-                                <li>
-                                    <i class="bi bi-check-circle"></i>
-                                    <span>Étude de la demande et vérification de sa faisabilité technique</span>
-                                </li>
-
-                                <li>
-                                    <i class="bi bi-check-circle"></i>
-                                    <span>Développement adapté à la structure actuelle de votre site</span>
-                                </li>
-
-                                <li>
-                                    <i class="bi bi-check-circle"></i>
-                                    <span>Intégration cohérente avec le design et les fonctionnalités existantes</span>
-                                </li>
-
-                                <li>
-                                    <i class="bi bi-check-circle"></i>
-                                    <span>Tests complets avant la mise en ligne de la nouvelle fonctionnalité</span>
-                                </li>
-
-                                <li>
-                                    <i class="bi bi-check-circle"></i>
-                                    <span>Tarif préférentiel pour les clients disposant d’un contrat de maintenance</span>
-                                </li>
-                            </ul>
-
-							<div class="pied-carte-prestation">
-								<div class="prix-prestation">
-									<strong>Sur devis</strong>
-
-									<span>
-										Selon la fonctionnalité demandée
-									</span>
+									<a href="{{ path(prestation.route, prestation.route_params|default({})) }}" class="btn bouton-prestation">
+										{{ prestation.bouton_libelle }}
+									</a>
 								</div>
 
-								<a href="{{ path('app_contact', {'sujet': 'nouvelle-fonctionnalite'}) }}" class="btn bouton-prestation">
-									Faire évoluer mon site
-								</a>
-							</div>
-
-						</article>
-					</div>
+							</article>
+						</div>
+					{% endfor %}
 
 				</div>
 			</section>
@@ -596,7 +517,7 @@
 
 				<p class="description-appel-action">
 					Création, refonte ou évolution : chaque demande est étudiée pour proposer une solution claire,
-					                adaptée et sans fonctionnalité inutile.
+					adaptée et sans fonctionnalité inutile.
 				</p>
 
 				<a href="{{ path('app_contact') }}" class="btn bouton-appel-action">

@@ -7,10 +7,10 @@ use App\Entity\Devis;
 use App\Form\DevisType;
 use App\Service\EnvoiDevisService;
 use App\Service\NotificationEmailService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EnvoiDevisController extends AbstractController
 {
@@ -23,13 +23,31 @@ class EnvoiDevisController extends AbstractController
     ): Response {
         $donneesOffre = $devisService->recupererDonneesOffre($offre);
 
+        if (($donneesOffre['prix_site_ht'] ?? null) === null) {
+            return $this->redirectToRoute('app_contact', [
+                'sujet' => 'offre-pro',
+            ]);
+        }
+
+        $optionsDevis = $devisService->recupererOptionsDevis();
+
         $montants = $devisService->calculerMontants(
             $donneesOffre,
             AppConfig::TAUX_TVA
         );
 
+        $configurationRecapitulatif = $devisService->preparerConfigurationRecapitulatif(
+            $donneesOffre,
+            $optionsDevis,
+            AppConfig::TAUX_TVA
+        );
 
         $devis = new Devis();
+
+        $devis->setContratMaintenance(false);
+        $devis->setDomaine((bool) ($optionsDevis['nom_domaine']['active_par_defaut'] ?? false));
+        $devis->setHebergement((bool) ($optionsDevis['hebergement']['active_par_defaut'] ?? false));
+
         $form = $this->createForm(DevisType::class, $devis);
         $form->handleRequest($request);
 
@@ -48,13 +66,17 @@ class EnvoiDevisController extends AbstractController
             'form' => $form,
             'offre' => $donneesOffre,
             'montants' => $montants,
-            'taux_tva' => AppConfig::TAUX_TVA
+            'optionsDevis' => $optionsDevis,
+            'configurationRecapitulatif' => $configurationRecapitulatif,
+            'taux_tva' => AppConfig::TAUX_TVA,
         ]);
     }
 
-    #[Route('/contrat-de-maintenance', name: 'app_cdm')]
+    #[Route('/webble-plus', name: 'app_cdm')]
     public function contratDeMaintenance(): Response
     {
-        return $this->render('envoi_devis/cdm.html.twig');
+        return $this->render('envoi_devis/cdm.html.twig', [
+            'webblePlus' => AppConfig::WEBBLE_PLUS,
+        ]);
     }
 }

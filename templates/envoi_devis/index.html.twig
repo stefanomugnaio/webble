@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Devis –
-	{{ offre.libelle }}
-{% endblock %}
+{% block title %}Devis - {{ offre.libelle }}{% endblock %}
 
 {% block stylesheets %}
 	{{ parent() }}
@@ -19,8 +17,7 @@
 				</p>
 
 				<h1 class="fw-semibold text-dark mb-3">
-					Offre
-					{{ offre.libelle }}
+					Offre {{ offre.libelle }}
 				</h1>
 
 				<p class="text-secondary mb-0">
@@ -29,20 +26,16 @@
 			</div>
 
 			{{ form_start(form, {
-attr: {
-id: 'contact-form',
-'data-recaptcha-site-key': recaptcha_site_key
-}
-}) }}
+				attr: {
+					id: 'contact-form',
+					'data-recaptcha-site-key': recaptcha_site_key
+				}
+			}) }}
 
-			<div
-				class="row g-4 align-items-start">
+			<div class="row g-4 align-items-start">
 
-				{# ================= COLONNE GAUCHE ================= #}
-				<div
-					class="col-12 col-xl-7">
+				<div class="col-12 col-xl-7">
 
-					{# ================= COORDONNÉES ================= #}
 					<div class="card border-0 shadow-sm rounded-4 mb-4">
 						<div class="card-body p-4 p-lg-5">
 
@@ -104,24 +97,20 @@ id: 'contact-form',
 						</div>
 					</div>
 
-					{# ================= CONTENU OFFRE ================= #}
 					<div class="card border-0 shadow-sm rounded-4 mb-4">
 						<div class="card-body p-4 p-lg-5">
 
 							<h5 class="fw-semibold text-dark mb-4">
-								Ce que comprend l'offre
-								{{ offre.libelle }}
+								Ce que comprend l'offre {{ offre.libelle }}
 							</h5>
 
 							<ul class="list-unstyled text-secondary mb-0">
-
 								{% for item in offre.caracteristiques %}
 									<li class="d-flex mb-2">
 										<i class="bi bi-check-circle-fill text-success me-2 mt-1"></i>
 										<span>{{ item }}</span>
 									</li>
 								{% endfor %}
-
 							</ul>
 
 						</div>
@@ -133,12 +122,8 @@ id: 'contact-form',
 
 				</div>
 
+				<div class="col-12 col-xl-5">
 
-				{# ================= COLONNE DROITE ================= #}
-				<div
-					class="col-12 col-xl-5">
-
-					{# ================= OPTIONS ================= #}
 					<div class="card border-0 shadow-sm rounded-4 mb-4">
 						<div class="card-body p-4">
 
@@ -147,49 +132,69 @@ id: 'contact-form',
 							</h5>
 
 							<div class="border rounded-4 bg-light p-3 mb-3">
-
 								<div class="form-check">
 									{{ form_widget(form.contrat_maintenance, { attr: { class: 'form-check-input' } }) }}
-									{{ form_label(form.contrat_maintenance, null, { label_attr: { class: 'form-check-label ms-2 text-dark fw-medium' } }) }}
+
+									{{ form_label(
+										form.contrat_maintenance,
+										offre.webble_plus_libelle ~ ' (' ~ offre.webble_plus_prix_mensuel_ht|number_format(2, ',', ' ') ~ ' € / mois)',
+										{ label_attr: { class: 'form-check-label ms-2 text-dark fw-medium' } }
+									) }}
 								</div>
 
-								<p class="small text-secondary mt-2 mb-0">
-									<a target="_blank" href="{{ path('app_cdm') }}">Voir le détail du contrat</a>
+								<p class="small text-secondary mt-2 mb-1">
+									Abonnement mensuel séparé du devis de création.
 								</p>
 
+								{% if offre.webble_plus_mois_offerts > 0 %}
+									<p class="small text-secondary mb-1">
+										{{ offre.webble_plus_mois_offerts }} mois offerts avec cette offre,
+										puis facturation à partir du {{ offre.webble_plus_premier_mois_facture }}e mois.
+									</p>
+								{% endif %}
+
+								<p class="small text-secondary mt-2 mb-0">
+									<a target="_blank" href="{{ path('app_cdm') }}">
+										En savoir plus sur l'abonnement Webble+
+									</a>
+								</p>
 							</div>
 
 							<div class="border rounded-4 bg-light p-3 mb-3">
-
 								<div class="form-check">
 									{{ form_widget(form.domaine, { attr: { class: 'form-check-input' } }) }}
-									{{ form_label(form.domaine, null, { label_attr: { class: 'form-check-label ms-2 text-dark fw-medium' } }) }}
+
+									{{ form_label(
+										form.domaine,
+										optionsDevis.nom_domaine.libelle ~ ' (' ~ optionsDevis.nom_domaine.prix_ht|number_format(2, ',', ' ') ~ ' € HT)',
+										{ label_attr: { class: 'form-check-label ms-2 text-dark fw-medium' } }
+									) }}
 								</div>
 
 								<p class="small text-secondary mt-2 mb-0">
-									Assistance à la création du nom de domaine.
+									{{ optionsDevis.nom_domaine.description }}
 								</p>
-
 							</div>
 
 							<div class="border rounded-4 bg-light p-3">
-
 								<div class="form-check">
 									{{ form_widget(form.hebergement, { attr: { class: 'form-check-input' } }) }}
-									{{ form_label(form.hebergement, null, { label_attr: { class: 'form-check-label ms-2 text-dark fw-medium' } }) }}
+
+									{{ form_label(
+										form.hebergement,
+										optionsDevis.hebergement.libelle ~ ' (' ~ optionsDevis.hebergement.prix_ht|number_format(2, ',', ' ') ~ ' € HT)',
+										{ label_attr: { class: 'form-check-label ms-2 text-dark fw-medium' } }
+									) }}
 								</div>
 
 								<p class="small text-secondary mt-2 mb-0">
-									Configuration de l’hébergement et mise en ligne.
+									{{ optionsDevis.hebergement.description }}
 								</p>
-
 							</div>
 
 						</div>
 					</div>
 
-
-					{# ================= RÉCAP ================= #}
 					<div class="card border-0 shadow-sm rounded-4 mb-4">
 						<div class="card-body p-4">
 
@@ -200,38 +205,35 @@ id: 'contact-form',
 							{% if montants.site_ht is not null %}
 
 								<script>
-									window.montantSiteHT = {{ montants.site_ht }};
-                                    window.maintenanceHT = {{ montants.maintenance_annuelle }};
-                                    window.tauxTVA = {{ taux_tva }};
-                                    window.offerLabel = "{{ offre.libelle }}";
+									window.devisRecapConfig = {{ configurationRecapitulatif|json_encode|raw }};
 								</script>
 
 								<div class="row mb-2">
 									<div class="col-7 text-secondary small">Site web</div>
 									<div class="col-5 text-end fw-semibold text-dark">
-										{{ montants.site_ht|number_format(2, ',', ' ') }}
-										€
+										{{ montants.site_ht|number_format(2, ',', ' ') }} €
 									</div>
 								</div>
 
-								<div id="maintenanceRow" class="row mb-2">
-									<div class="col-7 text-secondary small">Maintenance</div>
-									<div class="col-5 text-end fw-semibold text-dark" id="maintenanceAmount">
-										0,00 €
-									</div>
-								</div>
-
-								<div id="domaineRow" class="row mb-2">
+								<div id="domaineRow" class="row mb-2 {% if not configurationRecapitulatif.options.domaine.active_par_defaut %}gray-row{% endif %}">
 									<div class="col-7 text-secondary small">Nom de domaine</div>
 									<div class="col-5 text-end fw-semibold text-dark" id="domaineAmount">
-										0,00 €
+										{% if configurationRecapitulatif.options.domaine.active_par_defaut %}
+											{{ configurationRecapitulatif.options.domaine.prix_ht|number_format(2, ',', ' ') }} €
+										{% else %}
+											0,00 €
+										{% endif %}
 									</div>
 								</div>
 
-								<div id="hebergementRow" class="row mb-3">
+								<div id="hebergementRow" class="row mb-3 {% if not configurationRecapitulatif.options.hebergement.active_par_defaut %}gray-row{% endif %}">
 									<div class="col-7 text-secondary small">Hébergement</div>
 									<div class="col-5 text-end fw-semibold text-dark" id="hebergementAmount">
-										0,00 €
+										{% if configurationRecapitulatif.options.hebergement.active_par_defaut %}
+											{{ configurationRecapitulatif.options.hebergement.prix_ht|number_format(2, ',', ' ') }} €
+										{% else %}
+											0,00 €
+										{% endif %}
 									</div>
 								</div>
 
@@ -240,16 +242,33 @@ id: 'contact-form',
 								<div class="row mb-2">
 									<div class="col-6 text-secondary small">TVA</div>
 									<div class="col-6 text-end fw-semibold text-dark" id="tvaAmount">
-										{{ montants.total_tva|number_format(2, ',', ' ') }}
-										€
+										{{ configurationRecapitulatif.totaux_par_defaut.total_tva|number_format(2, ',', ' ') }} €
 									</div>
 								</div>
 
 								<div class="row">
-									<div class="col-6 fw-semibold text-dark">Total TTC</div>
+									<div class="col-6 fw-semibold text-dark">
+										Total création du site
+									</div>
+
 									<div class="col-6 text-end fw-bold fs-4 text-dark" id="totalTtc">
-										{{ montants.total_ttc|number_format(2, ',', ' ') }}
-										€
+										{{ configurationRecapitulatif.totaux_par_defaut.total_ttc|number_format(2, ',', ' ') }} €
+									</div>
+								</div>
+
+								<hr>
+
+								<div id="webblePlusRow" class="row mb-2 gray-row">
+									<div class="col-7 text-secondary small">
+										Abonnement {{ offre.webble_plus_libelle }}
+									</div>
+
+									<div class="col-5 text-end fw-semibold text-dark" id="webblePlusAmount">
+										Non souscrit
+									</div>
+
+									<div class="col-12 text-secondary mt-1" id="webblePlusInfo" style="font-size: 11px;">
+										Non inclus dans le total du devis.
 									</div>
 								</div>
 
@@ -258,13 +277,10 @@ id: 'contact-form',
 						</div>
 					</div>
 
-
-					{# ================= RGPD ================= #}
 					<div class="card border-0 shadow-sm rounded-4 mb-4">
 						<div class="card-body p-4">
 
 							<div class="form-check d-flex align-items-start">
-
 								{{ form_widget(form.rgpd, { attr: { class: 'form-check-input mt-1', required: true } }) }}
 
 								<label class="form-check-label ms-2 text-dark">
@@ -274,7 +290,6 @@ id: 'contact-form',
 									</a>
 									<span class="text-danger">*</span>
 								</label>
-
 							</div>
 
 							<div class="error-message">{{ form_errors(form.rgpd) }}</div>
@@ -282,9 +297,7 @@ id: 'contact-form',
 						</div>
 					</div>
 
-
 					<div class="d-grid gap-3">
-
 						<a href="{{ path('app_creation_site') }}" class="btn btn-outline-secondary rounded-pill">
 							Retour aux offres
 						</a>
@@ -292,11 +305,9 @@ id: 'contact-form',
 						<button type="submit" class="btn btn-primary rounded-pill">
 							Envoyer la demande de devis
 						</button>
-
 					</div>
 
 				</div>
-
 			</div>
 
 			{{ form_end(form) }}

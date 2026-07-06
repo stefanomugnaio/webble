@@ -141,7 +141,7 @@ class DevisType extends AbstractType
 
             // MAINTENANCE
             ->add('contrat_maintenance', CheckboxType::class, [
-                'label' => 'Contrat de maintenance annuelle (180 € HT / an)',
+                'label' => 'Abonnement Webble+ (12 €/ mois)',
                 'required' => false,
                 'attr' => ['class' => 'form-check-input'],
                 'row_attr' => ['class' => 'form-check'],

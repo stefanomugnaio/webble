@@ -1,7 +1,7 @@
-{# templates/devis/confirmation.html.twig #}
+{# templates/envoi_devis/cdm.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Contrat de maintenance{% endblock %}
+{% block title %}Webble+{% endblock %}
 
 {% block body %}
 <section class="py-5 min-vh-100 margin-top-responsive" style="background:#f8f9fa;">
@@ -9,16 +9,16 @@
 
         <div class="text-center mx-auto mb-5" style="max-width:720px;">
             <p class="text-uppercase small fw-semibold text-secondary mb-2" style="letter-spacing:.08em;">
-                Maintenance
+                Abonnement
             </p>
 
             <h1 class="fw-semibold text-dark mb-3">
-                Contrat de maintenance
+                Webble+
             </h1>
 
             <p class="text-secondary mb-0">
-                Le contrat de maintenance vous permet de garder un site web fiable,
-                sécurisé et toujours à jour.
+                Avec Webble+, votre site reste fiable, sécurisé et à jour chaque mois,
+                tout en bénéficiant de modifications incluses selon vos besoins.
             </p>
         </div>
 
@@ -29,7 +29,7 @@
                     <div class="card-body p-4 p-lg-5">
 
                         <h2 class="h5 fw-semibold text-dark mb-4">
-                            Ce que comprend le contrat
+                            Ce que comprend l'abonnement
                         </h2>
 
                         <ul class="list-unstyled text-secondary mb-4">
@@ -51,7 +51,7 @@
 
                             <li class="d-flex mb-2">
                                 <span class="me-2">✏️</span>
-                                <span>Modifications mineures de contenu (textes, images, informations)</span>
+                                <span>Modifications mineures de contenu, textes, images ou informations</span>
                             </li>
 
                             <li class="d-flex mb-2">
@@ -86,9 +86,27 @@
 
                         </ul>
 
-                        <div class="border rounded-4 bg-light p-3 small text-secondary">
-                            Le contrat de maintenance ne comprend pas la création de nouvelles fonctionnalités,
+                        <div class="border rounded-4 bg-light p-3 small text-secondary mb-3">
+                            L'abonnement à Webble+ ne comprend pas la création de nouvelles fonctionnalités,
                             les évolutions majeures du site ou les refontes complètes.
+                        </div>
+
+                        <div class="border rounded-4 bg-white p-3 small text-secondary">
+                            <h3 class="h6 fw-semibold text-dark mb-2">
+                                Engagement de l’abonnement
+                            </h3>
+
+                            <p class="mb-2">
+                                L’abonnement Webble+ est souscrit avec un engagement initial de
+                                <strong>12 mois</strong>.
+                                Les mensualités sont dues pendant toute la durée de cet engagement.
+                            </p>
+
+                            <p class="mb-0">
+                                En cas de mensualité non réglée, l’abonnement est interrompu.
+                                Cette interruption ne met pas fin à l’engagement initial et l’abonnement ne pourra pas être réactivé
+                                avant la date de fin initialement prévue.
+                            </p>
                         </div>
 
                     </div>

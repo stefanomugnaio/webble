@@ -13,26 +13,50 @@ final class CreationSiteController extends AbstractController
     #[Route('/creation-site', name: 'app_creation_site')]
     public function index(EnvoiDevisService $devisService): Response
     {
-        
-        $donneesOffreTranquille = $devisService->recupererDonneesOffre("tranquille");
+        $codesOffres = [
+            'tranquille',
+            'serieuse',
+            'pro',
+        ];
 
-        $montantsOffreTranquille = $devisService->calculerMontants(
-            $donneesOffreTranquille,
-            AppConfig::TAUX_TVA
-        );
+        $offres = [];
 
-        $donneesOffreSerieuse = $devisService->recupererDonneesOffre("serieuse");
+        foreach ($codesOffres as $codeOffre) {
+            $donneesOffre = $devisService->recupererDonneesOffre($codeOffre);
 
-        $montantsOffreSerieuse = $devisService->calculerMontants(
-            $donneesOffreSerieuse,
-            AppConfig::TAUX_TVA
-        );
-
+            $offres[$codeOffre] = [
+                'donnees' => $donneesOffre,
+                'montants' => $devisService->calculerMontants(
+                    $donneesOffre,
+                    AppConfig::TAUX_TVA
+                ),
+            ];
+        }
 
         return $this->render('creation_site/index.html.twig', [
             'controller_name' => 'CreationSiteController',
-            'montantsOffreTranquille' => $montantsOffreTranquille,
-            'montantsOffreSerieuse' => $montantsOffreSerieuse
+
+            /*
+             * Nouvelle structure propre utilisée par le template.
+             */
+            'offres' => $offres,
+
+            /*
+             * Prestations complémentaires depuis AppConfig.
+             */
+            'prestationsComplementaires' => AppConfig::PRESTATIONS_COMPLEMENTAIRES,
+
+            /*
+             * Anciennes variables conservées temporairement.
+             */
+            'donneesOffreTranquille' => $offres['tranquille']['donnees'],
+            'montantsOffreTranquille' => $offres['tranquille']['montants'],
+
+            'donneesOffreSerieuse' => $offres['serieuse']['donnees'],
+            'montantsOffreSerieuse' => $offres['serieuse']['montants'],
+
+            'donneesOffrePro' => $offres['pro']['donnees'],
+            'montantsOffrePro' => $offres['pro']['montants'],
         ]);
     }
 }

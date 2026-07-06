@@ -12,6 +12,18 @@
     transform: translateY(0);
 }
 
+.client-logo {
+  img {
+    transition: transform 0.25s ease, filter 0.25s ease;
+    transform-origin: center;
+  }
+
+  &:hover img {
+    transform: scale(1.08);
+    filter: brightness(1.05);
+  }
+}
+
 body.site-loading {
     overflow: hidden;
 }
