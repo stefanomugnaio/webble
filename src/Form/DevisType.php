@@ -175,6 +175,18 @@ class DevisType extends AbstractType
                 ],
             ])
 
+            // CGV
+            ->add('cgv', CheckboxType::class, [
+                'label' => false,
+                'attr' => ['class' => 'form-check-input'],
+                'row_attr' => ['class' => 'form-check mt-2'],
+                'constraints' => [
+                    new IsTrue(
+                        message: 'Vous devez accepter les conditions générales de vente.'
+                    ),
+                ],
+            ])
+
             ->add('recaptchaToken', HiddenType::class, [
                 'mapped' => false,
             ])

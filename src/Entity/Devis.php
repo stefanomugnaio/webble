@@ -53,6 +53,9 @@ class Devis
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $Description = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $cgv = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -210,6 +213,18 @@ class Devis
     public function setDescription(?string $Description): static
     {
         $this->Description = $Description;
+
+        return $this;
+    }
+
+    public function isCgv(): ?bool
+    {
+        return $this->cgv;
+    }
+
+    public function setCgv(?bool $cgv): static
+    {
+        $this->cgv = $cgv;
 
         return $this;
     }

@@ -280,7 +280,7 @@
 					<div class="card border-0 shadow-sm rounded-4 mb-4">
 						<div class="card-body p-4">
 
-							<div class="form-check d-flex align-items-start">
+							<div class="form-check d-flex align-items-start mb-3">
 								{{ form_widget(form.rgpd, { attr: { class: 'form-check-input mt-1', required: true } }) }}
 
 								<label class="form-check-label ms-2 text-dark">
@@ -292,7 +292,25 @@
 								</label>
 							</div>
 
-							<div class="error-message">{{ form_errors(form.rgpd) }}</div>
+							<div class="error-message mb-3">
+								{{ form_errors(form.rgpd) }}
+							</div>
+
+							<div class="form-check d-flex align-items-start">
+								{{ form_widget(form.cgv, { attr: { class: 'form-check-input mt-1', required: true } }) }}
+
+								<label class="form-check-label ms-2 text-dark">
+									J’ai lu et j’accepte les
+									<a href="/cgv" target="_blank" class="text-decoration-underline">
+										conditions générales de vente
+									</a>
+									<span class="text-danger">*</span>
+								</label>
+							</div>
+
+							<div class="error-message">
+								{{ form_errors(form.cgv) }}
+							</div>
 
 						</div>
 					</div>
