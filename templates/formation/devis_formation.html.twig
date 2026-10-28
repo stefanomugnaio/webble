@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block body %}
+{% set has_available_dates = form.dateSouhaitee.vars.choices is not empty %}
 <section class="py-5 min-vh-100 margin-top-responsive" style="background: #f8f9fa;">
     <div class="container py-4 py-lg-5">
 
@@ -88,29 +89,37 @@
                     </div>
                 </div>
 
-                {# ================= CHOIX SESSION ================= #}
+                {# ================= CHOIX DE LA JOURNÉE ================= #}
                 <div class="card border-0 shadow-sm rounded-4 mb-4">
                     <div class="card-body p-4 p-lg-5">
                         <h5 class="fw-semibold text-dark mb-4">
-                            Choisissez votre session de formation
+                            Choisissez votre journée
                         </h5>
 
-                        <div class="col-12">
-                            {{ form_label(form.sessionFormation) }}
-                            {{ form_widget(form.sessionFormation) }}
+                        <div class="col-12 mb-4">
+                            {{ form_label(form.dateSouhaitee) }}
+                            {{ form_widget(form.dateSouhaitee) }}
                             <div class="error-message">
-                                {{ form_errors(form.sessionFormation) }}
+                                {{ form_errors(form.dateSouhaitee) }}
                             </div>
                         </div>
 
-                        <div class="border rounded-4 bg-light p-3 mt-4">
-                            <p class="small text-secondary mb-0">
-                                Pour consulter les horaires et jours précis des formations, consultez le
-                                <a href="{{ path('app_planning_formations') }}" class="link-secondary text-decoration-underline">
-                                    planning détaillé des formations
-                                </a>
+                        {% if not has_available_dates %}
+                            <div class="alert alert-light border rounded-4 mb-0" role="status">
+                                Aucune journée n’est disponible pour le moment. Revenez prochainement ou contactez-nous.
+                            </div>
+                        {% else %}
+                            <p class="small text-secondary mb-3">
+                                Les journées disponibles sont affichées en vert. Cliquez sur celle qui vous convient.
                             </p>
-                        </div>
+
+                            <div id="calendar"
+                                 class="planning-calendar planning-calendar--selection mb-4"
+                                 data-mode="select"
+                                 data-events-url="{{ path('planning_formations_evenements') }}"
+                                 data-input-id="{{ form.dateSouhaitee.vars.id }}">
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -220,8 +229,9 @@
                     </a>
 
                     <button type="submit"
-                            class="btn btn-primary px-4 rounded-pill">
-                        Envoyer la demande d'inscription
+                            class="btn btn-primary px-4 rounded-pill"
+                            {% if not has_available_dates %}disabled{% endif %}>
+                        {{ has_available_dates ? "Envoyer la demande d'inscription" : "Aucune journée disponible" }}
                     </button>
                 </div>
 
@@ -238,5 +248,6 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>
+    {{ encore_entry_script_tags('planning') }}
     {{ encore_entry_script_tags('devis_formation') }}
 {% endblock %}

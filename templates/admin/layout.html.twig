@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% block admin_title %}Administration{% endblock %}{% endblock %}
+
+{% block body %}
+<main class="admin-page min-vh-100 py-5">
+    <div class="container margin-top-responsive py-4 py-lg-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
+            <div>
+                <p class="text-uppercase small fw-semibold text-secondary mb-2" style="letter-spacing: .08em;">Administration</p>
+                <h1 class="h2 fw-semibold text-dark mb-1">{% block admin_heading %}Tableau de bord{% endblock %}</h1>
+                <p class="text-secondary mb-0">{% block admin_description %}Gérez les données et les contenus du site.{% endblock %}</p>
+            </div>
+            <a href="{{ path('app_profil') }}" class="btn btn-outline-secondary rounded-pill px-4">
+                <i class="bi bi-person me-2"></i>Mon espace
+            </a>
+        </div>
+
+        {% for type, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ type }} rounded-4 shadow-sm" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+
+        <div class="row g-4 align-items-start">
+            <aside class="col-12 col-xl-3">
+                <nav class="card border-0 shadow-sm rounded-4 p-3 admin-nav" aria-label="Navigation de l’administration">
+                    <a href="{{ path('admin_dashboard') }}" class="admin-nav__link"><i class="bi bi-grid"></i>Vue d’ensemble</a>
+                    <div class="admin-nav__section">Offres &amp; facturation</div>
+                    <a href="{{ path('admin_offre_index') }}" class="admin-nav__link"><i class="bi bi-receipt"></i>Offres commerciales</a>
+                    <a href="{{ path('admin_tache_offre_index') }}" class="admin-nav__link"><i class="bi bi-list-check"></i>Bibliothèque de tâches</a>
+                    <a href="{{ path('admin_parametre_offre_edit') }}" class="admin-nav__link"><i class="bi bi-file-earmark-image"></i>Papier à en-tête</a>
+                    <div class="admin-nav__section">Gestion du site</div>
+                    <a href="{{ path('admin_contact_index') }}" class="admin-nav__link"><i class="bi bi-envelope"></i>Contacts</a>
+                    <a href="{{ path('admin_devis_index') }}" class="admin-nav__link"><i class="bi bi-file-earmark-text"></i>Devis</a>
+                    <a href="{{ path('admin_devis_formation_index') }}" class="admin-nav__link"><i class="bi bi-calendar-check"></i>Demandes de formation</a>
+                    <a href="{{ path('admin_planning') }}" class="admin-nav__link"><i class="bi bi-calendar3"></i>Planning</a>
+                    <a href="{{ path('admin_formation_index') }}" class="admin-nav__link"><i class="bi bi-mortarboard"></i>Formations</a>
+                    <a href="{{ path('admin_client_index') }}" class="admin-nav__link"><i class="bi bi-people"></i>Clients</a>
+                    <a href="{{ path('admin_document_index') }}" class="admin-nav__link"><i class="bi bi-folder2-open"></i>Documents</a>
+                </nav>
+            </aside>
+
+            <div class="col-12 col-xl-9">
+                {% block admin_content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

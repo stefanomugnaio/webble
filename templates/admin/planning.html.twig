@@ -1,0 +1,34 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block admin_title %}Planning des disponibilités{% endblock %}
+{% block admin_heading %}Planning des disponibilités{% endblock %}
+{% block admin_description %}Cliquez sur une journée pour la rendre disponible ou la retirer.{% endblock %}
+
+{% block admin_content %}
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4 p-lg-5">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+                <div>
+                    <h2 class="h5 fw-semibold text-dark mb-1">Vos journées disponibles</h2>
+                    <p class="small text-secondary mb-0">Les journées publiées apparaissent en vert pour les utilisateurs.</p>
+                </div>
+                <span class="badge text-bg-success rounded-pill px-3 py-2">Disponible</span>
+            </div>
+
+            <div id="calendar"
+                 class="planning-calendar"
+                 data-mode="admin"
+                 data-events-url="{{ path('planning_formations_evenements') }}"
+                 data-toggle-url="{{ path('admin_planning_toggle') }}"
+                 data-csrf-token="{{ csrf_token('admin_planning_toggle') }}">
+            </div>
+
+            <div id="planning-feedback" class="d-none" role="status" aria-live="polite"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('planning') }}
+{% endblock %}

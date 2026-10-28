@@ -24,6 +24,7 @@ class DocumentUploadType extends AbstractType
                     $client->getPrenom().' '.$client->getNom().' ('.$client->getEmail().')',
                 'choice_value' => 'id',
                 'placeholder' => 'Sélectionner un client',
+                'attr' => ['class' => 'form-select'],
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -31,6 +32,7 @@ class DocumentUploadType extends AbstractType
 
             ->add('nom', TextType::class, [
                 'label' => 'Nom du document',
+                'attr' => ['class' => 'form-control'],
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -39,6 +41,7 @@ class DocumentUploadType extends AbstractType
             ->add('fichier', FileType::class, [
                 'label' => 'Fichier PDF',
                 'mapped' => false,
+                'attr' => ['class' => 'form-control', 'accept' => 'application/pdf'],
                 'constraints' => [
                     new File(
                         mimeTypes: ['application/pdf'],

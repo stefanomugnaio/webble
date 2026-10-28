@@ -23,13 +23,7 @@ class EnvoiDevisController extends AbstractController
     ): Response {
         $donneesOffre = $devisService->recupererDonneesOffre($offre);
 
-        if (($donneesOffre['prix_site_ht'] ?? null) === null) {
-            return $this->redirectToRoute('app_contact', [
-                'sujet' => 'offre-pro',
-            ]);
-        }
-
-        $optionsDevis = $devisService->recupererOptionsDevis();
+        $optionsDevis = $devisService->recupererOptionsDevis($offre);
 
         $montants = $devisService->calculerMontants(
             $donneesOffre,
@@ -53,7 +47,14 @@ class EnvoiDevisController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($devisService->enregistrerDevis($devis, $donneesOffre['libelle'])) {
-                $notificationEmailService->envoyerNotificationDevis($form->getData());
+                $recapitulatifEmail = $devisService->preparerRecapitulatifEmail(
+                    $devis,
+                    $donneesOffre,
+                    $optionsDevis,
+                    AppConfig::TAUX_TVA
+                );
+
+                $notificationEmailService->envoyerNotificationDevis($devis, $recapitulatifEmail);
             }
 
             return $this->render('envoi_devis/confirmation.html.twig', [

@@ -1,0 +1,19 @@
+{% extends 'emails/layout.html.twig' %}
+{% block email_title %}Nouvelle demande de formation{% endblock %}
+{% block preheader %}Nouvelle demande pour {{ recapitulatif.formation }}.{% endblock %}
+{% block badge %}Nouvelle demande{% endblock %}
+{% block heading %}Une nouvelle demande de formation vient d’arriver.{% endblock %}
+{% block introduction %}<p style="margin:0;">Voici les informations transmises par le prospect.</p>{% endblock %}
+{% block content %}
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top:12px;background:#f8f9fb;border:1px solid #e5e7eb;border-radius:10px;">
+<tr><td colspan="2" style="padding:20px 22px 13px;color:#111827;font-size:16px;font-weight:700;">Demande {{ recapitulatif.reference }}</td></tr>
+<tr><td style="padding:9px 22px;color:#6b7280;font-size:13px;">Client</td><td align="right" style="padding:9px 22px;color:#111827;font-size:13px;font-weight:700;">{{ demande.prenom }} {{ demande.nom }}</td></tr>
+<tr><td style="padding:9px 22px;color:#6b7280;font-size:13px;">E-mail</td><td align="right" style="padding:9px 22px;font-size:13px;"><a href="mailto:{{ demande.email }}" style="color:#111827;">{{ demande.email }}</a></td></tr>
+<tr><td style="padding:9px 22px;color:#6b7280;font-size:13px;">Téléphone</td><td align="right" style="padding:9px 22px;font-size:13px;"><a href="tel:{{ demande.telephone }}" style="color:#111827;">{{ demande.telephone }}</a></td></tr>
+<tr><td style="padding:9px 22px;color:#6b7280;font-size:13px;">Adresse</td><td align="right" style="padding:9px 22px;color:#111827;font-size:13px;">{{ demande.adresse }}, {{ demande.codePostal }} {{ demande.ville }}</td></tr>
+<tr><td style="padding:9px 22px;color:#6b7280;font-size:13px;">Formation</td><td align="right" style="padding:9px 22px;color:#111827;font-size:13px;font-weight:700;">{{ recapitulatif.formation }}</td></tr>
+<tr><td style="padding:9px 22px;color:#6b7280;font-size:13px;">Journée souhaitée</td><td align="right" style="padding:9px 22px;color:#111827;font-size:13px;font-weight:700;">{{ recapitulatif.date_souhaitee ? recapitulatif.date_souhaitee|date('d/m/Y') : 'À convenir' }}</td></tr>
+<tr><td style="padding:9px 22px;color:#6b7280;font-size:13px;">Durée</td><td align="right" style="padding:9px 22px;color:#111827;font-size:13px;">{{ recapitulatif.duree ? recapitulatif.duree ~ ' h' : 'À préciser' }}</td></tr>
+<tr><td style="padding:14px 22px 20px;border-top:1px solid #dfe3e8;color:#111827;font-size:14px;font-weight:700;">Montant TTC</td><td align="right" style="padding:14px 22px 20px;border-top:1px solid #dfe3e8;color:#111827;font-size:20px;font-weight:800;">{{ recapitulatif.total_ttc|number_format(2, ',', ' ') }} €</td></tr>
+</table><p style="margin:22px 0 0;color:#596273;font-size:13px;line-height:1.6;">Tu peux répondre directement à cet e-mail : l’adresse du demandeur est configurée comme destinataire de réponse.</p>
+{% endblock %}

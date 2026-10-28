@@ -5,7 +5,6 @@ namespace App\Service;
 use App\Entity\DevisFormation;
 use App\Entity\Formation;
 use App\Repository\FormationRepository;
-use App\Repository\SessionFormationRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;
@@ -14,8 +13,7 @@ class EnvoiDevisFormationService
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private FormationRepository $formationRepository,
-        private SessionFormationRepository $sessionRepository
+        private FormationRepository $formationRepository
     ) {}
 
     /**
@@ -32,18 +30,6 @@ class EnvoiDevisFormationService
         }
 
         return $formation;
-    }
-
-    /**
-     * Récupération des sessions disponibles
-     */
-    public function recupererSessionsDisponibles(): array
-    {
-        return $this->sessionRepository->findBy([
-            'status' => 'disponible'
-        ], [
-            'date_debut' => 'ASC'
-        ]);
     }
 
     /**

@@ -2,7 +2,7 @@
 framework:
     secret: '%env(APP_SECRET)%'
     mailer:
-        dsn: 'smtp://postmaster@webble.fr:Ovh0054%%2B%%2B@ssl0.ovh.net:587'
+        dsn: '%env(MAILER_DSN)%'
     # Note that the session will be started ONLY if you read or write from it.
     session: true
 

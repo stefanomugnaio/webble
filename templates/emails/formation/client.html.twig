@@ -1,0 +1,22 @@
+{% extends 'emails/layout.html.twig' %}
+{% block email_title %}Votre demande de formation a bien été reçue{% endblock %}
+{% block preheader %}Webble a bien reçu votre demande de formation {{ recapitulatif.reference }}.{% endblock %}
+{% block badge %}Demande bien reçue{% endblock %}
+{% block heading %}Merci {{ demande.prenom }}, votre demande est enregistrée.{% endblock %}
+{% block introduction %}<p style="margin:0;">Votre demande de formation a bien été transmise. La journée choisie va maintenant être vérifiée avant la confirmation définitive.</p>{% endblock %}
+{% block content %}
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top:12px;background:#f8f9fb;border:1px solid #e5e7eb;border-radius:10px;">
+<tr><td colspan="2" style="padding:20px 22px 13px;color:#111827;font-size:16px;font-weight:700;">Récapitulatif de votre demande</td></tr>
+<tr><td style="padding:9px 22px;color:#6b7280;font-size:13px;">Référence</td><td align="right" style="padding:9px 22px;color:#111827;font-size:13px;font-weight:700;">{{ recapitulatif.reference }}</td></tr>
+<tr><td style="padding:9px 22px;color:#6b7280;font-size:13px;">Formation</td><td align="right" style="padding:9px 22px;color:#111827;font-size:13px;font-weight:700;">{{ recapitulatif.formation }}</td></tr>
+<tr><td style="padding:9px 22px;color:#6b7280;font-size:13px;">Journée souhaitée</td><td align="right" style="padding:9px 22px;color:#111827;font-size:13px;font-weight:700;">{{ recapitulatif.date_souhaitee ? recapitulatif.date_souhaitee|date('d/m/Y') : 'À convenir' }}</td></tr>
+<tr><td style="padding:9px 22px;color:#6b7280;font-size:13px;">Durée</td><td align="right" style="padding:9px 22px;color:#111827;font-size:13px;font-weight:700;">{{ recapitulatif.duree ? recapitulatif.duree ~ ' heure' ~ (recapitulatif.duree > 1 ? 's' : '') : 'À préciser' }}</td></tr>
+<tr><td style="padding:9px 22px;color:#6b7280;font-size:13px;">Montant HT</td><td align="right" style="padding:9px 22px;color:#111827;font-size:13px;font-weight:700;">{{ recapitulatif.prix_ht|number_format(2, ',', ' ') }} €</td></tr>
+<tr><td style="padding:14px 22px 20px;border-top:1px solid #dfe3e8;color:#111827;font-size:14px;font-weight:700;">Montant TTC</td><td align="right" style="padding:14px 22px 20px;border-top:1px solid #dfe3e8;color:#111827;font-size:20px;font-weight:800;">{{ recapitulatif.total_ttc|number_format(2, ',', ' ') }} €</td></tr>
+</table>
+<div style="margin-top:28px;"><h2 style="margin:0 0 14px;color:#111827;font-size:18px;">Les prochaines étapes</h2><table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+{% set etapes = [['Vérification', 'Je vérifie la disponibilité de la journée demandée.'], ['Confirmation', 'Vous recevez une réponse personnalisée confirmant la date ou proposant une alternative.'], ['Informations pratiques', 'Les modalités et les informations utiles vous seront communiquées avant la formation.']] %}
+{% for etape in etapes %}<tr><td width="36" valign="top" style="padding:7px 0;"><span style="display:inline-block;width:26px;height:26px;background:#111827;border-radius:50%;color:#fff;font-size:12px;font-weight:700;line-height:26px;text-align:center;">{{ loop.index }}</span></td><td style="padding:7px 0;color:#596273;font-size:14px;line-height:1.55;"><strong style="color:#111827;">{{ etape[0] }}</strong><br>{{ etape[1] }}</td></tr>{% endfor %}
+</table></div>
+<p style="margin:26px 0 0;color:#7a8290;font-size:11px;line-height:1.6;">Cet e-mail confirme uniquement la réception de votre demande. La date devient définitive après validation par Webble. Ce message ne constitue ni une facture ni une confirmation de réservation.</p>
+{% endblock %}

@@ -2,19 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Contact;
-use App\Entity\Devis;
-use App\Entity\DevisFormation;
 use App\Entity\Document;
-use App\Entity\SessionFormation;
 use App\Form\NotificationClientType;
 use App\Form\ProfilClientType;
 use App\Repository\ContactRepository;
 use App\Repository\DevisFormationRepository;
 use App\Repository\DevisRepository;
 use App\Service\DocumentService;
-use App\Service\SessionFormationService;
-use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -25,56 +19,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ProfilController extends AbstractController
 {
-    #[Route('/admin/devis/{id}', name: 'admin_devis_delete', methods: ['POST'])]
-    public function delete(Devis $devis, Request $request, EntityManagerInterface $em): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $devis->getId(), $request->request->get('_token'))) {
-            $em->remove($devis);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('app_profil', ['section' => 'devis']);
-    }
-
-    #[Route('/admin/formation/{id}', name: 'admin_devis_formation_delete', methods: ['POST'])]
-    public function deleteDevisFormation(DevisFormation $devisFormation, Request $request, EntityManagerInterface $em): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $devisFormation->getId(), $request->request->get('_token'))) {
-            $em->remove($devisFormation);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('app_profil', ['section' => 'devisFormation']);
-    }
-
-    #[Route('/admin/sessions-formation/{id}', name: 'admin_session_formation_delete', methods: ['POST'])]
-    public function deleteSession(SessionFormation $session, Request $request, EntityManagerInterface $em): Response
-    {
-        try {
-            $em->remove($session);
-            $em->flush();
-
-            $this->addFlash('success', 'La session a été supprimée avec succès.');
-
-        } catch (ForeignKeyConstraintViolationException $e) {
-
-            $this->addFlash('danger', 'Impossible de supprimer cette session car elle est utilisée dans un devis.');
-        }
-
-        return $this->redirectToRoute('app_profil', ['section' => 'formations']);
-    }
-
-    #[Route('/admin/contact/{id}', name: 'admin_contact_delete', methods: ['POST'])]
-    public function deleteContact(Contact $contact, Request $request, EntityManagerInterface $em): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $contact->getId(), $request->request->get('_token'))) {
-            $em->remove($contact);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('app_profil', ['section' => 'messages']);
-    }
-
     #[Route('/profil', name: 'app_profil')]
     public function index(
         Request $request,
@@ -82,8 +26,7 @@ class ProfilController extends AbstractController
         DocumentService $documentService,
         ContactRepository $contactRepository,
         DevisRepository $devisRepository,
-        DevisFormationRepository $devisFormationRepository,
-        SessionFormationService $sessionFormationService
+        DevisFormationRepository $devisFormationRepository
     ): Response {
         $client = $this->getUser();
 
@@ -95,6 +38,19 @@ class ProfilController extends AbstractController
         // Section affichée à droite
         // --------------------------------------------------
         $section = $request->query->get('section', 'profil');
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $adminSections = [
+                'messages' => 'admin_contact_index',
+                'devis' => 'admin_devis_index',
+                'devisFormation' => 'admin_devis_formation_index',
+                'formations' => 'admin_formation_index',
+            ];
+
+            if (isset($adminSections[$section])) {
+                return $this->redirectToRoute($adminSections[$section]);
+            }
+        }
 
         // --------------------------------------------------
         // FORMULAIRE PROFIL
@@ -168,11 +124,6 @@ class ProfilController extends AbstractController
         }
 
         // --------------------------------------------------
-        // LISTE DES SESSIONS
-        // --------------------------------------------------
-        $sessions = $sessionFormationService->recupererToutesLesSessions();
-
-        // --------------------------------------------------
         // RENDER
         // --------------------------------------------------
         return $this->render('profil/index.html.twig', [
@@ -196,7 +147,7 @@ class ProfilController extends AbstractController
             'devisList'           => $devisList,
 
             // sessions
-            'sessionsFormations'  => $sessions,
+            'sessionsFormations'  => [],
         ]);
     }
 

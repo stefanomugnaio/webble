@@ -1,0 +1,39 @@
+<footer class="site-footer bg-dark text-white" aria-label="Pied de page">
+	<div class="container py-5">
+		<div class="row g-4 align-items-start">
+			<div class="col-12 col-lg-5">
+				<a class="site-footer__brand d-inline-flex align-items-center mb-3" href="{{ path('app_index') }}" aria-label="Webble - Retour à l'accueil">
+					<img src="{{ asset('images/webble_black.svg') }}" alt="Webble" width="170">
+				</a>
+				<p class="site-footer__description mb-0">
+					Création de sites internet et formations numériques accessibles,
+					avec un accompagnement simple et personnalisé.
+				</p>
+			</div>
+
+			<div class="col-6 col-lg-3 offset-lg-1">
+				<h2 class="site-footer__title">Navigation</h2>
+				<ul class="site-footer__links list-unstyled mb-0">
+					<li><a href="{{ path('app_index') }}">Accueil</a></li>
+					<li><a href="{{ path('app_creation_site') }}">Création de site web</a></li>
+					<li><a href="{{ path('app_liste_formations') }}">Formations</a></li>
+					<li><a href="{{ path('app_contact') }}">Contact</a></li>
+				</ul>
+			</div>
+
+			<div class="col-6 col-lg-3">
+				<h2 class="site-footer__title">Informations</h2>
+				<ul class="site-footer__links list-unstyled mb-0">
+					<li><a href="mailto:contact@webble.fr">contact@webble.fr</a></li>
+					<li><a href="{{ path('app_mentions_legales') }}">Mentions légales</a></li>
+					<li><a href="{{ path('app_politique_confidentialite') }}">Politique de confidentialité</a></li>
+					<li><a href="{{ path('app_cgv') }}">Conditions générales de vente</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="site-footer__bottom mt-5 pt-4">
+			<p class="mb-0">&copy; {{ 'now'|date('Y') }} Webble. Tous droits réservés.</p>
+		</div>
+	</div>
+</footer>

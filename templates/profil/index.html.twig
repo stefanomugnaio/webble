@@ -75,40 +75,10 @@
                             {% if is_granted('ROLE_ADMIN') %}
                                 <hr class="my-3">
 
-                                <a class="list-group-item list-group-item-action border-0 rounded-3 px-3 py-3 mb-2 d-flex align-items-center gap-2 {% if section == 'messages' %}fw-semibold bg-light text-dark{% else %}text-dark{% endif %}"
-                                   href="{{ path('app_profil', { section: 'messages' }) }}">
-                                    <i class="bi bi-envelope"></i>
-                                    <span>Messages</span>
-                                </a>
-
-                                <a class="list-group-item list-group-item-action border-0 rounded-3 px-3 py-3 mb-2 d-flex align-items-center gap-2 {% if section == 'devis' %}fw-semibold bg-light text-dark{% else %}text-dark{% endif %}"
-                                   href="{{ path('app_profil', { section: 'devis' }) }}">
-                                    <i class="bi bi-file-text"></i>
-                                    <span>Devis</span>
-                                </a>
-
-                                <a class="list-group-item list-group-item-action border-0 rounded-3 px-3 py-3 mb-2 d-flex align-items-center gap-2 {% if section == 'devisFormation' %}fw-semibold bg-light text-dark{% else %}text-dark{% endif %}"
-                                   href="{{ path('app_profil', { section: 'devisFormation' }) }}">
-                                    <i class="bi bi-file-text"></i>
-                                    <span>Devis formation</span>
-                                </a>
-
-                                <a class="list-group-item list-group-item-action border-0 rounded-3 px-3 py-3 mb-2 d-flex align-items-center gap-2 {% if section == 'formations' %}fw-semibold bg-light text-dark{% else %}text-dark{% endif %}"
-                                   href="{{ path('app_profil', { section: 'formations' }) }}">
-                                    <i class="bi bi-calendar-event"></i>
-                                    <span>Sessions de formation</span>
-                                </a>
-
                                 <a class="list-group-item list-group-item-action border-0 rounded-3 px-3 py-3 mb-2 d-flex align-items-center gap-2 text-dark"
-                                   href="{{ path('app_ajouter_session', { section: 'formation' }) }}">
-                                    <i class="bi bi-plus-square"></i>
-                                    <span>Ajouter une session de formation</span>
-                                </a>
-
-                                <a class="list-group-item list-group-item-action border-0 rounded-3 px-3 py-3 mb-2 d-flex align-items-center gap-2 text-dark"
-                                   href="{{ path('app_ajouter_formation', { section: 'formation' }) }}">
-                                    <i class="bi bi-plus-square"></i>
-                                    <span>Ajouter une formation</span>
+                                   href="{{ path('admin_dashboard') }}">
+                                    <i class="bi bi-grid"></i>
+                                    <span>Administration</span>
                                 </a>
                             {% endif %}
 

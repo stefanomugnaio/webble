@@ -17,7 +17,7 @@
 				</p>
 
 				<h1 class="fw-semibold text-dark mb-3">
-					Offre {{ offre.libelle }}
+					{{ offre.titre_devis|default('Offre ' ~ offre.libelle) }}
 				</h1>
 
 				<p class="text-secondary mb-0">
@@ -209,14 +209,14 @@
 								</script>
 
 								<div class="row mb-2">
-									<div class="col-7 text-secondary small">Site web</div>
+									<div class="col-7 text-secondary small">{{ offre.recapitulatif_libelle|default('Site web') }}</div>
 									<div class="col-5 text-end fw-semibold text-dark">
 										{{ montants.site_ht|number_format(2, ',', ' ') }} €
 									</div>
 								</div>
 
 								<div id="domaineRow" class="row mb-2 {% if not configurationRecapitulatif.options.domaine.active_par_defaut %}gray-row{% endif %}">
-									<div class="col-7 text-secondary small">Nom de domaine</div>
+									<div class="col-7 text-secondary small">{{ optionsDevis.nom_domaine.libelle }}</div>
 									<div class="col-5 text-end fw-semibold text-dark" id="domaineAmount">
 										{% if configurationRecapitulatif.options.domaine.active_par_defaut %}
 											{{ configurationRecapitulatif.options.domaine.prix_ht|number_format(2, ',', ' ') }} €
@@ -227,7 +227,7 @@
 								</div>
 
 								<div id="hebergementRow" class="row mb-3 {% if not configurationRecapitulatif.options.hebergement.active_par_defaut %}gray-row{% endif %}">
-									<div class="col-7 text-secondary small">Hébergement</div>
+									<div class="col-7 text-secondary small">{{ optionsDevis.hebergement.libelle }}</div>
 									<div class="col-5 text-end fw-semibold text-dark" id="hebergementAmount">
 										{% if configurationRecapitulatif.options.hebergement.active_par_defaut %}
 											{{ configurationRecapitulatif.options.hebergement.prix_ht|number_format(2, ',', ' ') }} €
@@ -248,7 +248,7 @@
 
 								<div class="row">
 									<div class="col-6 fw-semibold text-dark">
-										Total création du site
+										{{ offre.total_libelle|default('Total création du site') }}
 									</div>
 
 									<div class="col-6 text-end fw-bold fs-4 text-dark" id="totalTtc">

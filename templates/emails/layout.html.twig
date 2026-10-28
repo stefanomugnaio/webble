@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block email_title %}Webble{% endblock %}</title>
+</head>
+<body style="margin:0;padding:0;background:#f2f3f5;color:#111827;font-family:Arial,Helvetica,sans-serif;-webkit-text-size-adjust:100%;">
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">
+        {% block preheader %}{% endblock %}
+    </div>
+
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="width:100%;background:#f2f3f5;">
+        <tr>
+            <td align="center" style="padding:24px 12px;">
+                <table role="presentation" width="640" cellspacing="0" cellpadding="0" border="0" style="width:100%;max-width:640px;background:#ffffff;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;">
+                    <tr>
+                        <td style="padding:30px 36px 24px;border-bottom:1px solid #e5e7eb;">
+                            <img src="{{ logo_url }}" width="160" height="29" alt="Webble" style="display:block;width:160px;max-width:60%;height:auto;border:0;">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding:38px 36px 18px;">
+                            <span style="display:inline-block;padding:7px 11px;background:#111827;border-radius:999px;color:#ffffff;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;">
+                                {% block badge %}Demande reçue{% endblock %}
+                            </span>
+
+                            <h1 style="margin:20px 0 14px;color:#111827;font-size:28px;line-height:1.2;letter-spacing:-0.6px;">
+                                {% block heading %}{% endblock %}
+                            </h1>
+
+                            <div style="color:#596273;font-size:16px;line-height:1.7;">
+                                {% block introduction %}{% endblock %}
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding:0 36px 38px;">
+                            {% block content %}{% endblock %}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding:26px 36px;background:#111827;color:#d1d5db;font-size:12px;line-height:1.7;text-align:center;">
+                            <strong style="display:block;margin-bottom:5px;color:#ffffff;font-size:14px;">Webble</strong>
+                            Création de sites web et formations numériques<br>
+                            Une question ? <a href="{{ contact_url }}" style="color:#ffffff;text-decoration:underline;">Contactez Webble</a> ou répondez directement à cet e-mail.
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

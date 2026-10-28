@@ -8,7 +8,7 @@
         {# Logo + nom de l'agence #}
         <a class="navbar-brand d-flex align-items-center" href="{{ path('app_index') }}">
             <div class="d-inline-flex align-items-center justify-content-center">
-                <img src="{{ asset('images/webble_black.svg') }}" alt="Logo Webble" width="200">
+                <img src="{{ asset('images/webble_black.png') }}" alt="Logo Webble" class="navbar-logo" width="200" height="36">
             </div>
         </a>
 
@@ -30,7 +30,7 @@
         {# Logo + nom de l'agence #}
         <a class="navbar-brand d-flex align-items-center" href="{{ path('app_index') }}">
             <div class="d-inline-flex align-items-center justify-content-center">
-                <img src="{{ asset('images/webble_black.svg') }}" alt="Logo Webble" width="200">
+                <img src="{{ asset('images/webble_black.png') }}" alt="Logo Webble" class="navbar-logo" width="200" height="36">
             </div>
         </a>
 
@@ -85,6 +85,11 @@
                 {% endif %}
             </li>
             {% if app.user %}
+            {% if is_granted('ROLE_ADMIN') %}
+            <li class="nav-item mb-2">
+                <a class="nav-link text-white" href="{{ path('admin_dashboard') }}">Administration</a>
+            </li>
+            {% endif %}
             <li class="nav-item mb-2">
                 <a class="nav-link text-white" href="{{ path('app_logout') }}">Déconnexion</a>
             </li>

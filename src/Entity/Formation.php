@@ -30,11 +30,11 @@ class Formation
     #[ORM\Column(length: 150, unique: true)]
     private ?string $slug = null;
 
-    /**symfony 
+    /**
      * @var Collection<int, DevisFormation>
      */
-    #[ORM\OneToMany(mappedBy: 'Formations', targetEntity: DevisFormation::class)]
-    private Collection $DevisFormation;
+    #[ORM\OneToMany(mappedBy: 'formation', targetEntity: DevisFormation::class)]
+    private Collection $devisFormations;
 
     /**
      * @var Collection<int, SessionFormation>
@@ -44,7 +44,7 @@ class Formation
 
     public function __construct()
     {
-        $this->DevisFormation = new ArrayCollection();
+        $this->devisFormations = new ArrayCollection();
         $this->sessionFormations = new ArrayCollection();
     }
 
@@ -106,14 +106,14 @@ class Formation
      */
     public function getDevisFormation(): Collection
     {
-        return $this->DevisFormation;
+        return $this->devisFormations;
     }
 
     public function addDevisFormation(DevisFormation $devisFormation): static
     {
-        if (!$this->DevisFormation->contains($devisFormation)) {
-            $this->DevisFormation->add($devisFormation);
-            $devisFormation->setFormations($this);
+        if (!$this->devisFormations->contains($devisFormation)) {
+            $this->devisFormations->add($devisFormation);
+            $devisFormation->setFormation($this);
         }
 
         return $this;
@@ -121,10 +121,10 @@ class Formation
 
     public function removeDevisFormation(DevisFormation $devisFormation): static
     {
-        if ($this->DevisFormation->removeElement($devisFormation)) {
+        if ($this->devisFormations->removeElement($devisFormation)) {
             // set the owning side to null (unless already changed)
             if ($devisFormation->getFormations() === $this) {
-                $devisFormation->setFormations(null);
+                $devisFormation->setFormation(null);
             }
         }
 

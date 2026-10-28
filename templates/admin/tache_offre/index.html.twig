@@ -1,0 +1,17 @@
+{% extends 'admin/layout.html.twig' %}
+{% block admin_title %}Bibliothèque de tâches{% endblock %}
+{% block admin_heading %}Bibliothèque de tâches{% endblock %}
+{% block admin_description %}Préparez les prestations réutilisables dans vos offres. Chaque ligne restera modifiable lors de la création.{% endblock %}
+{% block admin_content %}
+<div class="card border-0 shadow-sm rounded-4"><div class="card-body p-4 p-lg-5">
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-4">
+        <h2 class="h5 fw-semibold mb-0">{{ taches|length }} tâche{{ taches|length > 1 ? 's' : '' }}</h2>
+        <a href="{{ path('admin_tache_offre_new') }}" class="btn btn-primary rounded-pill px-4"><i class="bi bi-plus-lg me-2"></i>Ajouter une tâche</a>
+    </div>
+    {% if taches %}
+    <div class="table-responsive"><table class="table align-middle table-hover mb-0 admin-table"><thead class="table-light"><tr><th>Libellé</th><th>Quantité</th><th>Prix unitaire HT</th><th>Type</th><th class="text-end">Actions</th></tr></thead><tbody>
+    {% for tache in taches %}<tr><td class="fw-medium">{{ tache.libelle }}</td><td>{{ tache.quantite|number_format(2, ',', ' ') }}</td><td>{{ tache.prixUnitaire|number_format(2, ',', ' ') }} €</td><td>{% if tache.offerte %}<span class="badge text-bg-success">Offerte</span>{% else %}<span class="badge text-bg-light">Facturée</span>{% endif %}</td><td><div class="d-flex justify-content-end gap-2"><a href="{{ path('admin_tache_offre_edit', {id: tache.id}) }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a><form method="post" action="{{ path('admin_tache_offre_delete', {id: tache.id}) }}" onsubmit="return confirm('Supprimer cette tâche de la bibliothèque ?');"><input type="hidden" name="_token" value="{{ csrf_token('delete_tache_offre' ~ tache.id) }}"><button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></form></div></td></tr>{% endfor %}
+    </tbody></table></div>
+    {% else %}<div class="admin-empty-state"><i class="bi bi-list-check"></i><h2>Votre bibliothèque est vide</h2><p>Ajoutez vos prestations habituelles pour composer vos offres plus rapidement.</p></div>{% endif %}
+</div></div>
+{% endblock %}

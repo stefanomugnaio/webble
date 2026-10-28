@@ -3,10 +3,10 @@
 namespace App\Form;
 
 use App\Entity\DevisFormation;
-use App\Entity\SessionFormation;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Repository\DisponibiliteFormationRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,8 +19,22 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class DevisFormationType extends AbstractType
 {
+    public function __construct(
+        private DisponibiliteFormationRepository $disponibiliteRepository
+    ) {}
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $availableDates = [];
+
+        foreach ($this->disponibiliteRepository->findUpcoming() as $availability) {
+            $date = $availability->getDate();
+
+            if ($date) {
+                $availableDates[$date->format('d/m/Y')] = $date;
+            }
+        }
+
         $builder
 
             ->add('nom', null, [
@@ -119,34 +133,16 @@ class DevisFormationType extends AbstractType
                 ],
             ])
 
-            // SESSION FORMATION
-            ->add('sessionFormation', EntityType::class, [
-                'class' => SessionFormation::class,
-                'label' => 'Session disponible',
-                'choice_label' => function (SessionFormation $s) {
-                    $fmt = new \IntlDateFormatter('fr_FR', \IntlDateFormatter::NONE, \IntlDateFormatter::NONE);
-                    $fmt->setPattern('EEE d MMM y'); // Ven 21 fév 2026
-
-                    $debut = $fmt->format($s->getDateDebut());
-                    $fin   = $fmt->format($s->getDateFin());
-
-                    $heures = $s->getDuree();
-                    $duree = $heures . 'h';
-
-                    return sprintf('%s → %s • %s', $debut, $fin, $duree);
-                },
-                'placeholder' => 'Choisissez une session',
+            ->add('dateSouhaitee', ChoiceType::class, [
+                'label' => 'Journée sélectionnée',
+                'choices' => $availableDates,
+                'choice_value' => static fn (?\DateTimeInterface $date): string => $date?->format('Y-m-d') ?? '',
+                'placeholder' => 'Choisissez une journée verte dans le planning',
                 'attr' => ['class' => 'form-select'],
                 'row_attr' => ['class' => 'mb-3'],
                 'constraints' => [
-                    new NotBlank(message: 'Veuillez sélectionner une session.')
+                    new NotBlank(message: 'Veuillez sélectionner une journée disponible.'),
                 ],
-                'query_builder' => function ($repository) {
-                    return $repository->createQueryBuilder('s')
-                        ->where('s.status = :status')
-                        ->setParameter('status', 'disponible')
-                        ->orderBy('s.date_debut', 'ASC');
-                }
             ])
 
             // RGPD

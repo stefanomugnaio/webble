@@ -1,0 +1,15 @@
+NOUVELLE DEMANDE DE FORMATION
+
+Référence : {{ recapitulatif.reference }}
+Client : {{ demande.prenom }} {{ demande.nom }}
+E-mail : {{ demande.email }}
+Téléphone : {{ demande.telephone }}
+Adresse : {{ demande.adresse }}, {{ demande.codePostal }} {{ demande.ville }}
+
+Formation : {{ recapitulatif.formation }}
+Journée souhaitée : {{ recapitulatif.date_souhaitee ? recapitulatif.date_souhaitee|date('d/m/Y') : 'À convenir' }}
+Durée : {{ recapitulatif.duree ? recapitulatif.duree ~ ' h' : 'À préciser' }}
+Montant HT : {{ recapitulatif.prix_ht|number_format(2, ',', ' ') }} €
+Montant TTC : {{ recapitulatif.total_ttc|number_format(2, ',', ' ') }} €
+
+Répondre directement à cet e-mail pour contacter le demandeur.

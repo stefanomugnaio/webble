@@ -1,0 +1,20 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block admin_title %}{{ title }}{% endblock %}
+{% block admin_heading %}{{ title }}{% endblock %}
+{% block admin_description %}Renseignez les informations puis enregistrez vos modifications.{% endblock %}
+
+{% block admin_content %}
+<div class="card border-0 shadow-sm rounded-4 admin-form">
+    <div class="card-body p-4 p-lg-5">
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
+            {{ form_widget(form) }}
+            <div class="d-flex flex-column flex-sm-row justify-content-between gap-3 mt-4 pt-2">
+                <a href="{{ path('admin_' ~ resource ~ '_index') }}" class="btn btn-outline-secondary rounded-pill px-4">Annuler</a>
+                <button type="submit" class="btn btn-primary rounded-pill px-4">Enregistrer</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

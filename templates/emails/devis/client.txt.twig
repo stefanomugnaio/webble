@@ -1,0 +1,28 @@
+WEBBLE — DEMANDE DE DEVIS BIEN REÇUE
+
+Bonjour {{ devis.prenom }},
+
+Votre demande a bien été transmise. Je vais l’étudier afin de vous proposer un devis adapté à votre projet.
+
+RÉCAPITULATIF
+Référence : {{ recapitulatif.reference }}
+Prestation : {{ recapitulatif.offre }}
+Base estimative : à partir de {{ recapitulatif.prix_base_ht|number_format(2, ',', ' ') }} € HT
+{% for option in recapitulatif.options %}{{ option.libelle }} : {{ option.prix_ht|number_format(2, ',', ' ') }} € HT
+{% else %}Options ponctuelles : aucune
+{% endfor %}Webble+ : {% if recapitulatif.webble_plus.selectionne %}sélectionné à {{ recapitulatif.webble_plus.prix_mensuel_ht|number_format(2, ',', ' ') }} € HT/mois{% else %}non sélectionné{% endif %}
+Total estimatif TTC : {{ recapitulatif.total_ttc|number_format(2, ',', ' ') }} €
+
+VOTRE DEMANDE
+{{ devis.description }}
+
+PROCHAINES ÉTAPES
+1. Analyse de votre demande.
+2. Échange personnalisé si une précision est nécessaire.
+3. Envoi d’un devis détaillé avant tout engagement.
+
+Les montants indiqués sont estimatifs. Le tarif définitif sera précisé dans le devis personnalisé. Webble+ n’est pas inclus dans le total ponctuel.
+
+Une question ? Répondez directement à cet e-mail ou rendez-vous sur {{ contact_url }}.
+
+Webble

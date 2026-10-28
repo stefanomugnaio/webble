@@ -1,0 +1,57 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block admin_title %}{{ title }}{% endblock %}
+{% block admin_heading %}{{ title }}{% endblock %}
+{% block admin_description %}{{ description }}{% endblock %}
+
+{% block admin_content %}
+<div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body p-4 p-lg-5">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-4">
+            <h2 class="h5 fw-semibold text-dark mb-0">{{ items|length }} élément{{ items|length > 1 ? 's' : '' }}</h2>
+            <a href="{{ path('admin_' ~ resource ~ '_new') }}" class="btn btn-primary rounded-pill px-4">
+                <i class="bi bi-plus-lg me-2"></i>Ajouter
+            </a>
+        </div>
+
+        {% if items is not empty %}
+            <div class="table-responsive">
+                <table class="table align-middle table-hover mb-0 admin-table">
+                    <thead class="table-light">
+                        <tr>
+                            {% for column in columns %}<th>{{ column }}</th>{% endfor %}
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                            <tr>
+                                {% for value in item.values %}<td>{{ value }}</td>{% endfor %}
+                                <td>
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <a href="{{ path('admin_' ~ resource ~ '_show', {id: item.id}) }}" class="btn btn-sm btn-outline-secondary" aria-label="Consulter">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="{{ path('admin_' ~ resource ~ '_edit', {id: item.id}) }}" class="btn btn-sm btn-outline-primary" aria-label="Modifier">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <form method="post" action="{{ path('admin_' ~ resource ~ '_delete', {id: item.id}) }}" onsubmit="return confirm('Confirmer la suppression ?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete_' ~ resource ~ item.id) }}">
+                                            <button class="btn btn-sm btn-outline-danger" aria-label="Supprimer"><i class="bi bi-trash"></i></button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="bi bi-inbox fs-1 text-secondary"></i>
+                <p class="text-secondary mt-3 mb-0">Aucun élément pour le moment.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

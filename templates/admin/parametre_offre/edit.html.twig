@@ -1,0 +1,9 @@
+{% extends 'admin/layout.html.twig' %}
+{% block admin_title %}Papier à en-tête{% endblock %}
+{% block admin_heading %}Papier à en-tête{% endblock %}
+{% block admin_description %}Définissez l’image A4 qui servira de fond aux nouvelles offres PDF.{% endblock %}
+{% block admin_content %}
+<div class="row g-4"><div class="col-lg-7"><div class="card border-0 shadow-sm rounded-4 admin-form"><div class="card-body p-4 p-lg-5">
+{{ form_start(form) }}{{ form_row(form.papierEnteteUrl) }}<div class="d-flex justify-content-end mt-4"><button class="btn btn-primary rounded-pill px-4">Enregistrer le papier à en-tête</button></div>{{ form_end(form) }}
+</div></div></div><div class="col-lg-5"><div class="card border-0 shadow-sm rounded-4 h-100"><div class="card-body p-4"><h2 class="h6 fw-semibold">Aperçu du fond actif</h2>{% if parametre.papierEnteteUrl %}<div class="letterhead-preview mt-3"><img src="{{ parametre.papierEnteteUrl }}" alt="Aperçu du papier à en-tête"></div><p class="small text-secondary mt-3 mb-0">Les offres déjà créées conservent le papier qui leur était associé.</p>{% else %}<div class="admin-empty-state py-4"><i class="bi bi-file-earmark-image"></i><p class="mb-0">Aucun papier à en-tête configuré.</p></div>{% endif %}</div></div></div></div>
+{% endblock %}

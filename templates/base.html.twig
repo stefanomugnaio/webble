@@ -6,6 +6,21 @@
 		<meta
 		name="viewport" content="width=device-width, initial-scale=1">
 
+		<script>
+			(function () {
+				try {
+					var loaderStorageKey = 'webble-initial-loader-shown';
+
+					if (window.sessionStorage.getItem(loaderStorageKey) !== '1') {
+						document.documentElement.classList.add('site-first-load');
+						window.sessionStorage.setItem(loaderStorageKey, '1');
+					}
+				} catch (error) {
+					document.documentElement.classList.add('site-first-load');
+				}
+			})();
+		</script>
+
 		{# URL absolue de la page, sans les paramètres de recherche. #}
 		{% set urlCanoniqueParDefaut = app.request
             ? app.request.schemeAndHttpHost ~ app.request.baseUrl ~ app.request.pathInfo
@@ -174,12 +189,14 @@
 		{# ================= LOADER ================= #}
 		<div id="site-loader" class="site-loader" role="status" aria-label="Chargement du site">
 			<div class="loader-content">
-				<img src="{{ asset('images/webble_black.svg') }}" alt="Webble" class="loader-logo-img">
+				<img src="{{ asset('images/webble_black.png') }}" alt="Webble" class="loader-logo-img" width="180" height="32">
 
 				<div class="loader-bar" aria-hidden="true">
 					<span></span>
 				</div>
 			</div>
+
+			<div class="loader-spinner" aria-hidden="true"></div>
 		</div>
 
 		{# ================= NAVIGATION ================= #}
@@ -187,6 +204,9 @@
 
 		{# ================= CONTENU DE LA PAGE ================= #}
 		{% block body %}{% endblock %}
+
+		{# ================= PIED DE PAGE ================= #}
+		{% include 'footer/footer.html.twig' %}
 
 		{# ================= JAVASCRIPT WEBPACK ENCORE ================= #}
 		{% block javascripts %}

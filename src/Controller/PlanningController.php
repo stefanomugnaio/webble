@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
-use App\Repository\SessionFormationRepository;
+use App\Entity\DisponibiliteFormation;
+use App\Repository\DisponibiliteFormationRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class PlanningController extends AbstractController
 {
@@ -17,63 +21,69 @@ class PlanningController extends AbstractController
     }
 
     #[Route('/planning/evenements', name: 'planning_formations_evenements', methods: ['GET'])]
-    public function planningEvents(SessionFormationRepository $sessionFormationRepository): JsonResponse
+    public function planningEvents(DisponibiliteFormationRepository $repository): JsonResponse
     {
-        $sessions = $sessionFormationRepository->findAll();
-
-        $events = [];
-
-        foreach ($sessions as $session) {
-            $formation = $session->getFormation();
-
-            $libelle = $formation?->getLibelle() ?? 'Formation';
-
-            $dateDebut = $session->getDateDebut();
-            $dateFin = $session->getDateFin();
-
-            if (!$dateDebut || !$dateFin) {
-                continue;
-            }
-
-            $couleur = match (mb_strtolower((string) $session->getStatus())) {
-                'disponible', 'ouverte', 'open' => '#198754',
-                'complet', 'complète', 'complete' => '#ffc107',
-                'annulee', 'annulée', 'annule', 'cancelled' => '#dc3545',
-                default => '#0d6efd',
-            };
-
-            $bloc = $session->getBloc();
-            $heureDebut = $session->getHeureDebut();
-            $heureFin = $session->getHeureFin();
-
-            $title = $libelle;
-
-            if ($bloc !== null) {
-                $title .= ' - Bloc ' . $bloc;
-            }
-
-            if ($heureDebut && $heureFin) {
-                $title .= ' - ' . $heureDebut->format('H:i') . ' à ' . $heureFin->format('H:i');
-            }
-
-            $events[] = [
-                'id' => $session->getId(),
-                'title' => $title,
-                'start' => $dateDebut->format('Y-m-d'),
-                'end' => (clone $dateFin)->modify('+1 day')->format('Y-m-d'),
-                'backgroundColor' => $couleur,
-                'borderColor' => $couleur,
+        return $this->json(array_map(
+            static fn (DisponibiliteFormation $disponibilite): array => [
+                'id' => $disponibilite->getId(),
+                'title' => 'Disponible',
+                'start' => $disponibilite->getDate()?->format('Y-m-d'),
+                'allDay' => true,
+                'backgroundColor' => '#198754',
+                'borderColor' => '#198754',
                 'textColor' => '#ffffff',
-                'extendedProps' => [
-                    'status' => $session->getStatus(),
-                    'duree' => $session->getDuree(),
-                    'bloc' => $bloc,
-                    'heureDebut' => $heureDebut ? $heureDebut->format('H:i') : null,
-                    'heureFin' => $heureFin ? $heureFin->format('H:i') : null,
-                ],
-            ];
+            ],
+            $repository->findUpcoming()
+        ));
+    }
+
+    #[Route('/admin/planning', name: 'admin_planning', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function adminPlanning(): Response
+    {
+        return $this->render('admin/planning.html.twig');
+    }
+
+    #[Route('/admin/planning/disponibilites/basculer', name: 'admin_planning_toggle', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function toggleAvailability(
+        Request $request,
+        DisponibiliteFormationRepository $repository,
+        EntityManagerInterface $entityManager
+    ): JsonResponse {
+        try {
+            $payload = $request->toArray();
+        } catch (\JsonException) {
+            return $this->json(['message' => 'Requête invalide.'], Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->json($events);
+        if (!$this->isCsrfTokenValid('admin_planning_toggle', (string) ($payload['_token'] ?? ''))) {
+            return $this->json(['message' => 'Jeton de sécurité invalide.'], Response::HTTP_FORBIDDEN);
+        }
+
+        $dateValue = (string) ($payload['date'] ?? '');
+        $date = \DateTimeImmutable::createFromFormat('!Y-m-d', $dateValue);
+
+        if (!$date || $date->format('Y-m-d') !== $dateValue || $date < new \DateTimeImmutable('today')) {
+            return $this->json(['message' => 'Choisissez une journée à venir.'], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $availability = $repository->findOneBy(['date' => $date]);
+
+        if ($availability) {
+            $entityManager->remove($availability);
+            $available = false;
+        } else {
+            $entityManager->persist((new DisponibiliteFormation())->setDate($date));
+            $available = true;
+        }
+
+        $entityManager->flush();
+
+        return $this->json([
+            'date' => $dateValue,
+            'available' => $available,
+            'message' => $available ? 'Journée marquée comme disponible.' : 'Disponibilité retirée.',
+        ]);
     }
 }

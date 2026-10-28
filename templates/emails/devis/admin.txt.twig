@@ -1,0 +1,20 @@
+NOUVELLE DEMANDE DE DEVIS WEBBLE
+
+Référence : {{ recapitulatif.reference }}
+Date : {{ recapitulatif.date|date('d/m/Y à H\\hi') }}
+Offre : {{ recapitulatif.offre }}
+Estimation TTC : {{ recapitulatif.total_ttc|number_format(2, ',', ' ') }} €
+
+CLIENT
+{{ devis.prenom }} {{ devis.nom }}
+E-mail : {{ devis.email }}
+Téléphone : {{ devis.telephone }}
+Adresse : {{ devis.adresse }}, {{ devis.codePostal }} {{ devis.ville }}
+
+OPTIONS
+{% for option in recapitulatif.options %}- {{ option.libelle }} : {{ option.prix_ht|number_format(2, ',', ' ') }} € HT
+{% else %}- Aucune option ponctuelle
+{% endfor %}- Webble+ : {{ recapitulatif.webble_plus.selectionne ? 'Oui' : 'Non' }}
+
+DESCRIPTION
+{{ devis.description|default('Aucune description fournie.') }}

@@ -31,8 +31,19 @@
 				</p>
 			</header>
 
+			{# ================= NAVIGATION DANS LES TARIFS ================= #}
+			<nav class="navigation-tarifs" aria-label="Navigation dans les tarifs">
+				<a href="#comparatif-formules" class="navigation-tarifs__lien">
+					Formules
+				</a>
+
+				<a href="#prestations-complementaires" class="navigation-tarifs__lien navigation-tarifs__lien--mis-en-avant">
+					Refonte et Nouvelles fonctionnalités
+				</a>
+			</nav>
+
 			{# ================= COMPARATEUR ================= #}
-			<section class="comparateur-tarifs">
+			<section class="comparateur-tarifs" id="comparatif-formules">
 
 				<div class="entete-comparateur">
 
@@ -52,6 +63,7 @@
 						</p>
 
 						<div class="zone-prix-formule">
+							<span class="mention-prix-formule">À partir de</span>
 							<strong class="prix-formule">
 								{{ offres.tranquille.montants.site_ht|number_format(0, ',', ' ') }}
 								€
@@ -101,6 +113,8 @@
 								</span>
 							{% endif %}
 
+							<span class="mention-prix-formule">À partir de</span>
+
 							<strong class="prix-formule">
 								{{ offres.serieuse.montants.site_ht|number_format(0, ',', ' ') }}
 								€
@@ -131,7 +145,8 @@
 						</p>
 
 						<div class="zone-prix-formule">
-							<strong class="prix-formule prix-formule--devis">
+							<span class="mention-prix-formule">À partir de</span>
+							<strong class="prix-formule">
 								{% if offres.pro.donnees.prix_site_ht is same as(null) %}
 									Sur devis
 								{% else %}
@@ -144,8 +159,8 @@
 							{{ offres.pro.donnees.resume_creation_site }}
 						</p>
 
-						<a href="{{ path('app_contact') }}" class="btn bouton-formule">
-							Contactez-moi !
+						<a href="{{ path('app_devis', {'offre': 'pro'}) }}" class="btn bouton-formule">
+							C'est parti !
 						</a>
 
 					</article>
@@ -181,6 +196,27 @@
 				<div class="ligne-comparaison">
 					<div class="libelle-comparaison">
 						Intégration de votre logo et de vos couleurs
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Tranquille">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Sérieuse">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+
+					<div class="valeur-comparaison" data-formule="Pro">
+						<i class="bi bi-check-circle"></i>
+						<span class="texte-accessible">Inclus</span>
+					</div>
+				</div>
+
+				<div class="ligne-comparaison">
+					<div class="libelle-comparaison">
+						3 propositions de maquettes personnalisées selon votre secteur d’activité
 					</div>
 
 					<div class="valeur-comparaison" data-formule="Tranquille">
@@ -408,8 +444,8 @@
 					</div>
 
 					<div>
-						<a href="{{ path('app_contact') }}" class="btn bouton-tableau">
-							Contactez-moi !
+						<a href="{{ path('app_devis', {'offre': 'pro'}) }}" class="btn bouton-tableau">
+							C'est parti !
 						</a>
 					</div>
 				</div>
@@ -483,9 +519,13 @@
 
 								<div class="pied-carte-prestation">
 									<div class="prix-prestation">
-										<strong>
-											{{ prestation.prix_libelle }}
-										</strong>
+										<div class="prix-prestation__montant">
+											{% if prestation.prix_prefixe is defined %}
+												<small>{{ prestation.prix_prefixe }}</small>
+											{% endif %}
+
+											<strong>{{ prestation.prix_libelle }}</strong>
+										</div>
 
 										<span>
 											{{ prestation.prix_description }}

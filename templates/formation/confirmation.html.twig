@@ -21,7 +21,9 @@
                         </h1>
 
                         <p class="text-secondary mb-4">
-                            Vous recevrez par e-mail les détails de finalisation de votre inscription à la session de formation.
+                            Votre demande pour la journée du
+                            <strong>{{ devisFormation.dateSouhaitee|format_datetime(locale='fr', pattern="EEEE d MMMM y") }}</strong>
+                            a bien été enregistrée. Cette date vous sera confirmée par e-mail.
                             <strong>
                                 {% if formation.libelle is not null %}
                                     (formation {{ formation.libelle }} – {{ formation.prix|number_format(0, ',', ' ') }} € HT)

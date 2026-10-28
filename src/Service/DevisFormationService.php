@@ -32,9 +32,9 @@ class DevisFormationService
      */
     public function enregistrerDevisFormation(DevisFormation $devis): void
     {
-        if (!$devis->getSessionFormation()) {
+        if (!$devis->getDateSouhaitee()) {
             throw new \LogicException(
-                'Une session doit être sélectionnée.'
+                'Une journée disponible doit être sélectionnée.'
             );
         }
 

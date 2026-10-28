@@ -8,7 +8,8 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     documents_directory: '%kernel.project_dir%/public/uploads/documents'  
-    app.mail_from: 'noreply@webble.fr'
+    app.mail_from: '%env(FROM_EMAIL)%'
+    app.notification_emails: '%env(csv:NOTIFICATION_EMAILS)%'
     recaptcha_site_key: '%env(RECAPTCHA_SITE_KEY)%'
     app.taux_tva: '%env(float:TAUX_TVA)%'
 
@@ -28,6 +29,7 @@ services:
     App\Service\NotificationEmailService:
         arguments:
             $fromEmail: '%app.mail_from%'
+            $notificationEmails: '%app.notification_emails%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

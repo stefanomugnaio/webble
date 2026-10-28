@@ -1,0 +1,35 @@
+{% extends 'emails/layout.html.twig' %}
+
+{% block email_title %}Nouvelle demande de devis Webble{% endblock %}
+{% block preheader %}Nouvelle demande {{ recapitulatif.reference }} pour {{ recapitulatif.offre }}.{% endblock %}
+{% block badge %}Nouveau devis{% endblock %}
+{% block heading %}Une nouvelle demande de devis est arrivée.{% endblock %}
+
+{% block introduction %}
+    <p style="margin:0;">La demande <strong>{{ recapitulatif.reference }}</strong> a été enregistrée le {{ recapitulatif.date|date('d/m/Y à H\\hi') }}.</p>
+{% endblock %}
+
+{% block content %}
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top:12px;border:1px solid #e5e7eb;border-radius:10px;">
+        <tr><td colspan="2" style="padding:18px 20px 12px;font-size:16px;font-weight:700;">Client</td></tr>
+        <tr><td style="padding:7px 20px;color:#6b7280;font-size:13px;">Nom</td><td align="right" style="padding:7px 20px;font-size:13px;font-weight:700;">{{ devis.prenom }} {{ devis.nom }}</td></tr>
+        <tr><td style="padding:7px 20px;color:#6b7280;font-size:13px;">E-mail</td><td align="right" style="padding:7px 20px;font-size:13px;"><a href="mailto:{{ devis.email }}" style="color:#111827;">{{ devis.email }}</a></td></tr>
+        <tr><td style="padding:7px 20px;color:#6b7280;font-size:13px;">Téléphone</td><td align="right" style="padding:7px 20px;font-size:13px;"><a href="tel:{{ devis.telephone }}" style="color:#111827;">{{ devis.telephone }}</a></td></tr>
+        <tr><td style="padding:7px 20px 18px;color:#6b7280;font-size:13px;">Adresse</td><td align="right" style="padding:7px 20px 18px;font-size:13px;">{{ devis.adresse }}, {{ devis.codePostal }} {{ devis.ville }}</td></tr>
+    </table>
+
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top:18px;background:#f8f9fb;border:1px solid #e5e7eb;border-radius:10px;">
+        <tr><td colspan="2" style="padding:18px 20px 12px;font-size:16px;font-weight:700;">Prestation demandée</td></tr>
+        <tr><td style="padding:7px 20px;color:#6b7280;font-size:13px;">Offre</td><td align="right" style="padding:7px 20px;font-size:13px;font-weight:700;">{{ recapitulatif.offre }}</td></tr>
+        {% for option in recapitulatif.options %}
+            <tr><td style="padding:7px 20px;color:#6b7280;font-size:13px;">{{ option.libelle }}</td><td align="right" style="padding:7px 20px;font-size:13px;font-weight:700;">{{ option.prix_ht|number_format(2, ',', ' ') }} € HT</td></tr>
+        {% endfor %}
+        <tr><td style="padding:7px 20px;color:#6b7280;font-size:13px;">Webble+</td><td align="right" style="padding:7px 20px;font-size:13px;font-weight:700;">{{ recapitulatif.webble_plus.selectionne ? 'Oui' : 'Non' }}</td></tr>
+        <tr><td style="padding:13px 20px 18px;border-top:1px solid #dfe3e8;font-size:14px;font-weight:700;">Estimation TTC</td><td align="right" style="padding:13px 20px 18px;border-top:1px solid #dfe3e8;font-size:18px;font-weight:800;">{{ recapitulatif.total_ttc|number_format(2, ',', ' ') }} €</td></tr>
+    </table>
+
+    <div style="margin-top:18px;padding:18px 20px;border-left:4px solid #111827;background:#f8f9fb;">
+        <strong style="display:block;margin-bottom:8px;font-size:14px;">Description du projet</strong>
+        <p style="margin:0;color:#596273;font-size:13px;line-height:1.65;white-space:pre-line;">{{ devis.description|default('Aucune description fournie.') }}</p>
+    </div>
+{% endblock %}

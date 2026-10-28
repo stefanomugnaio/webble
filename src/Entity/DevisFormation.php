@@ -44,8 +44,11 @@ class DevisFormation
     #[ORM\Column]
     private ?bool $rgpd = null;
 
-    #[ORM\ManyToOne(inversedBy: 'DevisFormation')]
-    private ?Formation $Formation = null;
+    #[ORM\ManyToOne(inversedBy: 'devisFormations')]
+    private ?Formation $formation = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateSouhaitee = null;
 
     public function getId(): ?int
     {
@@ -174,12 +177,36 @@ class DevisFormation
 
     public function getFormations(): ?Formation
     {
-        return $this->Formation;
+        return $this->formation;
     }
 
     public function setFormations(?Formation $Formation): static
     {
-        $this->Formation = $Formation;
+        $this->formation = $Formation;
+
+        return $this;
+    }
+
+    public function getFormation(): ?Formation
+    {
+        return $this->formation;
+    }
+
+    public function setFormation(?Formation $formation): static
+    {
+        $this->formation = $formation;
+
+        return $this;
+    }
+
+    public function getDateSouhaitee(): ?\DateTimeInterface
+    {
+        return $this->dateSouhaitee;
+    }
+
+    public function setDateSouhaitee(?\DateTimeInterface $dateSouhaitee): static
+    {
+        $this->dateSouhaitee = $dateSouhaitee;
 
         return $this;
     }

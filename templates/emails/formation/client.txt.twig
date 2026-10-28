@@ -1,0 +1,18 @@
+Bonjour {{ demande.prenom }},
+
+Votre demande de formation a bien été reçue.
+
+RÉCAPITULATIF
+Référence : {{ recapitulatif.reference }}
+Formation : {{ recapitulatif.formation }}
+Journée souhaitée : {{ recapitulatif.date_souhaitee ? recapitulatif.date_souhaitee|date('d/m/Y') : 'À convenir' }}
+Durée : {{ recapitulatif.duree ? recapitulatif.duree ~ ' heure' ~ (recapitulatif.duree > 1 ? 's' : '') : 'À préciser' }}
+Montant HT : {{ recapitulatif.prix_ht|number_format(2, ',', ' ') }} €
+Montant TTC : {{ recapitulatif.total_ttc|number_format(2, ',', ' ') }} €
+
+La disponibilité de la journée demandée va être vérifiée. Vous recevrez ensuite une confirmation personnalisée ainsi que les informations pratiques.
+
+Cet e-mail confirme uniquement la réception de votre demande. La date devient définitive après validation par Webble. Ce message ne constitue ni une facture ni une confirmation de réservation.
+
+Webble
+{{ contact_url }}

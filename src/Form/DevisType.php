@@ -152,7 +152,6 @@ class DevisType extends AbstractType
                 'required' => false,
                 'attr'     => ['class' => 'form-check-input'],
                 'row_attr' => ['class' => 'form-check'],
-                'data'     => true,   // ✅ cochée par défaut
             ])
 
             ->add('hebergement', CheckboxType::class, [
@@ -160,7 +159,6 @@ class DevisType extends AbstractType
                 'required' => false,
                 'attr'     => ['class' => 'form-check-input'],
                 'row_attr' => ['class' => 'form-check'],
-                'data'     => true,   // ✅ cochée par défaut
             ])
 
             // RGPD

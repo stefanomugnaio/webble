@@ -1,0 +1,23 @@
+<!doctype html><html lang="fr"><head><meta charset="UTF-8"><style>
+@page { margin: 0; size: A4 portrait; }
+body { margin: 0; color: #15171a; font-family: DejaVu Sans, sans-serif; font-size: 10pt; line-height: 1.45; }
+.letterhead { position: fixed; top: 0; left: 0; width: 210mm; height: 297mm; z-index: -1000; }
+.page { padding: 40mm 17mm 28mm; }
+.brand { font-size: 24pt; font-weight: bold; margin-bottom: 22mm; }
+.top { width: 100%; margin-bottom: 12mm; } .top td { vertical-align: top; }
+.meta { width: 44%; border-collapse: collapse; } .meta td { padding: 2mm 0; border-bottom: .2mm solid #ddd; }
+.client { width: 46%; padding: 5mm; background: #f5f5f5; }
+h1 { margin: 0 0 4mm; font-size: 20pt; } .intro { margin-bottom: 8mm; color: #444; }
+table.lines { width: 100%; border-collapse: collapse; } .lines th { padding: 3mm 2mm; background: #111; color: #fff; text-align: left; font-size: 8pt; text-transform: uppercase; }
+.lines td { padding: 3.2mm 2mm; border-bottom: .2mm solid #ddd; vertical-align: top; } .right { text-align: right !important; } .free { font-weight: bold; color: #21864b; }
+.totals { width: 48%; margin: 8mm 0 0 auto; border-collapse: collapse; } .totals td { padding: 2mm; } .totals .grand td { padding-top: 3mm; border-top: .5mm solid #111; font-size: 13pt; font-weight: bold; }
+.conditions { margin-top: 10mm; padding-top: 5mm; border-top: .3mm solid #bbb; font-size: 8.5pt; color: #444; } .conditions h2 { font-size: 10pt; color: #111; }
+</style></head><body>
+{% if offre.papierEnteteUrl %}<img class="letterhead" src="{{ offre.papierEnteteUrl }}" alt="">{% endif %}
+<div class="page">{% if not offre.papierEnteteUrl %}<div class="brand">Webble_</div>{% endif %}
+<table class="top"><tr><td><h1>OFFRE COMMERCIALE</h1><table class="meta"><tr><td>Numéro</td><td class="right"><strong>{{ offre.numero }}</strong></td></tr><tr><td>Date</td><td class="right">{{ offre.dateEmission|date('d/m/Y') }}</td></tr><tr><td>Validité</td><td class="right">{{ offre.dateValidite|date('d/m/Y') }}</td></tr></table></td><td class="client"><strong>{{ offre.clientNom }}</strong>{% if offre.clientSociete %}<br>{{ offre.clientSociete }}{% endif %}{% if offre.clientAdresse %}<br>{{ offre.clientAdresse|nl2br }}{% endif %}{% if offre.clientEmail %}<br>{{ offre.clientEmail }}{% endif %}</td></tr></table>
+<h2 style="font-size:13pt;margin:0 0 3mm;">{{ offre.objet }}</h2>{% if offre.introduction %}<div class="intro">{{ offre.introduction|nl2br }}</div>{% endif %}
+<table class="lines"><thead><tr><th>Détail</th><th class="right" style="width:12%;">Qté</th><th class="right" style="width:18%;">PU HT</th><th class="right" style="width:18%;">Total HT</th></tr></thead><tbody>{% for ligne in offre.lignes %}<tr><td>{{ ligne.libelle|nl2br }}</td><td class="right">{{ ligne.quantite|number_format(2, ',', ' ') }}</td><td class="right">{{ ligne.prixUnitaire|number_format(2, ',', ' ') }} €</td><td class="right {{ ligne.offerte ? 'free' : '' }}">{{ ligne.offerte ? 'OFFERT' : ligne.totalHt|number_format(2, ',', ' ') ~ ' €' }}</td></tr>{% endfor %}</tbody></table>
+<table class="totals"><tr><td>Total HT</td><td class="right">{{ offre.totalHt|number_format(2, ',', ' ') }} €</td></tr><tr><td>TVA ({{ offre.tauxTva|number_format(2, ',', ' ') }} %)</td><td class="right">{{ offre.montantTva|number_format(2, ',', ' ') }} €</td></tr><tr class="grand"><td>Total TTC</td><td class="right">{{ offre.totalTtc|number_format(2, ',', ' ') }} €</td></tr></table>
+{% if offre.conditions %}<div class="conditions"><h2>Conditions et précisions</h2>{{ offre.conditions|nl2br }}</div>{% endif %}
+</div></body></html>

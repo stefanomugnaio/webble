@@ -59,8 +59,12 @@ class EnvoiDevisService
         return $offres;
     }
 
-    public function recupererOptionsDevis(): array
+    public function recupererOptionsDevis(?string $codeOffre = null): array
     {
+        if ($codeOffre === 'refonte') {
+            return AppConfig::OPTIONS_DEVIS_REFONTE;
+        }
+
         return AppConfig::OPTIONS_DEVIS;
     }
 
@@ -161,6 +165,56 @@ class EnvoiDevisService
                 'total_ht' => $this->arrondirMontant($totalCreationHt),
                 'total_tva' => $this->arrondirMontant($totalCreationTva),
                 'total_ttc' => $this->arrondirMontant($totalCreationTtc),
+            ],
+        ];
+    }
+
+    public function preparerRecapitulatifEmail(
+        Devis $devis,
+        array $offre,
+        array $optionsDevis,
+        ?float $tauxTva = null
+    ): array {
+        $tauxTva ??= AppConfig::TAUX_TVA;
+        $prixBaseHt = $this->arrondirMontant((float) ($offre['prix_site_ht'] ?? 0));
+        $optionsSelectionnees = [];
+        $totalHt = $prixBaseHt;
+
+        if ($devis->isDomaine()) {
+            $prixDomaineHt = $this->arrondirMontant((float) ($optionsDevis['nom_domaine']['prix_ht'] ?? 0));
+            $optionsSelectionnees[] = [
+                'libelle' => $optionsDevis['nom_domaine']['libelle'] ?? 'Nom de domaine',
+                'prix_ht' => $prixDomaineHt,
+            ];
+            $totalHt += $prixDomaineHt;
+        }
+
+        if ($devis->isHebergement()) {
+            $prixHebergementHt = $this->arrondirMontant((float) ($optionsDevis['hebergement']['prix_ht'] ?? 0));
+            $optionsSelectionnees[] = [
+                'libelle' => $optionsDevis['hebergement']['libelle'] ?? 'Hébergement',
+                'prix_ht' => $prixHebergementHt,
+            ];
+            $totalHt += $prixHebergementHt;
+        }
+
+        $totalTva = $this->arrondirMontant($totalHt * $tauxTva);
+
+        return [
+            'reference' => sprintf('WEB-DEV-%s-%06d', date('Y'), (int) $devis->getId()),
+            'date' => new \DateTimeImmutable(),
+            'offre' => $offre['libelle'] ?? $devis->getOffre(),
+            'prix_base_ht' => $prixBaseHt,
+            'options' => $optionsSelectionnees,
+            'total_ht' => $this->arrondirMontant($totalHt),
+            'taux_tva' => $tauxTva,
+            'total_tva' => $totalTva,
+            'total_ttc' => $this->arrondirMontant($totalHt + $totalTva),
+            'webble_plus' => [
+                'selectionne' => (bool) $devis->isContratMaintenance(),
+                'libelle' => $offre['webble_plus_libelle'] ?? AppConfig::WEBBLE_PLUS['libelle'],
+                'prix_mensuel_ht' => $this->arrondirMontant((float) ($offre['webble_plus_prix_mensuel_ht'] ?? AppConfig::WEBBLE_PLUS['prix_mensuel_ht'])),
+                'mois_offerts' => (int) ($offre['webble_plus_mois_offerts'] ?? 0),
             ],
         ];
     }

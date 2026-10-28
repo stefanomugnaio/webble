@@ -1,0 +1,85 @@
+{% extends 'emails/layout.html.twig' %}
+
+{% block email_title %}Votre demande de devis a bien été reçue{% endblock %}
+{% block preheader %}Webble a bien reçu votre demande de devis {{ recapitulatif.reference }}.{% endblock %}
+{% block badge %}Demande bien reçue{% endblock %}
+
+{% block heading %}Merci {{ devis.prenom }}, votre projet est entre de bonnes mains.{% endblock %}
+
+{% block introduction %}
+    <p style="margin:0;">Votre demande a bien été transmise. Je vais l’étudier avec attention afin de vous proposer un devis adapté à votre projet.</p>
+{% endblock %}
+
+{% block content %}
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top:12px;background:#f8f9fb;border:1px solid #e5e7eb;border-radius:10px;">
+        <tr>
+            <td colspan="2" style="padding:20px 22px 13px;color:#111827;font-size:16px;font-weight:700;">Récapitulatif de votre demande</td>
+        </tr>
+        <tr>
+            <td style="padding:9px 22px;color:#6b7280;font-size:13px;">Référence</td>
+            <td align="right" style="padding:9px 22px;color:#111827;font-size:13px;font-weight:700;">{{ recapitulatif.reference }}</td>
+        </tr>
+        <tr>
+            <td style="padding:9px 22px;color:#6b7280;font-size:13px;">Prestation</td>
+            <td align="right" style="padding:9px 22px;color:#111827;font-size:13px;font-weight:700;">{{ recapitulatif.offre }}</td>
+        </tr>
+        <tr>
+            <td style="padding:9px 22px;color:#6b7280;font-size:13px;">Base estimative HT</td>
+            <td align="right" style="padding:9px 22px;color:#111827;font-size:13px;font-weight:700;">À partir de {{ recapitulatif.prix_base_ht|number_format(2, ',', ' ') }} €</td>
+        </tr>
+
+        {% for option in recapitulatif.options %}
+            <tr>
+                <td style="padding:9px 22px;color:#6b7280;font-size:13px;">{{ option.libelle }}</td>
+                <td align="right" style="padding:9px 22px;color:#111827;font-size:13px;font-weight:700;">{{ option.prix_ht|number_format(2, ',', ' ') }} € HT</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td style="padding:9px 22px;color:#6b7280;font-size:13px;">Options ponctuelles</td>
+                <td align="right" style="padding:9px 22px;color:#111827;font-size:13px;">Aucune</td>
+            </tr>
+        {% endfor %}
+
+        <tr>
+            <td style="padding:9px 22px;color:#6b7280;font-size:13px;">Webble+</td>
+            <td align="right" style="padding:9px 22px;color:#111827;font-size:13px;font-weight:700;">
+                {% if recapitulatif.webble_plus.selectionne %}
+                    Sélectionné — {{ recapitulatif.webble_plus.prix_mensuel_ht|number_format(2, ',', ' ') }} € HT/mois
+                {% else %}
+                    Non sélectionné
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:14px 22px 20px;border-top:1px solid #dfe3e8;color:#111827;font-size:14px;font-weight:700;">Total estimatif TTC</td>
+            <td align="right" style="padding:14px 22px 20px;border-top:1px solid #dfe3e8;color:#111827;font-size:20px;font-weight:800;">{{ recapitulatif.total_ttc|number_format(2, ',', ' ') }} €</td>
+        </tr>
+    </table>
+
+    {% if devis.description %}
+        <div style="margin-top:20px;padding:18px 20px;border-left:4px solid #111827;background:#ffffff;border-top:1px solid #e5e7eb;border-right:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;">
+            <strong style="display:block;margin-bottom:8px;color:#111827;font-size:14px;">Votre demande</strong>
+            <p style="margin:0;color:#596273;font-size:13px;line-height:1.65;white-space:pre-line;">{{ devis.description }}</p>
+        </div>
+    {% endif %}
+
+    <div style="margin-top:28px;">
+        <h2 style="margin:0 0 14px;color:#111827;font-size:18px;">Et maintenant ?</h2>
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+            <tr>
+                <td width="36" valign="top" style="padding:7px 0;"><span style="display:inline-block;width:26px;height:26px;background:#111827;border-radius:50%;color:#ffffff;font-size:12px;font-weight:700;line-height:26px;text-align:center;">1</span></td>
+                <td style="padding:7px 0;color:#596273;font-size:14px;line-height:1.55;"><strong style="color:#111827;">Analyse de la demande</strong><br>Je vérifie vos besoins et les éléments transmis.</td>
+            </tr>
+            <tr>
+                <td width="36" valign="top" style="padding:7px 0;"><span style="display:inline-block;width:26px;height:26px;background:#111827;border-radius:50%;color:#ffffff;font-size:12px;font-weight:700;line-height:26px;text-align:center;">2</span></td>
+                <td style="padding:7px 0;color:#596273;font-size:14px;line-height:1.55;"><strong style="color:#111827;">Échange personnalisé</strong><br>Je vous contacte si une précision est nécessaire.</td>
+            </tr>
+            <tr>
+                <td width="36" valign="top" style="padding:7px 0;"><span style="display:inline-block;width:26px;height:26px;background:#111827;border-radius:50%;color:#ffffff;font-size:12px;font-weight:700;line-height:26px;text-align:center;">3</span></td>
+                <td style="padding:7px 0;color:#596273;font-size:14px;line-height:1.55;"><strong style="color:#111827;">Envoi du devis</strong><br>Vous recevez une proposition détaillée avant tout engagement.</td>
+            </tr>
+        </table>
+    </div>
+
+    <p style="margin:26px 0 0;color:#7a8290;font-size:11px;line-height:1.6;">Les montants ci-dessus constituent une estimation basée sur les choix effectués. Le tarif définitif sera précisé dans le devis personnalisé. L’abonnement Webble+ n’est pas inclus dans le total ponctuel.</p>
+{% endblock %}

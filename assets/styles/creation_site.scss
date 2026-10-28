@@ -2,6 +2,10 @@
    VARIABLES ET PAGE
    ========================= */
 
+html {
+    scroll-behavior: smooth;
+}
+
 .page-tarifs {
     --couleur-fond: #ffffff;
     --couleur-fond-secondaire: #f8f9fb;
@@ -64,6 +68,57 @@
 
 
 /* =========================
+   NAVIGATION DANS LES TARIFS
+   ========================= */
+
+.navigation-tarifs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    margin: 0 auto 2.75rem;
+}
+
+.navigation-tarifs__lien {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0 0.45rem;
+    color: var(--couleur-texte-secondaire);
+    border-bottom: 1px solid transparent;
+    font-size: 0.82rem;
+    font-weight: 650;
+    line-height: 1.2;
+    text-decoration: none;
+    transition:
+        border-color 0.2s ease,
+        color 0.2s ease,
+        gap 0.2s ease;
+}
+
+.navigation-tarifs__lien:hover,
+.navigation-tarifs__lien:focus-visible {
+    color: var(--couleur-texte);
+    border-bottom-color: var(--couleur-texte);
+}
+
+.navigation-tarifs__lien--mis-en-avant {
+    color: var(--couleur-texte);
+    border-bottom-color: var(--couleur-texte);
+}
+
+.navigation-tarifs__lien--mis-en-avant:hover {
+    gap: 0.7rem;
+}
+
+.navigation-tarifs__lien:focus-visible {
+    outline: 2px solid var(--couleur-texte);
+    outline-offset: 4px;
+}
+
+
+/* =========================
    COMPARATEUR
    ========================= */
 
@@ -71,6 +126,7 @@
     width: 100%;
     max-width: 1120px;
     margin: 0 auto;
+    scroll-margin-top: 7rem;
 }
 
 .entete-comparateur,
@@ -187,6 +243,14 @@
     font-size: 0.8rem;
     line-height: 1;
     text-decoration: line-through;
+}
+
+.mention-prix-formule {
+    margin-bottom: 0.3rem;
+    color: var(--couleur-texte-secondaire);
+    font-size: 0.68rem;
+    font-weight: 650;
+    line-height: 1;
 }
 
 .prix-formule {
@@ -496,8 +560,17 @@
 }
 
 .prix-prestation strong {
+    display: block;
     color: var(--couleur-texte);
     font-size: 1.4rem;
+}
+
+.prix-prestation__montant small {
+    display: block;
+    margin-bottom: 0.2rem;
+    color: var(--couleur-texte-secondaire);
+    font-size: 0.68rem;
+    font-weight: 650;
 }
 
 .prix-prestation span {
@@ -703,6 +776,18 @@
         font-size: 0.95rem;
     }
 
+    .navigation-tarifs {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .navigation-tarifs__lien {
+        width: fit-content;
+        align-self: center;
+    }
+
     .entete-carte-formule {
         flex-direction: column;
     }
@@ -757,6 +842,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .navigation-tarifs__lien,
     .bouton-formule,
     .bouton-tableau,
     .bouton-prestation,

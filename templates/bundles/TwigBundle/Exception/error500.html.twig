@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Une erreur est survenue{% endblock %}
+
+{% block description_seo %}Une erreur technique est survenue.{% endblock %}
+
+{% block robots_seo %}noindex, nofollow{% endblock %}
+
+{% block body %}
+<main class="error-page d-flex align-items-center" role="main">
+    <section class="container py-5">
+        <div class="error-page__content mx-auto text-center">
+            <p class="error-page__code mb-2" aria-hidden="true">500</p>
+
+            <p class="text-uppercase small fw-semibold text-secondary mb-3" style="letter-spacing: .1em;">
+                Erreur technique
+            </p>
+
+            <h1 class="fw-semibold text-dark mb-3">
+                Oups, quelque chose s’est mal passé.
+            </h1>
+
+            <p class="error-page__message text-secondary mx-auto mb-4">
+                Le service rencontre momentanément un problème. Vous pouvez réessayer ou revenir à l’accueil.
+            </p>
+
+            <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                <a href="{{ path('app_index') }}" class="btn btn-dark rounded px-4 py-3 fw-semibold">
+                    <i class="bi bi-house-door me-2" aria-hidden="true"></i>
+                    Retour à l’accueil
+                </a>
+                <a href="{{ app.request.uri }}" class="btn btn-outline-secondary rounded px-4 py-3">
+                    Réessayer
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

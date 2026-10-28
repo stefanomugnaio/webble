@@ -1,0 +1,29 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block admin_title %}{{ title }}{% endblock %}
+{% block admin_heading %}{{ title }}{% endblock %}
+{% block admin_description %}Consultez toutes les informations enregistrées.{% endblock %}
+
+{% block admin_content %}
+<div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body p-4 p-lg-5">
+        <dl class="row mb-0 admin-details">
+            {% for label, value in fields %}
+                <dt class="col-md-4 text-secondary fw-medium py-3 border-bottom">{{ label }}</dt>
+                <dd class="col-md-8 text-dark py-3 border-bottom mb-0 text-break">{{ value|nl2br }}</dd>
+            {% endfor %}
+        </dl>
+
+        <div class="d-flex flex-column flex-sm-row justify-content-between gap-3 mt-4">
+            <a href="{{ path('admin_' ~ resource ~ '_index') }}" class="btn btn-outline-secondary rounded-pill px-4">Retour à la liste</a>
+            <div class="d-flex gap-2">
+                <a href="{{ path('admin_' ~ resource ~ '_edit', {id: id}) }}" class="btn btn-primary rounded-pill px-4">Modifier</a>
+                <form method="post" action="{{ path('admin_' ~ resource ~ '_delete', {id: id}) }}" onsubmit="return confirm('Confirmer la suppression ?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete_' ~ resource ~ id) }}">
+                    <button class="btn btn-outline-danger rounded-pill px-4">Supprimer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

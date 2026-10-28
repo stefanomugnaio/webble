@@ -7,6 +7,7 @@ use App\Service\DocumentService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\Attribute\Route;
 
 class DocumentController extends AbstractController
@@ -25,11 +26,12 @@ class DocumentController extends AbstractController
         $form = $this->createForm(DocumentType::class);
         $form->handleRequest($request);
 
-        $fichier = $form->get('fichier')->getData();
-        dd($fichier);
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $fichier */
+            $fichier = $form->get('fichier')->getData();
+            $nomDocument = pathinfo($fichier->getClientOriginalName(), PATHINFO_FILENAME);
 
-            $documentService->enregistreDocumentPourClient($fichier,$client);
+            $documentService->enregistreDocumentPourClient($fichier, $client, $nomDocument);
 
             $this->addFlash('success', 'Document ajouté avec succès.');
 

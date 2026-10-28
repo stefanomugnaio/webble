@@ -1,0 +1,12 @@
+{% extends 'admin/layout.html.twig' %}
+{% block admin_title %}Offres commerciales{% endblock %}
+{% block admin_heading %}Offres commerciales{% endblock %}
+{% block admin_description %}Composez, modifiez et exportez vos propositions commerciales en PDF.{% endblock %}
+{% block admin_content %}
+<div class="card border-0 shadow-sm rounded-4"><div class="card-body p-4 p-lg-5">
+<div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-4"><h2 class="h5 fw-semibold mb-0">{{ offres|length }} offre{{ offres|length > 1 ? 's' : '' }}</h2><a href="{{ path('admin_offre_new') }}" class="btn btn-primary rounded-pill px-4"><i class="bi bi-plus-lg me-2"></i>Créer une offre</a></div>
+{% if offres %}<div class="table-responsive"><table class="table align-middle table-hover mb-0 admin-table"><thead class="table-light"><tr><th>Numéro</th><th>Client</th><th>Objet</th><th>Total TTC</th><th>Statut</th><th class="text-end">Actions</th></tr></thead><tbody>
+{% for offre in offres %}<tr><td class="fw-semibold">{{ offre.numero }}</td><td>{{ offre.clientNom }}{% if offre.clientSociete %}<span class="d-block small text-secondary">{{ offre.clientSociete }}</span>{% endif %}</td><td>{{ offre.objet }}</td><td>{{ offre.totalTtc|number_format(2, ',', ' ') }} €</td><td><span class="badge rounded-pill offre-status offre-status--{{ offre.statut }}">{{ offre.statut|replace({'_': ' '})|capitalize }}</span></td><td><div class="d-flex justify-content-end gap-2"><a href="{{ path('admin_offre_show', {id: offre.id}) }}" class="btn btn-sm btn-outline-secondary" title="Consulter"><i class="bi bi-eye"></i></a><a href="{{ path('admin_offre_edit', {id: offre.id}) }}" class="btn btn-sm btn-outline-primary" title="Modifier"><i class="bi bi-pencil"></i></a><a href="{{ path('admin_offre_pdf', {id: offre.id}) }}" class="btn btn-sm btn-dark" title="Télécharger le PDF" download><i class="bi bi-file-earmark-pdf"></i></a></div></td></tr>{% endfor %}
+</tbody></table></div>{% else %}<div class="admin-empty-state"><i class="bi bi-receipt"></i><h2>Aucune offre pour le moment</h2><p>Créez votre première proposition à partir des tâches de votre bibliothèque.</p><a href="{{ path('admin_offre_new') }}" class="btn btn-primary rounded-pill px-4">Créer une offre</a></div>{% endif %}
+</div></div>
+{% endblock %}

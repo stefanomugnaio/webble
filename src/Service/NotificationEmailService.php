@@ -2,190 +2,143 @@
 
 namespace App\Service;
 
+use App\Config\AppConfig;
 use App\Entity\Client;
 use App\Entity\Devis;
 use App\Entity\DevisFormation;
 use App\Entity\Document;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
+use Twig\Environment;
 
 class NotificationEmailService
 {
     public function __construct(
         private MailerInterface $mailer,
-        private string $fromEmail
-    ) {}
+        private Environment $twig,
+        private string $fromEmail,
+        private array $notificationEmails,
+        private LoggerInterface $logger
+    ) {
+        $this->notificationEmails = array_values(array_unique(array_filter(
+            array_map('trim', $this->notificationEmails),
+            static fn (string $email): bool => false !== filter_var($email, FILTER_VALIDATE_EMAIL)
+        )));
 
-    public function envoyerNotificationDocument(Client $client,Document $document): void {
-        $email = (new Email())
-            ->from('postmaster@webble.fr')
-            ->to($client->getEmail())
-            ->subject('Nouveau document disponible')
-            ->html("
-                <p>Bonjour {$client->getPrenom()},</p>
-
-                <p>Un nouveau document est disponible dans votre espace client :</p>
-
-                <p><strong>{$document->getNom()}</strong></p>
-
-                <p>
-                    Connectez-vous à votre espace client pour le consulter.
-                </p>
-
-                <p>
-                    — L’équipe
-                </p>
-            ");
-
-        try {
-            $this->mailer->send($email);
-        } catch (TransportExceptionInterface $e) {
-            dd($e->getMessage());
+        if ([] === $this->notificationEmails) {
+            throw new \InvalidArgumentException('Au moins une adresse de notification valide doit être configurée.');
         }
     }
 
-    public function envoyerNotificationContact($description): void {
-        $email = (new Email())
-            ->from('postmaster@webble.fr')
-            ->to('stephane.mn@outlook.fr')
-            ->subject('Un nouveau message est arrivé')
-            ->html($description);
-
-        try {
-            $this->mailer->send($email);
-        } catch (TransportExceptionInterface $e) {
-            dd($e->getMessage());
-        }
+    public function envoyerNotificationDocument(Client $client, Document $document): void
+    {
+        $this->envoyerEmail(function () use ($client, $document): Email {
+            return (new Email())
+                ->from(new Address($this->fromEmail, 'Webble'))
+                ->to($client->getEmail())
+                ->subject('Un nouveau document est disponible — Webble')
+                ->html(sprintf(
+                    '<p>Bonjour %s,</p><p>Un nouveau document est disponible dans votre espace client :</p><p><strong>%s</strong></p><p>Bien cordialement,<br><strong>Webble</strong></p>',
+                    htmlspecialchars((string) $client->getPrenom(), ENT_QUOTES),
+                    htmlspecialchars((string) $document->getNom(), ENT_QUOTES)
+                ));
+        }, 'notification de document');
     }
 
-    public function envoyerNotificationDevis(Devis $devis): void {
-        $emailVersWebble = (new Email())
-            ->from('postmaster@webble.fr')
-            ->to('stephane.mn@outlook.fr')
-            ->subject('Un nouvelle demande de devis vient d\'arriver !')
-            ->html("
-                <p>Descriptif de la demande :</p>
-
-                <h3><strong>Informations personnelles :</h3></strong>
-                <p>Email : <strong>{$devis->getEmail()}</strong></p>
-                <p>Nom : <strong>{$devis->getNom()}</strong></p>
-                <p>Prénom : <strong>{$devis->getPrenom()}</strong></p>
-                <p>Tél : <strong>{$devis->getTelephone()}</strong></p>
-                <p>Ville : <strong>{$devis->getVille()}</strong></p>
-                <p>Code postal : <strong>{$devis->getCodePostal()}</strong></p>
-                <p>Adresse : <strong>{$devis->getAdresse()}</strong></p>
-                <p>Offre choisie : <strong>{$devis->getDescription()}</strong></p>
-                <p>Offre choisie : <strong>{$devis->getOffre()}</strong></p>
-
-                <h3> Options : </h3>
-                <p>Contrat de maintenance : <strong>{$devis->isContratMaintenance()}</strong></p>
-                <p>Domaine : <strong>{$devis->isDomaine()}</strong></p>
-                <p>Hébergement : <strong>{$devis->isHebergement()}</strong></p>
-            ");
-
-        try {
-            $this->mailer->send($emailVersWebble);
-        } catch (TransportExceptionInterface $e) {
-            dd($e->getMessage());
-        }
-
-        $emailVersClient = (new Email())
-            ->from('postmaster@webble.fr')
-            ->to($devis->getEmail())
-            ->subject('Confirmation de réception de votre demande de devis')
-            ->html("
-                <p>Bonjour,</p>
-
-                <p>
-                    Votre demande a bien été reçue et est actuellement en cours d’analyse.
-                </p>
-
-                <p>
-                    Vous recevrez un retour personnalisé dans les plus brefs délais.
-                </p>
-
-                <p>
-                    Si vous avez des informations complémentaires à me transmettre d’ici là,
-                    n’hésitez pas à m'envoyer un message via le formulaire de contact.
-                </p>
-
-                <p>
-                    Bien cordialement,<br>
-                    <strong>Webble</strong><br>
-                </p>
-            ");
-
-        try {
-            $this->mailer->send($emailVersClient);
-        } catch (TransportExceptionInterface $e) {
-            dd($e->getMessage());
-        }
+    public function envoyerNotificationContact($description): void
+    {
+        $this->envoyerEmail(function () use ($description): Email {
+            return (new Email())
+                ->from(new Address($this->fromEmail, 'Webble'))
+                ->to(...$this->notificationEmails)
+                ->subject('[Webble] Nouveau message de contact')
+                ->html((string) $description);
+        }, 'notification de contact');
     }
 
-    public function envoyerNotificationFormation(DevisFormation $devisFormation): void {
-        
-        $sessionFormation = $devisFormation->getSessionFormation();
+    public function envoyerNotificationDevis(Devis $devis, array $recapitulatif): void
+    {
+        $contexte = [
+            'devis' => $devis,
+            'recapitulatif' => $recapitulatif,
+            'logo_url' => 'https://webble.fr/images/webble_black.png',
+            'contact_url' => 'https://webble.fr/contact',
+        ];
+
+        $this->envoyerEmail(function () use ($devis, $recapitulatif, $contexte): Email {
+            return (new Email())
+                ->from(new Address($this->fromEmail, 'Webble'))
+                ->to(...$this->notificationEmails)
+                ->replyTo(new Address((string) $devis->getEmail(), trim($devis->getPrenom().' '.$devis->getNom())))
+                ->subject(sprintf('[Webble] Nouvelle demande de devis — %s', $recapitulatif['offre']))
+                ->html($this->twig->render('emails/devis/admin.html.twig', $contexte))
+                ->text($this->twig->render('emails/devis/admin.txt.twig', $contexte));
+        }, 'nouvelle demande de devis');
+
+        $this->envoyerEmail(function () use ($devis, $contexte): Email {
+            return (new Email())
+                ->from(new Address($this->fromEmail, 'Webble'))
+                ->to(new Address((string) $devis->getEmail(), trim($devis->getPrenom().' '.$devis->getNom())))
+                ->replyTo(...$this->notificationEmails)
+                ->subject('Votre demande de devis a bien été reçue — Webble')
+                ->html($this->twig->render('emails/devis/client.html.twig', $contexte))
+                ->text($this->twig->render('emails/devis/client.txt.twig', $contexte));
+        }, 'accusé de réception de devis');
+    }
+
+    public function envoyerNotificationFormation(DevisFormation $devisFormation): void
+    {
         $formation = $devisFormation->getFormations();
-        $emailVersWebble = (new Email())
-            ->from('postmaster@webble.fr')
-            ->to('stephane.mn@outlook.fr')
-            ->subject('Un nouvelle demande de formation vient d\'arriver !')
-            ->html("
-                <p>Descriptif de la demande :</p>
+        $prixHt = (float) ($formation?->getPrix() ?? 0);
+        $totalTva = round($prixHt * AppConfig::TAUX_TVA, 2);
+        $recapitulatif = [
+            'reference' => sprintf('WEB-FOR-%s-%06d', date('Y'), (int) $devisFormation->getId()),
+            'date' => new \DateTimeImmutable(),
+            'formation' => $formation?->getLibelle() ?? 'Formation Webble',
+            'date_souhaitee' => $devisFormation->getDateSouhaitee(),
+            'duree' => $formation?->getDuree(),
+            'prix_ht' => round($prixHt, 2),
+            'total_tva' => $totalTva,
+            'total_ttc' => round($prixHt + $totalTva, 2),
+        ];
+        $contexte = [
+            'demande' => $devisFormation,
+            'recapitulatif' => $recapitulatif,
+            'logo_url' => 'https://webble.fr/images/webble_black.png',
+            'contact_url' => 'https://webble.fr/contact',
+        ];
 
-                <h3><strong>Informations personnelles :</h3></strong>
-                <p>Email : <strong>{$devisFormation->getEmail()}</strong></p>
-                <p>Nom : <strong>{$devisFormation->getNom()}</strong></p>
-                <p>Prénom : <strong>{$devisFormation->getPrenom()}</strong></p>
-                <p>Tél : <strong>{$devisFormation->getTelephone()}</strong></p>
-                <p>Ville : <strong>{$devisFormation->getVille()}</strong></p>
-                <p>Code postal : <strong>{$devisFormation->getCodePostal()}</strong></p>
-                <p>Adresse : <strong>{$devisFormation->getAdresse()}</strong></p>
-                
-                <h3> Détail de la formation : </h3>
-                <p>Session choisie : <strong>Du {$sessionFormation->getDateDebut()->format('d/m/Y')} au {$sessionFormation->getDateFin()->format('d/m/Y')}</strong></p>
-                <p>Formation : <strong>{$formation->getLibelle()}</strong></p>
-                <p>Durée : <strong>{$formation->getDuree()} heures</strong></p>
+        $this->envoyerEmail(function () use ($devisFormation, $recapitulatif, $contexte): Email {
+            return (new Email())
+                ->from(new Address($this->fromEmail, 'Webble'))
+                ->to(...$this->notificationEmails)
+                ->replyTo(new Address((string) $devisFormation->getEmail(), trim($devisFormation->getPrenom().' '.$devisFormation->getNom())))
+                ->subject(sprintf('[Webble] Nouvelle demande de formation — %s', $recapitulatif['formation']))
+                ->html($this->twig->render('emails/formation/admin.html.twig', $contexte))
+                ->text($this->twig->render('emails/formation/admin.txt.twig', $contexte));
+        }, 'nouvelle demande de formation');
 
-            ");
+        $this->envoyerEmail(function () use ($devisFormation, $contexte): Email {
+            return (new Email())
+                ->from(new Address($this->fromEmail, 'Webble'))
+                ->to(new Address((string) $devisFormation->getEmail(), trim($devisFormation->getPrenom().' '.$devisFormation->getNom())))
+                ->replyTo(...$this->notificationEmails)
+                ->subject('Votre demande de formation a bien été reçue — Webble')
+                ->html($this->twig->render('emails/formation/client.html.twig', $contexte))
+                ->text($this->twig->render('emails/formation/client.txt.twig', $contexte));
+        }, 'accusé de réception de formation');
+    }
 
+    private function envoyerEmail(callable $fabriqueEmail, string $contexte): void
+    {
         try {
-            $this->mailer->send($emailVersWebble);
-        } catch (TransportExceptionInterface $e) {
-            dd($e->getMessage());
-        }
-
-        $emailVersClient = (new Email())
-            ->from('postmaster@webble.fr')
-            ->to($devisFormation->getEmail())
-            ->subject('Confirmation de réception de votre demande de formation')
-            ->html("
-                <p>Bonjour,</p>
-
-                <p>
-                    Votre demande de formation a bien été reçue et est actuellement en cours d’analyse.
-                </p>
-
-                <p>
-                    Une offre détaillée vous sera prochainement transmise à l’adresse email indiquée.
-                </p>
-
-                <p>
-                    Après réception de celle-ci signée, je prendrai directement contact avec vous afin d’échanger
-                    sur les détails et planifier la formation.
-                </p>
-
-                <p>
-                    Si vous avez des informations complémentaires à me transmettre d’ici là,
-                    n’hésitez pas à m'envoyer un message via le formulaire de contact.
-                </p>
-            ");
-
-        try {
-            $this->mailer->send($emailVersClient);
-        } catch (TransportExceptionInterface $e) {
-            dd($e->getMessage());
+            $this->mailer->send($fabriqueEmail());
+        } catch (\Throwable $exception) {
+            $this->logger->error('Échec de l’envoi d’un e-mail : '.$contexte.'.', [
+                'exception' => $exception,
+            ]);
         }
     }
 }

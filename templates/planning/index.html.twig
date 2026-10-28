@@ -11,10 +11,10 @@
                 Calendrier
             </p>
             <h1 class="fw-semibold text-dark mb-3">
-                Planning des formations
+                Journées disponibles
             </h1>
             <p class="text-secondary mb-0">
-                Consultez les prochaines sessions disponibles et choisissez la période qui vous convient.
+                Consultez les journées proposées en vert, puis choisissez votre formation pour vous inscrire.
             </p>
         </div>
 
@@ -24,12 +24,14 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 class="h5 fw-semibold text-dark mb-0">
                         <i class="bi bi-calendar-event me-2"></i>
-                        Sessions de formation
+                        Planning des disponibilités
                     </h2>
                 </div>
 
                 {# CALENDRIER #}
                 <div id="calendar"
+                     class="planning-calendar"
+                     data-mode="view"
                      data-events-url="{{ path('planning_formations_evenements') }}">
                 </div>
 
@@ -37,20 +39,16 @@
                 <div class="mt-4 d-flex flex-wrap gap-3 gap-md-4 align-items-center">
 
                     <div class="d-flex align-items-center border rounded-pill bg-light px-3 py-2">
-                        <span style="display:inline-block; width:14px; height:14px; min-width:14px; border-radius:999px; background:#0d6efd; margin-right:8px;"></span>
-                        <span class="small text-dark">Disponible</span>
+                        <span style="display:inline-block; width:14px; height:14px; min-width:14px; border-radius:999px; background:#198754; margin-right:8px;"></span>
+                        <span class="small text-dark">Journée disponible</span>
                     </div>
 
-                    <div class="d-flex align-items-center border rounded-pill bg-light px-3 py-2">
-                        <span style="display:inline-block; width:14px; height:14px; min-width:14px; border-radius:999px; background:#ffc107; margin-right:8px;"></span>
-                        <span class="small text-dark">Complet</span>
-                    </div>
+                </div>
 
-                    <div class="d-flex align-items-center border rounded-pill bg-light px-3 py-2">
-                        <span style="display:inline-block; width:14px; height:14px; min-width:14px; border-radius:999px; background:#dc3545; margin-right:8px;"></span>
-                        <span class="small text-dark">Annulée</span>
-                    </div>
-
+                <div class="text-center mt-4">
+                    <a href="{{ path('app_liste_formations') }}" class="btn btn-primary rounded-pill px-4">
+                        Choisir une formation
+                    </a>
                 </div>
 
             </div>

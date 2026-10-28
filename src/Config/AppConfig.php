@@ -28,6 +28,22 @@ final class AppConfig
         ],
     ];
 
+    public const OPTIONS_DEVIS_REFONTE = [
+        'nom_domaine' => [
+            'libelle' => 'Nouveau nom de domaine',
+            'description' => 'Accompagnement au changement et à la configuration d’un nouveau nom de domaine.',
+            'prix_ht' => 20.00,
+            'active_par_defaut' => false,
+        ],
+
+        'hebergement' => [
+            'libelle' => 'Nouvel hébergement',
+            'description' => 'Migration et configuration du site sur un nouvel hébergement.',
+            'prix_ht' => 30.00,
+            'active_par_defaut' => false,
+        ],
+    ];
+
     public const OFFRES = [
         'tranquille' => [
             'libelle' => 'Tranquille',
@@ -35,11 +51,12 @@ final class AppConfig
             'description' => 'Pour avoir enfin un vrai site professionnel.',
             'accroche_creation_site' => 'Pour enfin avoir un vrai site, et plus seulement une page Facebook.',
             'resume_creation_site' => 'Idéal pour lancer rapidement votre présence en ligne avec une page claire et professionnelle.',
-            'prix_site_ht' => 150.00,
+            'prix_site_ht' => 70.00,
             'pourcentage_reduction' => 0.00,
             'webble_plus_mois_offerts' => 0,
             'caracteristiques' => [
                 '1 page principale (landing page)',
+                'Présentation de 3 propositions de maquettes personnalisées selon votre secteur d’activité',
                 'Design responsive sur mobile, tablette et ordinateur',
                 'Intégration de votre logo et de vos couleurs',
                 'Livraison clé en main, prête à être mise en ligne',
@@ -52,7 +69,7 @@ final class AppConfig
             'description' => 'La formule idéale pour un site solide et évolutif.',
             'accroche_creation_site' => 'Pour ceux qui en ont marre que le site du voisin soit mieux que le leur.',
             'resume_creation_site' => 'La formule idéale pour les indépendants et petites structures qui veulent un site solide et évolutif.',
-            'prix_site_ht' => 550.00,
+            'prix_site_ht' => 190.00,
             'pourcentage_reduction' => 0.00,
             'webble_plus_mois_offerts' => 3,
             'caracteristiques' => [
@@ -70,17 +87,36 @@ final class AppConfig
             'titre_carte' => 'Offre Pro',
             'description' => 'Pour les projets qui sortent du cadre.',
             'accroche_creation_site' => 'Pour les idées qui ne rentrent dans aucune case, et c’est très bien comme ça.',
-            'resume_creation_site' => 'Pour les projets qui sortent du cadre : fonctionnalités avancées, espace client, etc.',
-            'prix_site_ht' => null,
+            'resume_creation_site' => 'Une formule sur mesure pour les projets qui nécessitent davantage de liberté et des fonctionnalités adaptées.',
+            'prix_site_ht' => 390.00,
             'pourcentage_reduction' => 0.00,
             'webble_plus_mois_offerts' => 6,
             'caracteristiques' => [
-                'Pages libres',
-                'Fonctionnalités avancées',
-                'Blog',
-                'Espace client',
-                'Réservation',
-                'Accompagnement personnalisé',
+                'Tout ce qui est inclus dans l’offre Sérieuse',
+                'Nombre de pages adapté à l’ampleur de votre projet',
+                'Conception de fonctionnalités avancées sur mesure',
+                'Ajout, selon vos besoins, d’un blog, d’un espace client ou d’un système de réservation',
+                'Structure évolutive pour accompagner le développement de votre activité',
+                'Accompagnement personnalisé de la conception à la mise en ligne',
+            ],
+        ],
+
+        'refonte' => [
+            'libelle' => 'Refonte de site web',
+            'titre_carte' => 'Refonte de site web',
+            'titre_devis' => 'Refonte de votre site web',
+            'description' => 'Modernisez votre site existant et faites-le évoluer sur une base plus claire, performante et adaptée à votre activité.',
+            'prix_site_ht' => 590.00,
+            'pourcentage_reduction' => 0.00,
+            'webble_plus_mois_offerts' => 0,
+            'recapitulatif_libelle' => 'Refonte du site',
+            'total_libelle' => 'Total de la refonte',
+            'caracteristiques' => [
+                'Analyse de l’existant et identification des améliorations',
+                'Modernisation du design et de l’expérience utilisateur',
+                'Adaptation complète aux mobiles et aux tablettes',
+                'Amélioration des performances et du référencement de base',
+                'Reprise ou réorganisation des contenus existants',
             ],
         ],
     ];
@@ -100,12 +136,13 @@ final class AppConfig
                 'Amélioration des performances et du référencement de base',
                 'Reprise ou réorganisation des contenus existants',
             ],
-            'prix_libelle' => 'Sur devis',
+            'prix_prefixe' => 'À partir de',
+            'prix_libelle' => '590 €',
             'prix_description' => 'Selon l’état et la complexité du site',
-            'bouton_libelle' => 'Parler de ma refonte',
-            'route' => 'app_contact',
+            'bouton_libelle' => 'C’est parti !',
+            'route' => 'app_devis',
             'route_params' => [
-                'sujet' => 'refonte-site',
+                'offre' => 'refonte',
             ],
         ],
 

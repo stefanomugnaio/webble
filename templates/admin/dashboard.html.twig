@@ -1,0 +1,35 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block admin_title %}Tableau de bord{% endblock %}
+
+{% block admin_content %}
+<div class="row g-4">
+    {% set cards = [
+        {label: 'Offres commerciales', count: counts.offres_commerciales, icon: 'bi-receipt', route: 'admin_offre_index'},
+        {label: 'Tâches de la bibliothèque', count: counts.taches_offres, icon: 'bi-list-check', route: 'admin_tache_offre_index'},
+        {label: 'Contacts', count: counts.contacts, icon: 'bi-envelope', route: 'admin_contact_index'},
+        {label: 'Devis', count: counts.devis, icon: 'bi-file-earmark-text', route: 'admin_devis_index'},
+        {label: 'Demandes de formation', count: counts.devis_formations, icon: 'bi-calendar-check', route: 'admin_devis_formation_index'},
+        {label: 'Journées disponibles', count: counts.disponibilites, icon: 'bi-calendar3', route: 'admin_planning'},
+        {label: 'Formations', count: counts.formations, icon: 'bi-mortarboard', route: 'admin_formation_index'},
+        {label: 'Clients', count: counts.clients, icon: 'bi-people', route: 'admin_client_index'},
+        {label: 'Documents', count: counts.documents, icon: 'bi-folder2-open', route: 'admin_document_index'}
+    ] %}
+
+    {% for card in cards %}
+        <div class="col-sm-6 col-lg-4">
+            <a href="{{ path(card.route) }}" class="card border-0 shadow-sm rounded-4 h-100 text-decoration-none admin-stat-card">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start gap-3">
+                        <div>
+                            <p class="text-secondary mb-2">{{ card.label }}</p>
+                            <p class="display-6 fw-semibold text-dark mb-0">{{ card.count }}</p>
+                        </div>
+                        <span class="admin-stat-card__icon"><i class="bi {{ card.icon }}"></i></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
